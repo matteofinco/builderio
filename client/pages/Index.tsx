@@ -50,10 +50,10 @@ export default function Index() {
         {/* Designer info */}
         <div className="text-center mb-24">
           <h1 className="font-serif text-6xl font-light tracking-tight mb-3">
-            Alessia Rossi
+            Matteo Finco
           </h1>
           <p className="text-lg font-light text-gray-600">
-            Product & Interior Designer
+            Product Designer & Maker
           </p>
         </div>
 
@@ -67,18 +67,18 @@ export default function Index() {
               onMouseLeave={() => setHoveredItem(null)}
               className="block group cursor-pointer"
             >
-              <div className="relative">
+              <div className="relative text-center">
                 <h2 className="text-4xl font-serif font-light transition-opacity duration-300 group-hover:opacity-50">
                   {item.label}
                 </h2>
                 <div
-                  className={`absolute bottom-0 left-0 h-px bg-black transition-all duration-300 ${
+                  className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-px bg-black transition-all duration-300 ${
                     hoveredItem === item.label ? "w-full" : "w-0"
                   }`}
                 />
               </div>
               <p
-                className={`text-sm text-gray-600 mt-3 transition-opacity duration-300 ${
+                className={`text-sm text-gray-600 mt-3 transition-opacity duration-300 text-center ${
                   hoveredItem === item.label ? "opacity-100" : "opacity-0"
                 }`}
               >
@@ -89,10 +89,6 @@ export default function Index() {
         </nav>
       </div>
 
-      {/* Footer hint */}
-      <div className="text-center pb-8 relative z-10 text-xs text-gray-400 tracking-wide">
-        Hover to explore
-      </div>
     </div>
   );
 }
