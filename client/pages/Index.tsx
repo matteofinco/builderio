@@ -10,7 +10,7 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   {
-    label: "Portfolio",
+    label: "Designs",
     path: "/portfolio",
     preview: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop",
     description: "A carefully curated selection of products and spaces.",
