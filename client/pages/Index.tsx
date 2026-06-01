@@ -13,19 +13,19 @@ const navItems: NavItem[] = [
     label: "Designs",
     path: "/portfolio",
     preview: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop",
-    description: "A carefully curated selection of products and spaces.",
+    description: "Selected industrial products & functional concepts.",
   },
   {
     label: "About",
     path: "/about",
     preview: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop",
-    description: "Philosophy, background, and approach to design.",
+    description: "Design student & maker based in Italy",
   },
   {
     label: "Curriculum Vitae",
     path: "/cv",
     preview: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop",
-    description: "Education, experience, and professional achievements.",
+    description: "Experience, tools, and background.",
   },
 ];
 
