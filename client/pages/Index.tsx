@@ -79,7 +79,7 @@ export default function Index() {
                 className="block"
               >
                 <div className="border-b border-black py-4 transition-all duration-300 hover:pb-6">
-                  <h2 className="font-serif text-3xl sm:text-4xl font-normal text-black transition-transform duration-300 group-hover:translate-x-2">
+                  <h2 className="font-serif text-3xl sm:text-4xl font-normal text-black transition-transform duration-300 group-hover:translate-x-2 text-center">
                     {item.label}
                   </h2>
                 </div>
