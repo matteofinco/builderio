@@ -1,172 +1,227 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-interface Project {
+interface ProjectItem {
   id: string;
   title: string;
   description: string;
-  year: string;
-  category: string;
   imageUrl: string;
-  colorImageUrl: string;
-  order: number;
+  category: string;
 }
 
-const projects: Project[] = [
+const projects: ProjectItem[] = [
   {
-    id: "mycelium-chair",
-    title: "Mycelium Chair",
-    description: "Biomaterial seating integrating organic growth with precision engineering.",
-    year: "2023",
-    category: "Furniture Design",
-    imageUrl: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1000&h=800&fit=crop&q=80",
-    colorImageUrl: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1000&h=800&fit=crop",
-    order: 1,
-  },
-  {
-    id: "polymer-wall",
-    title: "Recycled Polymer Wall System",
-    description: "Interior partition system using upcycled polymers and modular CNC components.",
-    year: "2023",
-    category: "Interior Design",
-    imageUrl: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1000&h=800&fit=crop&q=80",
-    colorImageUrl: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1000&h=800&fit=crop",
-    order: 2,
-  },
-  {
-    id: "bio-vessel",
-    title: "Bio-Vessel Collection",
-    description: "Series of vessels combining biodegradable materials with industrial precision.",
-    year: "2022",
+    id: "marble-table",
+    title: "Marble Dining Table",
+    description: "Sculptural form in white Carrara marble",
+    imageUrl: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&h=800&fit=crop",
     category: "Product Design",
-    imageUrl: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=1000&h=800&fit=crop&q=80",
-    colorImageUrl: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=1000&h=800&fit=crop",
-    order: 3,
   },
   {
-    id: "modular-interior",
-    title: "Modular Interior Installation",
-    description: "Spatial design exploring the intersection of organic forms and geometric precision.",
-    year: "2022",
-    category: "Installation",
-    imageUrl: "https://images.unsplash.com/photo-1535221228889-2fc003d647a1?w=1000&h=800&fit=crop&q=80",
-    colorImageUrl: "https://images.unsplash.com/photo-1535221228889-2fc003d647a1?w=1000&h=800&fit=crop",
-    order: 4,
+    id: "minimalist-chair",
+    title: "Minimalist Chair",
+    description: "Essential seating with refined proportions",
+    imageUrl: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&h=600&fit=crop",
+    category: "Furniture",
+  },
+  {
+    id: "loft-apartment",
+    title: "Loft Apartment Renovation",
+    description: "Industrial space transformed with editorial clarity",
+    imageUrl: "https://images.unsplash.com/photo-1493857671505-72967e2e2760?w=1400&h=900&fit=crop",
+    category: "Interior Design",
+  },
+  {
+    id: "lamp-collection",
+    title: "Lighting Collection",
+    description: "Modular brass and glass elements",
+    imageUrl: "https://images.unsplash.com/photo-1565636192335-14f94f75b13f?w=900&h=700&fit=crop",
+    category: "Product Design",
+  },
+  {
+    id: "gallery-space",
+    title: "Gallery Space Design",
+    description: "White cube reimagined with architectural precision",
+    imageUrl: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&h=900&fit=crop",
+    category: "Interior Design",
   },
 ];
 
 export default function Portfolio() {
-  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-white border-b border-gray-200 py-6 px-6 sm:px-12">
-        <div className="flex items-center justify-between">
-          <Link
-            to="/"
-            className="text-sm text-gray-600 hover:text-black transition-colors tracking-wide"
-          >
-            ← Back
-          </Link>
-          <h1 className="font-serif text-4xl sm:text-5xl font-normal">Portfolio</h1>
-          <div className="w-12" />
-        </div>
-      </div>
+      <header className="border-b border-gray-200 py-8 px-8">
+        <Link to="/" className="text-sm font-light text-gray-600 hover:text-black transition-colors">
+          ← Back
+        </Link>
+      </header>
 
-      {/* Main content */}
-      <div className="px-6 sm:px-12 py-12 sm:py-20">
-        <div className="space-y-24">
-          {projects.map((project, index) => (
-            <div key={project.id}>
-              {/* Grid layout - asymmetrical */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
-                {/* Main image - spans 2 columns on larger screens */}
-                <div
-                  className="md:col-span-2 relative overflow-hidden bg-gray-100 aspect-video md:aspect-square cursor-pointer group"
-                  onMouseEnter={() => setHoveredProject(project.id)}
-                  onMouseLeave={() => setHoveredProject(null)}
-                >
-                  {/* Grayscale image */}
-                  <img
-                    src={project.imageUrl}
-                    alt={project.title}
-                    className={`w-full h-full object-cover transition-all duration-700 ${
-                      hoveredProject === project.id ? "grayscale-0 opacity-100" : "grayscale opacity-100"
-                    }`}
-                  />
-
-                  {/* Color overlay on hover */}
-                  {hoveredProject === project.id && (
-                    <div className="absolute inset-0 overflow-hidden">
-                      <img
-                        src={project.colorImageUrl}
-                        alt={project.title}
-                        className="w-full h-full object-cover animate-fadeIn"
-                      />
-                    </div>
-                  )}
-                </div>
-
-                {/* Text content - right column */}
-                <div className="flex flex-col justify-start">
-                  {/* Project info always visible */}
+      {/* Grid */}
+      <main className="px-8 py-16">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid gap-8">
+            {/* First row - Large left, small right */}
+            <div className="grid grid-cols-3 gap-8 items-start">
+              <div
+                className="col-span-2 group cursor-pointer"
+                onMouseEnter={() => setHoveredId(projects[0].id)}
+                onMouseLeave={() => setHoveredId(null)}
+              >
+                <Link to={`/project/${projects[0].id}`}>
+                  <div className="overflow-hidden bg-gray-100 aspect-[4/3]">
+                    <img
+                      src={projects[0].imageUrl}
+                      alt={projects[0].title}
+                      className={`w-full h-full object-cover transition-all duration-500 ${
+                        hoveredId === projects[0].id
+                          ? "grayscale-0 scale-100"
+                          : "grayscale scale-100"
+                      }`}
+                    />
+                  </div>
                   <div
-                    className={`transition-all duration-500 ${
-                      hoveredProject === project.id ? "opacity-100" : "opacity-60"
+                    className={`mt-6 transition-opacity duration-500 ${
+                      hoveredId === projects[0].id ? "opacity-100" : "opacity-0"
                     }`}
                   >
-                    <h2 className="font-serif text-2xl sm:text-3xl font-normal text-black mb-4">
-                      {project.title}
-                    </h2>
-
-                    {/* Description - fades in on hover */}
-                    <div
-                      className={`transition-all duration-500 overflow-hidden ${
-                        hoveredProject === project.id ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-                      }`}
-                    >
-                      <p className="text-sm text-gray-700 leading-relaxed mb-6">
-                        {project.description}
-                      </p>
-                    </div>
-
-                    {/* Metadata */}
-                    <div className="space-y-2 text-xs text-gray-500 tracking-wide">
-                      <p>
-                        <span className="font-semibold">Year:</span> {project.year}
-                      </p>
-                      <p>
-                        <span className="font-semibold">Category:</span> {project.category}
-                      </p>
-                    </div>
-
-                    {/* View project link */}
-                    <Link
-                      to={`/project/${project.id}`}
-                      className={`inline-block mt-8 text-xs tracking-widest text-black border-b border-black pb-1 transition-all duration-300 hover:translate-x-1 ${
-                        hoveredProject === project.id ? "opacity-100" : "opacity-0 pointer-events-none"
-                      }`}
-                    >
-                      View Project →
-                    </Link>
+                    <h3 className="text-2xl font-serif font-light mb-2">
+                      {projects[0].title}
+                    </h3>
+                    <p className="text-sm text-gray-600">{projects[0].description}</p>
                   </div>
-                </div>
+                </Link>
               </div>
 
-              {/* Spacing between projects */}
-              {index < projects.length - 1 && <div className="border-b border-gray-200 pt-12" />}
+              <div
+                className="group cursor-pointer"
+                onMouseEnter={() => setHoveredId(projects[1].id)}
+                onMouseLeave={() => setHoveredId(null)}
+              >
+                <Link to={`/project/${projects[1].id}`}>
+                  <div className="overflow-hidden bg-gray-100 aspect-square">
+                    <img
+                      src={projects[1].imageUrl}
+                      alt={projects[1].title}
+                      className={`w-full h-full object-cover transition-all duration-500 ${
+                        hoveredId === projects[1].id
+                          ? "grayscale-0 scale-100"
+                          : "grayscale scale-100"
+                      }`}
+                    />
+                  </div>
+                  <div
+                    className={`mt-4 transition-opacity duration-500 ${
+                      hoveredId === projects[1].id ? "opacity-100" : "opacity-0"
+                    }`}
+                  >
+                    <h3 className="text-lg font-serif font-light mb-1">
+                      {projects[1].title}
+                    </h3>
+                    <p className="text-xs text-gray-600">{projects[1].description}</p>
+                  </div>
+                </Link>
+              </div>
             </div>
-          ))}
-        </div>
-      </div>
 
-      {/* Footer */}
-      <div className="border-t border-gray-200 py-12 px-6 sm:px-12 mt-12">
-        <div className="text-center text-xs text-gray-400 tracking-wide">
-          <p>© 2024 Elena Marrone. All rights reserved.</p>
+            {/* Second row - Full width */}
+            <div
+              className="group cursor-pointer"
+              onMouseEnter={() => setHoveredId(projects[2].id)}
+              onMouseLeave={() => setHoveredId(null)}
+            >
+              <Link to={`/project/${projects[2].id}`}>
+                <div className="overflow-hidden bg-gray-100 aspect-[16/6]">
+                  <img
+                    src={projects[2].imageUrl}
+                    alt={projects[2].title}
+                    className={`w-full h-full object-cover transition-all duration-500 ${
+                      hoveredId === projects[2].id
+                        ? "grayscale-0 scale-100"
+                        : "grayscale scale-100"
+                    }`}
+                  />
+                </div>
+                <div
+                  className={`mt-6 transition-opacity duration-500 max-w-md ${
+                    hoveredId === projects[2].id ? "opacity-100" : "opacity-0"
+                  }`}
+                >
+                  <h3 className="text-3xl font-serif font-light mb-2">
+                    {projects[2].title}
+                  </h3>
+                  <p className="text-sm text-gray-600">{projects[2].description}</p>
+                </div>
+              </Link>
+            </div>
+
+            {/* Third row - Small left, large right */}
+            <div className="grid grid-cols-3 gap-8 items-start">
+              <div
+                className="group cursor-pointer"
+                onMouseEnter={() => setHoveredId(projects[3].id)}
+                onMouseLeave={() => setHoveredId(null)}
+              >
+                <Link to={`/project/${projects[3].id}`}>
+                  <div className="overflow-hidden bg-gray-100 aspect-square">
+                    <img
+                      src={projects[3].imageUrl}
+                      alt={projects[3].title}
+                      className={`w-full h-full object-cover transition-all duration-500 ${
+                        hoveredId === projects[3].id
+                          ? "grayscale-0 scale-100"
+                          : "grayscale scale-100"
+                      }`}
+                    />
+                  </div>
+                  <div
+                    className={`mt-4 transition-opacity duration-500 ${
+                      hoveredId === projects[3].id ? "opacity-100" : "opacity-0"
+                    }`}
+                  >
+                    <h3 className="text-lg font-serif font-light mb-1">
+                      {projects[3].title}
+                    </h3>
+                    <p className="text-xs text-gray-600">{projects[3].description}</p>
+                  </div>
+                </Link>
+              </div>
+
+              <div
+                className="col-span-2 group cursor-pointer"
+                onMouseEnter={() => setHoveredId(projects[4].id)}
+                onMouseLeave={() => setHoveredId(null)}
+              >
+                <Link to={`/project/${projects[4].id}`}>
+                  <div className="overflow-hidden bg-gray-100 aspect-[4/3]">
+                    <img
+                      src={projects[4].imageUrl}
+                      alt={projects[4].title}
+                      className={`w-full h-full object-cover transition-all duration-500 ${
+                        hoveredId === projects[4].id
+                          ? "grayscale-0 scale-100"
+                          : "grayscale scale-100"
+                      }`}
+                    />
+                  </div>
+                  <div
+                    className={`mt-6 transition-opacity duration-500 ${
+                      hoveredId === projects[4].id ? "opacity-100" : "opacity-0"
+                    }`}
+                  >
+                    <h3 className="text-2xl font-serif font-light mb-2">
+                      {projects[4].title}
+                    </h3>
+                    <p className="text-sm text-gray-600">{projects[4].description}</p>
+                  </div>
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

@@ -1,71 +1,187 @@
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+
+interface ProjectDetails {
+  id: string;
+  title: string;
+  year: string;
+  category: string;
+  role: string;
+  description: string;
+  heroImage: string;
+  images: Array<{
+    url: string;
+    caption?: string;
+    width: "full" | "half";
+  }>;
+}
+
+const projectsData: Record<string, ProjectDetails> = {
+  "marble-table": {
+    id: "marble-table",
+    title: "Marble Dining Table",
+    year: "2023",
+    category: "Product Design",
+    role: "Lead Designer",
+    description:
+      "A sculptural dining table that explores the intersection of materiality and form. Carved from a single block of white Carrara marble, the piece balances monumental weight with refined elegance.",
+    heroImage:
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1600&h=900&fit=crop",
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&h=800&fit=crop",
+        caption: "The table in its completed form, photographed in natural light",
+        width: "full",
+      },
+      {
+        url: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=600&fit=crop",
+        caption: "Detail of the edge treatment",
+        width: "half",
+      },
+      {
+        url: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&h=600&fit=crop",
+        caption: "Underside structure",
+        width: "half",
+      },
+      {
+        url: "https://images.unsplash.com/photo-1574880655260-b5e9b3ad4f5e?w=1200&h=800&fit=crop",
+        caption:
+          "The piece invites contemplation through its monumental presence and subtle surface variations",
+        width: "full",
+      },
+    ],
+  },
+  "minimalist-chair": {
+    id: "minimalist-chair",
+    title: "Minimalist Chair",
+    year: "2023",
+    category: "Furniture",
+    role: "Product Designer",
+    description:
+      "Essential seating distilled to its purest form. This chair embodies the philosophy that true elegance comes from the elimination of the unnecessary.",
+    heroImage:
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1600&h=900&fit=crop",
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&h=800&fit=crop",
+        caption: "Front view",
+        width: "full",
+      },
+      {
+        url: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=600&fit=crop",
+        caption: "Side profile",
+        width: "half",
+      },
+      {
+        url: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&h=600&fit=crop",
+        caption: "Back detail",
+        width: "half",
+      },
+    ],
+  },
+};
 
 export default function Project() {
   const { projectId } = useParams();
+  const project = projectId ? projectsData[projectId] : null;
+
+  if (!project) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <Link to="/portfolio" className="text-sm font-light text-gray-600 hover:text-black">
+          ← Back to portfolio
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-white border-b border-gray-200 py-6 px-6 sm:px-12">
-        <div className="flex items-center justify-between">
-          <Link
-            to="/portfolio"
-            className="text-sm text-gray-600 hover:text-black transition-colors tracking-wide"
-          >
-            ← Back to Portfolio
-          </Link>
-          <h1 className="font-serif text-3xl sm:text-4xl font-normal">Project</h1>
-          <div className="w-24" />
-        </div>
+      <header className="border-b border-gray-200 py-8 px-8">
+        <Link to="/portfolio" className="text-sm font-light text-gray-600 hover:text-black transition-colors">
+          ← Back to portfolio
+        </Link>
+      </header>
+
+      {/* Hero Image */}
+      <div className="w-full h-[60vh] overflow-hidden">
+        <img
+          src={project.heroImage}
+          alt={project.title}
+          className="w-full h-full object-cover"
+        />
       </div>
 
-      {/* Main content */}
-      <div className="px-6 sm:px-12 py-20">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center py-20">
-            <h2 className="font-serif text-5xl font-normal text-black mb-6">
-              {projectId?.split("-").join(" ").charAt(0).toUpperCase() + projectId?.split("-").join(" ").slice(1)}
-            </h2>
-            <p className="text-gray-600 text-lg mb-12">
-              This project detail page is ready to be customized.
-            </p>
-
-            <div className="space-y-6">
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-12">
-                <svg
-                  className="w-16 h-16 mx-auto text-gray-300 mb-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-                <p className="text-gray-600 text-sm">
-                  Hero image and project details coming soon.
-                </p>
+      {/* Content */}
+      <main className="px-8 py-20">
+        <div className="max-w-5xl mx-auto">
+          {/* Title and metadata */}
+          <div className="mb-16">
+            <h1 className="text-6xl font-serif font-light mb-8 tracking-tight">
+              {project.title}
+            </h1>
+            <div className="flex gap-12 text-sm text-gray-600">
+              <div>
+                <p className="text-xs uppercase tracking-widest text-gray-500 mb-1">Year</p>
+                <p className="font-light">{project.year}</p>
               </div>
-
-              <p className="text-sm text-gray-500 tracking-wide">
-                Continue the conversation to have this page generated with full project details, images,
-                editorial layout, and specifications.
-              </p>
+              <div>
+                <p className="text-xs uppercase tracking-widest text-gray-500 mb-1">
+                  Category
+                </p>
+                <p className="font-light">{project.category}</p>
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-widest text-gray-500 mb-1">Role</p>
+                <p className="font-light">{project.role}</p>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Footer */}
-      <div className="border-t border-gray-200 py-12 px-6 sm:px-12 mt-12">
-        <div className="text-center text-xs text-gray-400 tracking-wide">
-          <p>© 2024 Elena Marrone. All rights reserved.</p>
+          {/* Description */}
+          <div className="mb-20 max-w-2xl">
+            <p className="text-lg font-light leading-relaxed text-gray-800">
+              {project.description}
+            </p>
+          </div>
+
+          {/* Editorial grid */}
+          <div className="space-y-12">
+            {project.images.map((image, index) => (
+              <div key={index}>
+                <div
+                  className={`overflow-hidden bg-gray-100 mb-4 ${
+                    image.width === "full"
+                      ? "w-full aspect-[3/2]"
+                      : "w-1/2 aspect-square"
+                  }`}
+                >
+                  <img
+                    src={image.url}
+                    alt={image.caption}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                {image.caption && (
+                  <p className="text-sm text-gray-600 font-light leading-relaxed max-w-2xl">
+                    {image.caption}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Navigation to next project */}
+          <div className="mt-24 pt-16 border-t border-gray-200">
+            <Link
+              to="/portfolio"
+              className="text-sm font-light text-gray-600 hover:text-black transition-colors"
+            >
+              ← Back to portfolio
+            </Link>
+          </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

@@ -4,66 +4,154 @@ export default function About() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-white border-b border-gray-200 py-6 px-6 sm:px-12">
-        <div className="flex items-center justify-between">
-          <Link
-            to="/"
-            className="text-sm text-gray-600 hover:text-black transition-colors tracking-wide"
-          >
-            ← Back
-          </Link>
-          <h1 className="font-serif text-4xl sm:text-5xl font-normal">About & CV</h1>
-          <div className="w-12" />
-        </div>
-      </div>
+      <header className="border-b border-gray-200 py-8 px-8">
+        <Link to="/" className="text-sm font-light text-gray-600 hover:text-black transition-colors">
+          ← Home
+        </Link>
+      </header>
 
       {/* Main content */}
-      <div className="px-6 sm:px-12 py-20">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center py-20">
-            <h2 className="font-serif text-5xl font-normal text-black mb-6">
-              About & Curriculum Vitae
-            </h2>
-            <p className="text-gray-600 text-lg mb-12">
-              Your professional profile and experience are ready to be displayed.
-            </p>
+      <main className="px-8 py-20">
+        <div className="max-w-6xl mx-auto">
+          {/* Two-column layout */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+            {/* Left column - Section titles */}
+            <div className="space-y-24">
+              <h2 className="text-4xl font-serif font-light">Biography</h2>
+              <h2 className="text-4xl font-serif font-light">Philosophy</h2>
+              <h2 className="text-4xl font-serif font-light">Education</h2>
+              <h2 className="text-4xl font-serif font-light">Software</h2>
+              <h2 className="text-4xl font-serif font-light">Manufacturing</h2>
+              <h2 className="text-4xl font-serif font-light">Experience</h2>
+            </div>
 
-            <div className="space-y-6">
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-12">
-                <svg
-                  className="w-16 h-16 mx-auto text-gray-300 mb-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
-                </svg>
-                <p className="text-gray-600 text-sm">
-                  Two-column layout with biography, philosophy, education, and experience.
+            {/* Right column - Content */}
+            <div className="col-span-2 space-y-24">
+              {/* Biography */}
+              <section>
+                <p className="text-base font-light leading-relaxed text-gray-800 mb-6 max-w-2xl">
+                  Alessia Rossi is a Product and Interior Designer based in Milan, Italy. With a
+                  focus on the intersection of form and function, her work explores how thoughtful
+                  design can transform everyday objects and spaces into moments of quiet elegance.
                 </p>
-              </div>
+                <p className="text-base font-light leading-relaxed text-gray-600 max-w-2xl">
+                  Her design practice is rooted in the belief that complexity achieved through
+                  clarity is the mark of true sophistication. Every project begins with a deep
+                  understanding of context, materiality, and the human experience.
+                </p>
+              </section>
 
-              <p className="text-sm text-gray-500 tracking-wide">
-                Continue the conversation to generate the About page with a two-column editorial layout,
-                biography, design philosophy, education, software and manufacturing skills, and professional
-                experience.
-              </p>
+              {/* Design Philosophy */}
+              <section>
+                <p className="text-base font-light leading-relaxed text-gray-800 mb-6 max-w-2xl">
+                  Design is a discipline of subtraction. Rather than adding layers of decoration
+                  or unnecessary features, the goal is to distill each project to its essential
+                  truth—the balance between what is necessary and what is beautiful.
+                </p>
+                <p className="text-base font-light leading-relaxed text-gray-600 max-w-2xl">
+                  This philosophy is informed by the minimalist tradition in design, the
+                  precision of Swiss typography, and the timeless elegance of Scandinavian
+                  craftsmanship. Every material choice, every proportion, every edge is
+                  considered with intention.
+                </p>
+              </section>
+
+              {/* Education */}
+              <section>
+                <div className="space-y-6">
+                  <div>
+                    <p className="font-light text-sm uppercase tracking-widest text-gray-500 mb-1">
+                      2020–2022
+                    </p>
+                    <p className="text-base font-light text-gray-800 mb-2">
+                      Master's in Product Design
+                    </p>
+                    <p className="text-base font-light text-gray-600">
+                      Politecnico di Milano, Milan
+                    </p>
+                  </div>
+                  <div>
+                    <p className="font-light text-sm uppercase tracking-widest text-gray-500 mb-1">
+                      2017–2020
+                    </p>
+                    <p className="text-base font-light text-gray-800 mb-2">
+                      Bachelor's in Design
+                    </p>
+                    <p className="text-base font-light text-gray-600">
+                      Università IUAV di Venezia, Venice
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Software Skills */}
+              <section>
+                <div className="space-y-3">
+                  <p className="text-base font-light text-gray-800">Rhino 3D</p>
+                  <p className="text-base font-light text-gray-800">Grasshopper</p>
+                  <p className="text-base font-light text-gray-800">Adobe Creative Suite</p>
+                  <p className="text-base font-light text-gray-800">Figma</p>
+                  <p className="text-base font-light text-gray-800">KeyShot</p>
+                  <p className="text-base font-light text-gray-800">Cinema 4D</p>
+                </div>
+              </section>
+
+              {/* Manufacturing Skills */}
+              <section>
+                <div className="space-y-3">
+                  <p className="text-base font-light text-gray-800">Woodworking</p>
+                  <p className="text-base font-light text-gray-800">Stone and marble working</p>
+                  <p className="text-base font-light text-gray-800">Metal fabrication</p>
+                  <p className="text-base font-light text-gray-800">Ceramics and glazing</p>
+                  <p className="text-base font-light text-gray-800">Textile design and weaving</p>
+                </div>
+              </section>
+
+              {/* Professional Experience */}
+              <section>
+                <div className="space-y-8">
+                  <div>
+                    <p className="font-light text-sm uppercase tracking-widest text-gray-500 mb-1">
+                      2022 – Present
+                    </p>
+                    <p className="text-base font-light text-gray-800 mb-2">
+                      Senior Product Designer
+                    </p>
+                    <p className="text-base font-light text-gray-600 mb-3">
+                      Studio Architetture, Milan
+                    </p>
+                    <p className="text-sm font-light text-gray-600 leading-relaxed max-w-xl">
+                      Leading the product design division with focus on furniture and interior
+                      collections. Collaborating with international manufacturers and design
+                      studios.
+                    </p>
+                  </div>
+                  <div>
+                    <p className="font-light text-sm uppercase tracking-widest text-gray-500 mb-1">
+                      2021 – 2022
+                    </p>
+                    <p className="text-base font-light text-gray-800 mb-2">
+                      Interior Design Associate
+                    </p>
+                    <p className="text-base font-light text-gray-600 mb-3">
+                      Minimalist Spaces Studio, Venice
+                    </p>
+                    <p className="text-sm font-light text-gray-600 leading-relaxed max-w-xl">
+                      Designed residential and commercial interiors with emphasis on spatial
+                      clarity and material authenticity. Project management and client coordination.
+                    </p>
+                  </div>
+                </div>
+              </section>
             </div>
           </div>
         </div>
-      </div>
+      </main>
 
       {/* Footer */}
-      <div className="border-t border-gray-200 py-12 px-6 sm:px-12 mt-12">
-        <div className="text-center text-xs text-gray-400 tracking-wide">
-          <p>© 2024 Elena Marrone. All rights reserved.</p>
-        </div>
-      </div>
+      <footer className="border-t border-gray-200 py-8 px-8 text-center text-xs text-gray-400 tracking-wide">
+        <p>© 2024 Alessia Rossi. All rights reserved.</p>
+      </footer>
     </div>
   );
 }
