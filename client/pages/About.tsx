@@ -1,14 +1,10 @@
 import { Link } from "react-router-dom";
+import Header from "../components/Header";
 
 export default function About() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="border-b border-gray-200 py-8 px-8">
-        <Link to="/" className="text-sm font-light text-gray-600 hover:text-black transition-colors">
-          ← Home
-        </Link>
-      </header>
+      <Header />
 
       {/* Main content */}
       <main className="px-8 py-20">

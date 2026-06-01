@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Header from "../components/Header";
 
 interface ProjectItem {
   id: string;
@@ -52,12 +53,7 @@ export default function Portfolio() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="border-b border-gray-200 py-8 px-8">
-        <Link to="/" className="text-sm font-light text-gray-600 hover:text-black transition-colors">
-          ← Back
-        </Link>
-      </header>
+      <Header />
 
       {/* Grid */}
       <main className="px-8 py-16">

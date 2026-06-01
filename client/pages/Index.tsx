@@ -89,6 +89,16 @@ export default function Index() {
         </nav>
       </div>
 
+      {/* Footer contact link */}
+      <div className="text-center pb-12 relative z-10">
+        <Link
+          to="/contact"
+          className="text-sm font-light text-gray-600 hover:text-black transition-colors"
+        >
+          Get in touch
+        </Link>
+      </div>
+
     </div>
   );
 }

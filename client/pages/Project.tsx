@@ -1,4 +1,5 @@
 import { Link, useParams } from "react-router-dom";
+import Header from "../components/Header";
 
 interface ProjectDetails {
   id: string;
@@ -96,12 +97,7 @@ export default function Project() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="border-b border-gray-200 py-8 px-8">
-        <Link to="/portfolio" className="text-sm font-light text-gray-600 hover:text-black transition-colors">
-          ← Back to portfolio
-        </Link>
-      </header>
+      <Header />
 
       {/* Hero Image */}
       <div className="w-full h-[60vh] overflow-hidden">
