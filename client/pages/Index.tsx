@@ -10,7 +10,7 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   {
-    label: "Portfolio",
+    label: "Designs",
     href: "/portfolio",
     preview: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=600&fit=crop",
     description: "A selection of completed projects bridging materials and precision.",
@@ -61,10 +61,10 @@ export default function Index() {
         {/* Header Section */}
         <div className="text-center mb-20 max-w-2xl">
           <h1 className="font-serif text-6xl sm:text-7xl font-normal leading-tight mb-6 text-black">
-            Elena Marrone
+            Matteo Finco
           </h1>
           <p className="font-sans text-lg sm:text-xl text-gray-600 font-light tracking-wide">
-            Product & Interior Designer
+            Product Designer & Maker
           </p>
         </div>
 
@@ -108,7 +108,7 @@ export default function Index() {
 
       {/* Subtle footer */}
       <div className="text-center pb-8 px-6 border-t border-gray-200 text-xs text-gray-400 tracking-wide">
-        <p>© 2024 Elena Marrone. All rights reserved.</p>
+        <p>© 2024 Matteo Finco. All rights reserved.</p>
       </div>
     </div>
   );
