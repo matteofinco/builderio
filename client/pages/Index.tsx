@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 interface NavItem {
@@ -32,6 +32,7 @@ const navItems: NavItem[] = [
 export default function Index() {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [lastActivePreview, setLastActivePreview] = useState<string | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const handleMouseEnter = (label: string, preview: string) => {
     setHoveredItem(label);
@@ -42,23 +43,89 @@ export default function Index() {
     setHoveredItem(null);
   };
 
-  return (
-    <div className="bg-white flex flex-col homepage-container" style={{ height: "100vh", width: "100vw", overflow: "hidden", overflowX: "hidden" }}>
+  // Logica per le particelle fluttuanti (effetto vento/pulviscolo)
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let particles: Array<{
+      x: number;
+      y: number;
+      radius: number;
+      density: number;
+      opacity: number;
+      speedY: number;
+      speedX: number;
+    }> = [];
+
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initParticles();
+    };
+
+    const initParticles = () => {
+      particles = [];
+      // Numero di particelle (regolabile, 60 è un buon compromesso per non affollare lo schermo)
+      const numberOfParticles = 60; 
+      for (let i = 0; i < numberOfParticles; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 1.5 + 0.5, // Particelle piccolissime (da 0.5px a 2px)
+          density: Math.random() * 30,
+          opacity: Math.random() * 0.4 + 0.1, // Opacità molto bassa per rimanere discrete
+          speedY: -(Math.random() * 0.4 + 0.1), // Si muovono verso l'alto lentamente
+          speedX: Math.random() * 0.5 + 0.2,   // Spinte verso destra (effetto vento)
+        });
+      }
+    };
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       
-    <style>{`
-        @keyframes ambientGlow {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
+      particles.forEach((p) => {
+        ctx.beginPath();
+        // Disegnamo la particella con un tono grigio/bianco molto etereo
+        ctx.fillStyle = `rgba(180, 180, 185, ${p.opacity})`;
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
 
-        .homepage-container {
-          /* Usiamo un grigio/panna più marcato (#f0f0f3 e #e5e5ea) alternato al bianco puro */
-          background: linear-gradient(-45deg, #ffffff, #f0f0f3, #ffffff, #e5e5ea);
-          background-size: 300% 300%;
-          animation: ambientGlow 8s ease-in-out infinite;
-        }
+        // Aggiorna la posizione in base alla velocità (effetto brezza)
+        p.y += p.speedY;
+        p.x += p.speedX;
 
+        // Se escono dallo schermo, rigenerale dal lato opposto
+        if (p.y < -10) {
+          p.y = canvas.height + 10;
+          p.x = Math.random() * canvas.width;
+        }
+        if (p.x > canvas.width + 10) {
+          p.x = -10;
+          p.y = Math.random() * canvas.height;
+        }
+      });
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+    animate();
+
+    return () => {
+      window.removeEventListener("resize", resizeCanvas);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  return (
+    <div className="bg-white flex flex-col relative" style={{ height: "100vh", width: "100vw", overflow: "hidden", overflowX: "hidden" }}>
+      
+      <style>{`
         .fade-preview {
           transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1);
           opacity: 0;
@@ -70,8 +137,16 @@ export default function Index() {
         }
       `}</style>
 
+      {/* Canvas per le particelle sullo sfondo */}
+      <canvas 
+        ref={canvasRef} 
+        className="absolute inset-0 pointer-events-none z-0"
+        style={{ mixBlendMode: "multiply" }}
+      />
+
+      {/* Background preview dei progetti */}
       {lastActivePreview && (
-        <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="fixed inset-0 pointer-events-none overflow-hidden z-10">
           <img
             src={lastActivePreview}
             alt="Preview"
@@ -80,7 +155,9 @@ export default function Index() {
         </div>
       )}
 
-      <div className="flex-1 flex flex-col items-center justify-center px-4 py-20 relative z-10">
+      {/* Main content */}
+      <div className="flex-1 flex flex-col items-center justify-center px-4 py-20 relative z-20">
+        {/* Designer info */}
         <div className="text-center mb-24">
           <h1 className="font-serif text-6xl font-light tracking-tight mb-3">
             Matteo Finco
@@ -90,6 +167,7 @@ export default function Index() {
           </p>
         </div>
 
+        {/* Navigation */}
         <nav className="space-y-8 max-w-2xl w-full">
           {navItems.map((item) => (
             <Link
@@ -121,7 +199,8 @@ export default function Index() {
         </nav>
       </div>
 
-      <div className="text-center pb-12 relative z-10">
+      {/* Footer contact link */}
+      <div className="text-center pb-12 relative z-20">
         <Link
           to="/contact"
           className="text-sm font-light text-gray-600 hover:text-black transition-colors"
