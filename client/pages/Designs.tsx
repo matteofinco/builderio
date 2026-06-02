@@ -2,29 +2,39 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 
+// 1. Importiamo le immagini direttamente dagli asset per mapparne i percorsi corretti in build
+import archiviaImg from "../assets/archiviamodificato@2x.jpg";
+import intarsiImg from "../assets/intarsimodificato@2x.jpg";
+import nandoImg from "../assets/nandomodificato@2x.jpg";
+import pizzaImg from "../assets/pizzamodificato@2x.jpg";
+import snakeImg from "../assets/snakemodificato@2x.jpg";
+import ttableImg from "../assets/ttablemodificato@2x.jpg";
+import waffleImg from "../assets/wafflemodificato@2x.jpg";
+
 interface Project {
   id: string;
   title: string;
   subtitle: string;
   imageUrl?: string;
   path: string;
-  areaClass: string; // Definisce la posizione esatta nella scacchiera
+  areaClass: string;
   isProfile?: boolean;
 }
 
-const projects: Project[] = [
-  { id: "archivia", title: "Archivia", subtitle: "Pen holder", imageUrl: "archiviamodificato@2x", path: "/archivia", areaClass: "area-archivia" },
-  { id: "pizzamente", title: "Pizza Machine", subtitle: "Academic Workshop", imageUrl: "pizzamodificato@2x", path: "/pizzamente", areaClass: "area-pizza" },
-  { id: "nando", title: "Nando", subtitle: "Hyperplastic cutlery handle", imageUrl: "nandomodificato@2x", path: "/nando", areaClass: "area-nando" },
-  { id: "snake", title: "Snake", subtitle: "Hockey stickhandling trainer", imageUrl: "snakemodificato@2x", path: "/snake", areaClass: "area-snake" },
-  { id: "wafflemaker", title: "Waffle Maker", subtitle: "Academic product basic design course", imageUrl: "wafflemodificato@2x", path: "/wafflemaker", areaClass: "area-waffle" },
-  { id: "inlays", title: "Inlays", subtitle: "Academic inlays laboratory", imageUrl: "intarsimodificato@2x", path: "/inlays", areaClass: "area-inlays" },
-  { id: "ttable", title: "T-Table", subtitle: "Interactive feeding friendly table", imageUrl: "ttablemodificato@2x", path: "/ttable", areaClass: "area-ttable" },
-  { id: "matteo-finco", title: "Matteo Finco", subtitle: "Industrial Design Portfolio", path: "/about", areaClass: "area-profile", isProfile: true },
-];
-
 export default function Designs() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+
+  // 2. L'array è dentro al componente così legge i riferimenti delle immagini importate sopra
+  const projects: Project[] = [
+    { id: "archivia", title: "Archivia", subtitle: "Pen holder", imageUrl: archiviaImg, path: "/archivia", areaClass: "area-archivia" },
+    { id: "pizzamente", title: "Pizza Machine", subtitle: "Academic Workshop", imageUrl: pizzaImg, path: "/pizzamente", areaClass: "area-pizza" },
+    { id: "nando", title: "Nando", subtitle: "Hyperplastic cutlery handle", imageUrl: nandoImg, path: "/nando", areaClass: "area-nando" },
+    { id: "snake", title: "Snake", subtitle: "Hockey stickhandling trainer", imageUrl: snakeImg, path: "/snake", areaClass: "area-snake" },
+    { id: "wafflemaker", title: "Waffle Maker", subtitle: "Academic product basic design course", imageUrl: waffleImg, path: "/wafflemaker", areaClass: "area-waffle" },
+    { id: "inlays", title: "Inlays", subtitle: "Academic inlays laboratory", imageUrl: intarsiImg, path: "/inlays", areaClass: "area-inlays" },
+    { id: "ttable", title: "T-Table", subtitle: "Interactive feeding friendly table", imageUrl: ttableImg, path: "/ttable", areaClass: "area-ttable" },
+    { id: "matteo-finco", title: "Matteo Finco", subtitle: "Industrial Design Portfolio", path: "/about", areaClass: "area-profile", isProfile: true },
+  ];
 
   return (
     <div className="bg-white" style={{ height: "100vh", width: "100vw", overflow: "hidden", display: "flex", flexDirection: "column" }}>
@@ -45,7 +55,6 @@ export default function Designs() {
           padding: 2rem;
         }
 
-        /* Assegnazione delle aree */
         .area-archivia { grid-area: archivia; }
         .area-pizza { grid-area: pizza; }
         .area-nando { grid-area: nando; }
@@ -65,7 +74,6 @@ export default function Designs() {
           cursor: pointer;
         }
 
-        /* L'effetto scala dinamico */
         .collage-item:hover {
           transform: scale(1.04);
           z-index: 10;
@@ -84,12 +92,10 @@ export default function Designs() {
           display: block;
           width: 100%;
           height: 100%;
-          /* 'fill' mappa l'immagine al 100% delle dimensioni da te create senza crop residui */
           object-fit: fill; 
           transition: filter 0.5s ease-in-out;
         }
 
-        /* Card tipografica Matteo Finco */
         .text-profile-card {
           background-color: #f9fafb;
           border: 1px solid #e5e7eb;
@@ -108,7 +114,6 @@ export default function Designs() {
           border-color: #1f2937;
         }
 
-        /* Responsività fluida */
         @media (max-width: 1024px) {
           .collage-container { 
             grid-template-columns: repeat(2, 1fr); 
