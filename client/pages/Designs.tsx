@@ -16,7 +16,7 @@ export default function Designs() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   const projects: Project[] = [
-    { id: "archivia", title: "Archivia", subtitle: "Pen holder", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F8aa07d657c5049f3ad60b36072b7affb?width=500&height=500", path: "/archivia", areaClass: "area-archivia" },
+    { id: "archivia", title: "Archivia", subtitle: "Pen holder", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F65c9f3670b2a484ba3d71220897004f0?width=500&height=500", path: "/archivia", areaClass: "area-archivia" },
     { id: "pizzamente", title: "Pizza Machine", subtitle: "Academic Workshop", imageUrl: "/pizzamodificato@2x.jpg", path: "/pizzamente", areaClass: "area-pizza" },
     { id: "nando", title: "Nando", subtitle: "Hyperplastic cutlery handle", imageUrl: "/nandomodificato@2x.jpg", path: "/nando", areaClass: "area-nando" },
     { id: "snake", title: "Snake", subtitle: "Hockey stickhandling trainer", imageUrl: "/snakemodificato@2x.jpg", path: "/snake", areaClass: "area-snake" },
