@@ -21,8 +21,8 @@ export default function Archivia() {
             position: "absolute",
             bottom: "0px",
             right: "0px",
-            width: "160px",
-            height: "40px",
+            width: "200px",
+            height: "80px",
             backgroundColor: "#ffffff", // Assicurati che corrisponda al colore di fondo del tuo sito Framer
             zIndex: 10
           }}
