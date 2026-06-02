@@ -25,7 +25,6 @@ export default function Designs() {
 
   return (
     <div className="bg-white" style={{ height: "100vh", width: "100vw", overflow: "hidden", display: "flex", flexDirection: "column" }}>
-      {/* Inseriamo lo stile qui per gestire la griglia masonry senza librerie esterne */}
       <style>{`
         .masonry-grid {
           column-count: 3;
@@ -39,6 +38,12 @@ export default function Designs() {
           break-inside: avoid;
           margin-bottom: 20px;
           cursor: pointer;
+          transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          transform-origin: center;
+        }
+        .masonry-item:hover {
+          transform: scale(1.03);
+          z-index: 10;
         }
         @media (max-width: 900px) { .masonry-grid { column-count: 2; } }
         @media (max-width: 600px) { .masonry-grid { column-count: 1; } }
@@ -78,17 +83,21 @@ export default function Designs() {
                 />
               </div>
 
+              {/* Box di testo con altezza fissa minima per non far saltare il layout */}
               <div
                 style={{
-                  marginTop: "16px",
+                  marginTop: "12px",
+                  paddingBottom: "8px",
                   opacity: hoveredId === project.id ? 1 : 0,
-                  transition: "opacity 0.5s ease-in-out",
+                  transition: "opacity 0.3s ease-in-out, transform 0.3s ease",
+                  transform: hoveredId === project.id ? "translateY(0)" : "translateY(-10px)",
+                  minHeight: "45px", 
                 }}
               >
-                <h3 style={{ fontSize: "18px", fontFamily: "Crimson Text, serif", fontWeight: 300, color: "#1f2937", marginBottom: "4px", marginTop: 0 }}>
+                <h3 style={{ fontSize: "16px", fontFamily: "Crimson Text, serif", fontWeight: 400, color: "#1f2937", margin: 0 }}>
                   {project.title}
                 </h3>
-                <p style={{ fontSize: "14px", fontFamily: "Lato, sans-serif", fontWeight: 300, color: "#4b5563", marginTop: 0 }}>
+                <p style={{ fontSize: "13px", fontFamily: "Lato, sans-serif", fontWeight: 300, color: "#4b5563", margin: "2px 0 0 0" }}>
                   {project.subtitle}
                 </p>
               </div>
