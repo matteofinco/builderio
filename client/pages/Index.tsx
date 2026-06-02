@@ -33,26 +33,60 @@ export default function Index() {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   return (
-    <div className="bg-white flex flex-col breathing" style={{ height: "100vh", width: "100vw", overflow: "hidden", overflowX: "hidden" }}>
-      {/* Background preview - positioned absolutely */}
-      {hoveredItem && (
-        <div className="fixed inset-0 pointer-events-none overflow-hidden">
+    <div className="bg-white flex flex-col homepage-container" style={{ height: "100vh", width: "100vw", overflow: "hidden" }}>
+      
+      {/* CSS Inniettato per gestire le animazioni dello sfondo bianco e della dissolvenza in uscita */}
+      <style>{`
+        @keyframes softBreathing {
+          0% { background-color: #ffffff; }
+          50% { background-color: #fcfcfd; } /* Un calo impercettibile verso un grigio caldissimo/panna */
+          100% { background-color: #ffffff; }
+        }
+
+        .homepage-container {
+          animation: softBreathing 8s ease-in-out infinite;
+        }
+
+        /* Gestione della dissolvenza asimmetrica delle immagini */
+        .preview-bg {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-cover: cover;
+          pointer-events: none;
+          /* Quando esci dall'hover (stato di default), ci mette 1.2 secondi a svanire */
+          opacity: 0;
+          transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Quando la classe active è applicata, l'immagine appare in soli 250ms */
+        .preview-bg.active {
+          opacity: 0.05; /* Rimane finissima come piaceva a te */
+          transition: opacity 0.25s ease-out;
+        }
+      `}</style>
+
+      {/* Background preview - Renderizzate tutte in posizionato assoluto per permettere il crossfade pulito */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        {navItems.map((item) => (
           <img
-            src={navItems.find((item) => item.label === hoveredItem)?.preview}
-            alt={hoveredItem}
-            className="w-full h-full object-cover opacity-5 transition-opacity duration-500"
+            key={item.label}
+            src={item.preview}
+            alt={item.label}
+            className={`preview-bg ${hoveredItem === item.label ? "active" : ""}`}
           />
-        </div>
-      )}
+        ))}
+      </div>
 
       {/* Main content */}
       <div className="flex-1 flex flex-col items-center justify-center px-4 py-20 relative z-10">
         {/* Designer info */}
         <div className="text-center mb-24">
-          <h1 className="font-serif text-6xl font-light tracking-tight mb-3">
+          <h1 className="font-serif text-6xl font-light tracking-tight mb-3 text-gray-950">
             Matteo Finco
           </h1>
-          <p className="text-lg font-light text-gray-600">
+          <p className="text-lg font-light text-gray-500">
             Product Designer & Maker
           </p>
         </div>
@@ -68,18 +102,18 @@ export default function Index() {
               className="block group cursor-pointer"
             >
               <div className="relative text-center">
-                <h2 className="text-4xl font-serif font-light transition-opacity duration-300 group-hover:opacity-50">
+                <h2 className="text-4xl font-serif font-light transition-opacity duration-300 group-hover:opacity-40 text-gray-900">
                   {item.label}
                 </h2>
                 <div
                   className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-px bg-black transition-all duration-300 ${
-                    hoveredItem === item.label ? "w-full" : "w-0"
+                    hoveredItem === item.label ? "w-32" : "w-0" // Sottolineatura controllata invece che a tutto schermo, molto elegante
                   }`}
                 />
               </div>
               <p
-                className={`text-sm text-gray-600 mt-3 transition-opacity duration-300 text-center ${
-                  hoveredItem === item.label ? "opacity-100" : "opacity-0"
+                className={`text-sm text-gray-500 mt-3 transition-all duration-500 text-center ${
+                  hoveredItem === item.label ? "opacity-100 transform translate-y-0" : "opacity-0 transform -translate-y-1"
                 }`}
               >
                 {item.description}
@@ -93,7 +127,7 @@ export default function Index() {
       <div className="text-center pb-12 relative z-10">
         <Link
           to="/contact"
-          className="text-sm font-light text-gray-600 hover:text-black transition-colors"
+          className="text-sm font-light text-gray-500 hover:text-black transition-colors"
         >
           Get in touch
         </Link>
