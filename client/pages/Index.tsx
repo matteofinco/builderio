@@ -31,9 +31,20 @@ const navItems: NavItem[] = [
 
 export default function Index() {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  // Teniamo traccia dell'ultima immagine attiva per permetterle di sfumare in uscita anche quando hoveredItem torna null
+  const [lastActivePreview, setLastActivePreview] = useState<string | null>(null);
+
+  const handleMouseEnter = (label: string, preview: string) => {
+    setHoveredItem(label);
+    setLastActivePreview(preview);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredItem(null);
+  };
 
   return (
-    <div className="bg-white flex flex-col homepage-container" style={{ height: "100vh", width: "100vw", overflow: "hidden" }}>
+    <div className="bg-white flex flex-col homepage-container" style={{ height: "100vh", width: "100vw", overflow: "hidden", overflowX: "hidden" }}>
       
       <style>{`
         @keyframes softBreathing {
@@ -46,47 +57,38 @@ export default function Index() {
           animation: softBreathing 8s ease-in-out infinite;
         }
 
-        /* Gestione dello sfondo con le proporzioni corrette */
-        .preview-bg {
-          position: absolute;
-          inset: 0;
-          width: 100%;
-          height: 100%;
-          /* CRITICO: contain garantisce che l'immagine mantenga le sue proporzioni senza essere deformata o croppata */
-          object-fit: contain; 
-          pointer-events: none;
-          opacity: 0;
+        .fade-preview {
+          /* Quando si esce dall'hover, l'immagine ci mette 1.2s a scomparire */
           transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1);
-          padding: 4rem; /* Un po' di padding evita che il render tocchi i bordi dello schermo */
-          box-sizing: border-box;
+          opacity: 0;
         }
 
-        .preview-bg.active {
+        .fade-preview.visible {
+          /* Quando l'hover è attivo, appare istantaneamente (o quasi, 200ms per ammorbidire) */
+          transition: opacity 0.2s ease-out;
           opacity: 0.05;
-          transition: opacity 0.25s ease-out;
         }
       `}</style>
 
-      {/* Background preview con proporzioni bloccate */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 flex items-center justify-center">
-        {navItems.map((item) => (
+      {/* Background preview - Struttura identica alla tua originale ma con classi animate */}
+      {lastActivePreview && (
+        <div className="fixed inset-0 pointer-events-none overflow-hidden">
           <img
-            key={item.label}
-            src={item.preview}
-            alt={item.label}
-            className={`preview-bg ${hoveredItem === item.label ? "active" : ""}`}
+            src={lastActivePreview}
+            alt="Preview"
+            className={`w-full h-full object-cover fade-preview ${hoveredItem ? "visible" : ""}`}
           />
-        ))}
-      </div>
+        </div>
+      )}
 
       {/* Main content */}
       <div className="flex-1 flex flex-col items-center justify-center px-4 py-20 relative z-10">
         {/* Designer info */}
         <div className="text-center mb-24">
-          <h1 className="font-serif text-6xl font-light tracking-tight mb-3 text-gray-950">
+          <h1 className="font-serif text-6xl font-light tracking-tight mb-3">
             Matteo Finco
           </h1>
-          <p className="text-lg font-light text-gray-500">
+          <p className="text-lg font-light text-gray-600">
             Product Designer & Maker
           </p>
         </div>
@@ -97,23 +99,23 @@ export default function Index() {
             <Link
               key={item.path}
               to={item.path}
-              onMouseEnter={() => setHoveredItem(item.label)}
-              onMouseLeave={() => setHoveredItem(null)}
+              onMouseEnter={() => handleMouseEnter(item.label, item.preview)}
+              onMouseLeave={handleMouseLeave}
               className="block group cursor-pointer"
             >
               <div className="relative text-center">
-                <h2 className="text-4xl font-serif font-light transition-opacity duration-300 group-hover:opacity-40 text-gray-900">
+                <h2 className="text-4xl font-serif font-light transition-opacity duration-300 group-hover:opacity-50">
                   {item.label}
                 </h2>
                 <div
                   className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-px bg-black transition-all duration-300 ${
-                    hoveredItem === item.label ? "w-32" : "w-0"
+                    hoveredItem === item.label ? "w-full" : "w-0"
                   }`}
                 />
               </div>
               <p
-                className={`text-sm text-gray-500 mt-3 transition-all duration-500 text-center ${
-                  hoveredItem === item.label ? "opacity-100 transform translate-y-0" : "opacity-0 transform -translate-y-1"
+                className={`text-sm text-gray-600 mt-3 transition-opacity duration-300 text-center ${
+                  hoveredItem === item.label ? "opacity-100" : "opacity-0"
                 }`}
               >
                 {item.description}
@@ -127,7 +129,7 @@ export default function Index() {
       <div className="text-center pb-12 relative z-10">
         <Link
           to="/contact"
-          className="text-sm font-light text-gray-500 hover:text-black transition-colors"
+          className="text-sm font-light text-gray-600 hover:text-black transition-colors"
         >
           Get in touch
         </Link>
