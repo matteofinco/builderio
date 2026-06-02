@@ -6,7 +6,11 @@ export default function Archivia() {
       <Header showBackToDesigns={true} />
 
       <main style={{ flex: 1, overflow: "hidden", width: "100%", height: "100%", margin: 0, padding: 0 }}>
-       <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/site/3GgDchBiszfexjgDBeedNB/Untitled?node-id=0-1&embed-host=share" allowfullscreen></iframe>
+       <iframe
+          src="https://embed.figma.com/site/3GgDchBiszfexjgDBeedNB/Untitled?node-id=0-1&embed-host=share"
+          style={{ width: "100%", height: "100%", border: "none", display: "block" }}
+          allowFullScreen
+        />
       </main>
     </div>
   );
