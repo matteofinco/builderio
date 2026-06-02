@@ -7,7 +7,7 @@ export default function Archivia() {
 
       <main style={{ flex: 1, overflow: "hidden", width: "100%", height: "100%", margin: 0, padding: 0 }}>
        <iframe
-  src="https://sites.google.com/view/matteofinco/archivia"
+  src="https://archiviapages.my.canva.site/"
   title="Archivia Project"
   style={{ width: "100%", height: "100%", border: "none", display: "block", margin: 0, padding: 0 }}
   allowFullScreen
