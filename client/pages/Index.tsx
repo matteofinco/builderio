@@ -43,7 +43,7 @@ export default function Index() {
     setHoveredItem(null);
   };
 
-  // Logica per le particelle fluttuanti (effetto vento/pulviscolo)
+  // Sistema di particelle nativo (Canvas)
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -69,17 +69,16 @@ export default function Index() {
 
     const initParticles = () => {
       particles = [];
-      // Numero di particelle (regolabile, 60 è un buon compromesso per non affollare lo schermo)
       const numberOfParticles = 60; 
       for (let i = 0; i < numberOfParticles; i++) {
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          radius: Math.random() * 1.5 + 0.5, // Particelle piccolissime (da 0.5px a 2px)
+          radius: Math.random() * 1.5 + 0.5,
           density: Math.random() * 30,
-          opacity: Math.random() * 0.4 + 0.1, // Opacità molto bassa per rimanere discrete
-          speedY: -(Math.random() * 0.4 + 0.1), // Si muovono verso l'alto lentamente
-          speedX: Math.random() * 0.5 + 0.2,   // Spinte verso destra (effetto vento)
+          opacity: Math.random() * 0.4 + 0.1,
+          speedY: -(Math.random() * 0.4 + 0.1),
+          speedX: Math.random() * 0.5 + 0.2,
         });
       }
     };
@@ -89,16 +88,13 @@ export default function Index() {
       
       particles.forEach((p) => {
         ctx.beginPath();
-        // Disegnamo la particella con un tono grigio/bianco molto etereo
         ctx.fillStyle = `rgba(180, 180, 185, ${p.opacity})`;
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fill();
 
-        // Aggiorna la posizione in base alla velocità (effetto brezza)
         p.y += p.speedY;
         p.x += p.speedX;
 
-        // Se escono dallo schermo, rigenerale dal lato opposto
         if (p.y < -10) {
           p.y = canvas.height + 10;
           p.x = Math.random() * canvas.width;
@@ -126,6 +122,24 @@ export default function Index() {
     <div className="bg-white flex flex-col relative" style={{ height: "100vh", width: "100vw", overflow: "hidden", overflowX: "hidden" }}>
       
       <style>{`
+        /* Gestione della dissolvenza graduale del Canvas */
+        .particles-canvas {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          z-index: 0;
+          mix-blend-mode: multiply;
+          opacity: 1;
+          /* Quando riappaiono ci mettono 1 secondo per tornare (morbido) */
+          transition: opacity 1s ease-in-out; 
+        }
+
+        .particles-canvas.hidden {
+          /* Quando fai hover su un link, le particelle svaniscono gradualmente in 0.4 secondi */
+          opacity: 0;
+          transition: opacity 0.4s ease-out;
+        }
+
         .fade-preview {
           transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1);
           opacity: 0;
@@ -137,11 +151,10 @@ export default function Index() {
         }
       `}</style>
 
-      {/* Canvas per le particelle sullo sfondo */}
+      {/* Canvas per le particelle - la classe "hidden" si attiva dinamicamente */}
       <canvas 
         ref={canvasRef} 
-        className="absolute inset-0 pointer-events-none z-0"
-        style={{ mixBlendMode: "multiply" }}
+        className={`particles-canvas ${hoveredItem ? "hidden" : ""}`}
       />
 
       {/* Background preview dei progetti */}
@@ -211,4 +224,3 @@ export default function Index() {
 
     </div>
   );
-}
