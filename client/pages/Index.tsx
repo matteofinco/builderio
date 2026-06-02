@@ -47,14 +47,17 @@ export default function Index() {
     <div className="bg-white flex flex-col homepage-container" style={{ height: "100vh", width: "100vw", overflow: "hidden", overflowX: "hidden" }}>
       
       <style>{`
-        @keyframes softBreathing {
-          0% { background-color: #ffffff; }
-          50% { background-color: #fcfcfd; }
-          100% { background-color: #ffffff; }
+        @keyframes ambientGlow {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
         }
 
         .homepage-container {
-          animation: softBreathing 8s ease-in-out infinite;
+          /* Genera una mappa di luce morbida che si sposta fluidamente in diagonale */
+          background: linear-gradient(-45deg, #ffffff, #f9f9fb, #ffffff, #fcfcfc);
+          background-size: 400% 400%;
+          animation: ambientGlow 12s ease infinite;
         }
 
         .fade-preview {
@@ -64,13 +67,13 @@ export default function Index() {
         }
 
         .fade-preview.visible {
-          /* Quando l'hover è attivo, appare istantaneamente (o quasi, 200ms per ammorbidire) */
+          /* Quando l'hover è attivo, appare in 200ms per ammorbidire l'ingresso */
           transition: opacity 0.2s ease-out;
           opacity: 0.05;
         }
       `}</style>
 
-      {/* Background preview - Struttura identica alla tua originale ma con classi animate */}
+      {/* Background preview - Struttura originale con classi animate */}
       {lastActivePreview && (
         <div className="fixed inset-0 pointer-events-none overflow-hidden">
           <img
@@ -88,53 +91,3 @@ export default function Index() {
           <h1 className="font-serif text-6xl font-light tracking-tight mb-3">
             Matteo Finco
           </h1>
-          <p className="text-lg font-light text-gray-600">
-            Product Designer & Maker
-          </p>
-        </div>
-
-        {/* Navigation */}
-        <nav className="space-y-8 max-w-2xl w-full">
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              onMouseEnter={() => handleMouseEnter(item.label, item.preview)}
-              onMouseLeave={handleMouseLeave}
-              className="block group cursor-pointer"
-            >
-              <div className="relative text-center">
-                <h2 className="text-4xl font-serif font-light transition-opacity duration-300 group-hover:opacity-50">
-                  {item.label}
-                </h2>
-                <div
-                  className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-px bg-black transition-all duration-300 ${
-                    hoveredItem === item.label ? "w-full" : "w-0"
-                  }`}
-                />
-              </div>
-              <p
-                className={`text-sm text-gray-600 mt-3 transition-opacity duration-300 text-center ${
-                  hoveredItem === item.label ? "opacity-100" : "opacity-0"
-                }`}
-              >
-                {item.description}
-              </p>
-            </Link>
-          ))}
-        </nav>
-      </div>
-
-      {/* Footer contact link */}
-      <div className="text-center pb-12 relative z-10">
-        <Link
-          to="/contact"
-          className="text-sm font-light text-gray-600 hover:text-black transition-colors"
-        >
-          Get in touch
-        </Link>
-      </div>
-
-    </div>
-  );
-}
