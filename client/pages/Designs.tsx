@@ -148,7 +148,7 @@ export default function Designs() {
                     fontSize: "24px",
                     fontFamily: "Crimson Text, serif",
                     fontWeight: 400,
-                    color: "#1f2937", // Mantenuto il colore scuro della toolbar coerente
+                    color: "#1f2937",
                     margin: 0,
                     transition: "color 0.4s ease"
                   }}>
@@ -158,9 +158,9 @@ export default function Designs() {
                     fontSize: "13px",
                     fontFamily: "Lato, sans-serif",
                     fontWeight: 300,
-                    color: "#6b7280", // Grigio leggero neutro fisso
+                    color: "#6b7280",
                     margin: "8px 0 0 0",
-                    textTransform: "uppercase",
+                    textTransform: "none", // Modificato: evita che il CSS forzi tutto in MAIUSCOLO
                     letterSpacing: "0.05em",
                     transition: "color 0.4s ease"
                   }}>
