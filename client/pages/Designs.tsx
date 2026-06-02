@@ -82,11 +82,12 @@ export default function Designs() {
           display: block;
           width: 100%;
           height: 100%;
-          object-fit: fill;
+          /* MODIFICATO: Cambiato da 'fill' a 'cover' per bloccare la distorsione geometrica */
+          object-fit: cover;
           transition: filter 0.5s ease-in-out;
         }
 
-        /* Card tipografica minimale - Tolto box, bordi e background invasivi */
+        /* Card tipografica minimale */
         .text-profile-card {
           background-color: transparent;
           border: none;
@@ -100,7 +101,6 @@ export default function Designs() {
           transition: opacity 0.4s ease;
         }
 
-        /* All'hover non cambia lo sfondo, ma diamo un feedback visivo soft (opacità leggera) */
         .text-profile-card:hover {
           background-color: transparent;
           border-color: transparent;
@@ -120,7 +120,12 @@ export default function Designs() {
         }
         
         @media (max-width: 640px) {
-          .collage-container { grid-template-columns: 1fr; grid-auto-rows: 280px; gap: 16px; }
+          .collage-container { 
+            grid-template-columns: 1fr; 
+            grid-auto-rows: 280px; 
+            gap: 16px; 
+            padding: 1.5rem 1rem; /* Un filo di respiro extra sui lati dello smartphone */
+          }
           .area-archivia, .area-waffle, .area-pizza, .area-inlays, .area-nando, .area-snake, .area-ttable, .area-profile {
             grid-column: span 1 !important;
             grid-row: span 1 !important;
@@ -160,7 +165,7 @@ export default function Designs() {
                     fontWeight: 300,
                     color: "#6b7280",
                     margin: "8px 0 0 0",
-                    textTransform: "none", // Modificato: evita che il CSS forzi tutto in MAIUSCOLO
+                    textTransform: "none",
                     letterSpacing: "0.05em",
                     transition: "color 0.4s ease"
                   }}>
