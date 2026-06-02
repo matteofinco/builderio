@@ -43,7 +43,7 @@ export default function Index() {
     setHoveredItem(null);
   };
 
-  // Sistema di particelle nativo (Canvas)
+  // Logica Canvas per il pulviscolo/vento
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -55,7 +55,6 @@ export default function Index() {
       x: number;
       y: number;
       radius: number;
-      density: number;
       opacity: number;
       speedY: number;
       speedX: number;
@@ -69,13 +68,12 @@ export default function Index() {
 
     const initParticles = () => {
       particles = [];
-      const numberOfParticles = 60; 
+      const numberOfParticles = 60;
       for (let i = 0; i < numberOfParticles; i++) {
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
           radius: Math.random() * 1.5 + 0.5,
-          density: Math.random() * 30,
           opacity: Math.random() * 0.4 + 0.1,
           speedY: -(Math.random() * 0.4 + 0.1),
           speedX: Math.random() * 0.5 + 0.2,
@@ -85,7 +83,6 @@ export default function Index() {
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
       particles.forEach((p) => {
         ctx.beginPath();
         ctx.fillStyle = `rgba(180, 180, 185, ${p.opacity})`;
@@ -104,7 +101,6 @@ export default function Index() {
           p.y = Math.random() * canvas.height;
         }
       });
-
       animationFrameId = requestAnimationFrame(animate);
     };
 
@@ -119,33 +115,87 @@ export default function Index() {
   }, []);
 
   return (
-    <div className="bg-white flex flex-col relative" style={{ height: "100vh", width: "100vw", overflow: "hidden", overflowX: "hidden" }}>
+    <div className="bg-white flex flex-col relative w-screen h-screen overflow-hidden">
       
-      <style>{`
-        .particles-canvas {
-          position: absolute;
-          inset: 0;
-          pointer-events: none;
-          z-index: 0;
-          mix-blend-mode: multiply;
-          opacity: 1;
-          transition: opacity 1s ease-in-out; 
-        }
+      {/* Canvas delle particelle con dissolvenza gestita via inline style */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 pointer-events-none z-0 multiply"
+        style={{
+          opacity: hoveredItem ? 0 : 1,
+          transition: hoveredItem ? "opacity 400ms ease-out" : "opacity 1000ms ease-in-out"
+        }}
+      />
 
-        .particles-canvas.hidden {
-          opacity: 0;
-          transition: opacity 0.4s ease-out;
-        }
+      {/* Render di sfondo con dissolvenza asimmetrica nativa */}
+      {lastActivePreview && (
+        <div className="fixed inset-0 pointer-events-none overflow-hidden z-10">
+          <img
+            src={lastActivePreview}
+            alt="Preview"
+            className="w-full h-full object-cover"
+            style={{
+              opacity: hoveredItem ? 0.05 : 0,
+              transition: hoveredItem 
+                ? "opacity 200ms ease-out" 
+                : "opacity 1200ms cubic-bezier(0.25, 1, 0.5, 1)"
+            }}
+          />
+        </div>
+      )}
 
-        .fade-preview {
-          transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1);
-          opacity: 0;
-        }
+      {/* Contenuto principale */}
+      <div className="flex-1 flex flex-col items-center justify-center px-4 py-20 relative z-20">
+        <div className="text-center mb-24">
+          <h1 className="font-serif text-6xl font-light tracking-tight mb-3">
+            Matteo Finco
+          </h1>
+          <p className="text-lg font-light text-gray-600">
+            Product Designer & Maker
+          </p>
+        </div>
 
-        .fade-preview.visible {
-          transition: opacity 0.2s ease-out;
-          opacity: 0.05;
-        }
-      `}</style>
+        <nav className="space-y-8 max-w-2xl w-full">
+          {navItems.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              onMouseEnter={() => handleMouseEnter(item.label, item.preview)}
+              onMouseLeave={handleMouseLeave}
+              className="block group cursor-pointer"
+            >
+              <div className="relative text-center">
+                <h2 className="text-4xl font-serif font-light transition-opacity duration-300 group-hover:opacity-50">
+                  {item.label}
+                </h2>
+                <div
+                  className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-px bg-black transition-all duration-300 ${
+                    hoveredItem === item.label ? "w-full" : "w-0"
+                  }`}
+                />
+              </div>
+              <p
+                className={`text-sm text-gray-600 mt-3 transition-opacity duration-300 text-center ${
+                  hoveredItem === item.label ? "opacity-100" : "opacity-0"
+                }`}
+              >
+                {item.description}
+              </p>
+            </Link>
+          ))}
+        </nav>
+      </div>
 
-      {/* Canvas per le
+      {/* Footer */}
+      <div className="text-center pb-12 relative z-20">
+        <Link
+          to="/contact"
+          className="text-sm font-light text-gray-600 hover:text-black transition-colors"
+        >
+          Get in touch
+        </Link>
+      </div>
+
+    </div>
+  );
+}
