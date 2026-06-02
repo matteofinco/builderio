@@ -2,15 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 
-// Importazione esplicita dei file con estensione .jpg
-import archiviaImg from "../assets/archiviamodificato@2x.jpg";
-import intarsiImg from "../assets/intarsimodificato@2x.jpg";
-import nandoImg from "../assets/nandomodificato@2x.jpg";
-import pizzaImg from "../assets/pizzamodificato@2x.jpg";
-import snakeImg from "../assets/snakemodificato@2x.jpg";
-import ttableImg from "../assets/ttablemodificato@2x.jpg";
-import waffleImg from "../assets/wafflemodificato@2x.jpg";
-
 interface Project {
   id: string;
   title: string;
@@ -24,14 +15,15 @@ interface Project {
 export default function Designs() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
+  // Avendo spostato i file in /public, il percorso parte direttamente con "/" senza bisogno di import
   const projects: Project[] = [
-    { id: "archivia", title: "Archivia", subtitle: "Pen holder", imageUrl: archiviaImg, path: "/archivia", areaClass: "area-archivia" },
-    { id: "pizzamente", title: "Pizza Machine", subtitle: "Academic Workshop", imageUrl: pizzaImg, path: "/pizzamente", areaClass: "area-pizza" },
-    { id: "nando", title: "Nando", subtitle: "Hyperplastic cutlery handle", imageUrl: nandoImg, path: "/nando", areaClass: "area-nando" },
-    { id: "snake", title: "Snake", subtitle: "Hockey stickhandling trainer", imageUrl: snakeImg, path: "/snake", areaClass: "area-snake" },
-    { id: "wafflemaker", title: "Waffle Maker", subtitle: "Academic product basic design course", imageUrl: waffleImg, path: "/wafflemaker", areaClass: "area-waffle" },
-    { id: "inlays", title: "Inlays", subtitle: "Academic inlays laboratory", imageUrl: intarsiImg, path: "/inlays", areaClass: "area-inlays" },
-    { id: "ttable", title: "T-Table", subtitle: "Interactive feeding friendly table", imageUrl: ttableImg, path: "/ttable", areaClass: "area-ttable" },
+    { id: "archivia", title: "Archivia", subtitle: "Pen holder", imageUrl: "/archiviamodificato@2x.jpg", path: "/archivia", areaClass: "area-archivia" },
+    { id: "pizzamente", title: "Pizza Machine", subtitle: "Academic Workshop", imageUrl: "/pizzamodificato@2x.jpg", path: "/pizzamente", areaClass: "area-pizza" },
+    { id: "nando", title: "Nando", subtitle: "Hyperplastic cutlery handle", imageUrl: "/nandomodificato@2x.jpg", path: "/nando", areaClass: "area-nando" },
+    { id: "snake", title: "Snake", subtitle: "Hockey stickhandling trainer", imageUrl: "/snakemodificato@2x.jpg", path: "/snake", areaClass: "area-snake" },
+    { id: "wafflemaker", title: "Waffle Maker", subtitle: "Academic product basic design course", imageUrl: "/wafflemodificato@2x.jpg", path: "/wafflemaker", areaClass: "area-waffle" },
+    { id: "inlays", title: "Inlays", subtitle: "Academic inlays laboratory", imageUrl: "/intarsimodificato@2x.jpg", path: "/inlays", areaClass: "area-inlays" },
+    { id: "ttable", title: "T-Table", subtitle: "Interactive feeding friendly table", imageUrl: "/ttablemodificato@2x.jpg", path: "/ttable", areaClass: "area-ttable" },
     { id: "matteo-finco", title: "Matteo Finco", subtitle: "Industrial Design Portfolio", path: "/about", areaClass: "area-profile", isProfile: true },
   ];
 
@@ -153,74 +145,4 @@ export default function Designs() {
                     fontSize: "24px", 
                     fontFamily: "Crimson Text, serif", 
                     fontWeight: 400, 
-                    color: hoveredId === project.id ? "#ffffff" : "#1f2937", 
-                    margin: 0,
-                    transition: "color 0.4s ease"
-                  }}>
-                    {project.title}
-                  </h2>
-                  <p style={{ 
-                    fontSize: "13px", 
-                    fontFamily: "Lato, sans-serif", 
-                    fontWeight: 300, 
-                    color: hoveredId === project.id ? "#9ca3af" : "#6b7280", 
-                    margin: "8px 0 0 0",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.05em",
-                    transition: "color 0.4s ease"
-                  }}>
-                    {project.subtitle}
-                  </p>
-                </Link>
-              );
-            }
-
-            return (
-              <Link
-                key={project.id}
-                to={project.path}
-                className={`collage-item ${project.areaClass}`}
-                onMouseEnter={() => setHoveredId(project.id)}
-                onMouseLeave={() => setHoveredId(null)}
-              >
-                <div className="image-wrapper">
-                  <img
-                    src={project.imageUrl}
-                    alt={project.title}
-                    className="collage-image"
-                    style={{
-                      filter: hoveredId === project.id ? "grayscale(0%)" : "grayscale(100%)",
-                    }}
-                    loading="eager"
-                  />
-                </div>
-
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: "0",
-                    left: "0",
-                    right: "0",
-                    padding: "16px",
-                    background: "linear-gradient(to top, rgba(255,255,255,0.95) 60%, rgba(255,255,255,0))",
-                    opacity: hoveredId === project.id ? 1 : 0,
-                    transform: hoveredId === project.id ? "translateY(0)" : "translateY(8px)",
-                    transition: "opacity 0.4s ease, transform 0.4s ease",
-                    pointerEvents: "none",
-                  }}
-                >
-                  <h3 style={{ fontSize: "15px", fontFamily: "Crimson Text, serif", fontWeight: 400, color: "#1f2937", margin: 0 }}>
-                    {project.title}
-                  </h3>
-                  <p style={{ fontSize: "12px", fontFamily: "Lato, sans-serif", fontWeight: 300, color: "#4b5563", margin: "2px 0 0 0" }}>
-                    {project.subtitle}
-                  </p>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-      </main>
-    </div>
-  );
-}
+                    color: hoveredId ===
