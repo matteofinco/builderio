@@ -29,7 +29,7 @@ export default function Designs() {
   return (
     <div className="bg-white" style={{ height: "100vh", width: "100vw", overflow: "hidden", display: "flex", flexDirection: "column" }}>
       <style>{`
-        /* Mappa del collage geometrico */
+        /* 1. GRIGLIA DESKTOP (Invariata) */
         .collage-container {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
@@ -82,12 +82,10 @@ export default function Designs() {
           display: block;
           width: 100%;
           height: 100%;
-          /* MODIFICATO: Cambiato da 'fill' a 'cover' per bloccare la distorsione geometrica */
           object-fit: cover;
           transition: filter 0.5s ease-in-out;
         }
 
-        /* Card tipografica minimale */
         .text-profile-card {
           background-color: transparent;
           border: none;
@@ -107,6 +105,7 @@ export default function Designs() {
           opacity: 0.7;
         }
 
+        /* 2. GRIGLIA TABLET / SCHERMI MEDI */
         @media (max-width: 1024px) {
           .collage-container {
             grid-template-columns: repeat(2, 1fr);
@@ -119,108 +118,31 @@ export default function Designs() {
           .area-nando, .area-snake, .area-ttable, .area-profile { grid-column: span 1; grid-row: span 1; }
         }
         
+        /* 3. NUOVA GRIGLIA GEOMETRICA PER SMARTPHONE (Sotto i 640px) */
         @media (max-width: 640px) {
           .collage-container { 
-            grid-template-columns: 1fr; 
-            grid-auto-rows: 280px; 
+            grid-template-columns: repeat(2, 1fr); /* Due colonne strette per creare incastri */
+            grid-template-rows: auto;
+            grid-auto-rows: 180px; /* Altezza di base dei moduli piccoli */
             gap: 16px; 
-            padding: 1.5rem 1rem; /* Un filo di respiro extra sui lati dello smartphone */
+            padding: 1.5rem 1rem; 
+            grid-template-areas:
+              "archivia    archivia"   /* Orizzontale largo */
+              "nando       pizza"      /* Nando quadrato, Pizza si allunga in basso */
+              "snake       pizza"      /* Snake sotto nando, affianca pizza */
+              "waffle      waffle"     /* Waffle orizzontale largo a spezzare */
+              "ttable      inlays"     /* Ttable quadrato, Inlays si allunga */
+              "profile     inlays";    /* Tua scheda contatto di fianco a inlays */
           }
-          .area-archivia, .area-waffle, .area-pizza, .area-inlays, .area-nando, .area-snake, .area-ttable, .area-profile {
-            grid-column: span 1 !important;
-            grid-row: span 1 !important;
-          }
-        }
-      `}</style>
 
-      <Header />
+          /* Riapplichiamo le aree esplicite per forzare l'incastro mobile */
+          .area-archivia { grid-area: archivia; }
+          .area-pizza { grid-area: pizza; }
+          .area-nando { grid-area: nando; }
+          .area-snake { grid-area: snake; }
+          .area-waffle { grid-area: waffle; }
+          .area-inlays { grid-area: inlays; }
+          .area-ttable { grid-area: ttable; }
+          .area-profile { grid-area: profile; }
 
-      <main style={{ flex: 1, overflowY: "auto", overflowX: "hidden", width: "100%" }}>
-        <div className="collage-container">
-          {projects.map((project) => {
-            const isHovered = hoveredId === project.id;
-
-            if (project.isProfile) {
-              return (
-                <Link
-                  key={project.id}
-                  to={project.path}
-                  className={`collage-item ${project.areaClass} text-profile-card`}
-                  onMouseEnter={() => setHoveredId(project.id)}
-                  onMouseLeave={() => setHoveredId(null)}
-                >
-                  <h2 style={{
-                    fontSize: "24px",
-                    fontFamily: "Crimson Text, serif",
-                    fontWeight: 400,
-                    color: "#1f2937",
-                    margin: 0,
-                    transition: "color 0.4s ease"
-                  }}>
-                    {project.title}
-                  </h2>
-                  <p style={{
-                    fontSize: "13px",
-                    fontFamily: "Lato, sans-serif",
-                    fontWeight: 300,
-                    color: "#6b7280",
-                    margin: "8px 0 0 0",
-                    textTransform: "none",
-                    letterSpacing: "0.05em",
-                    transition: "color 0.4s ease"
-                  }}>
-                    {project.subtitle}
-                  </p>
-                </Link>
-              );
-            }
-
-            return (
-              <Link
-                key={project.id}
-                to={project.path}
-                className={`collage-item ${project.areaClass}`}
-                onMouseEnter={() => setHoveredId(project.id)}
-                onMouseLeave={() => setHoveredId(null)}
-              >
-                <div className="image-wrapper">
-                  <img
-                    src={project.imageUrl}
-                    alt={project.title}
-                    className="collage-image"
-                    style={{
-                      filter: isHovered ? "grayscale(0%)" : "grayscale(100%)",
-                    }}
-                    loading="eager"
-                  />
-                </div>
-
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: "0",
-                    left: "0",
-                    right: "0",
-                    padding: "16px",
-                    background: "linear-gradient(to top, rgba(255,255,255,0.95) 60%, rgba(255,255,255,0))",
-                    opacity: isHovered ? 1 : 0,
-                    transform: isHovered ? "translateY(0)" : "translateY(8px)",
-                    transition: "opacity 0.4s ease, transform 0.4s ease",
-                    pointerEvents: "none",
-                  }}
-                >
-                  <h3 style={{ fontSize: "15px", fontFamily: "Crimson Text, serif", fontWeight: 400, color: "#1f2937", margin: 0 }}>
-                    {project.title}
-                  </h3>
-                  <p style={{ fontSize: "12px", fontFamily: "Lato, sans-serif", fontWeight: 300, color: "#4b5563", margin: "2px 0 0 0" }}>
-                    {project.subtitle}
-                  </p>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-      </main>
-    </div>
-  );
-}
+          /* Su mobile non essendoci l'hover del mouse, most
