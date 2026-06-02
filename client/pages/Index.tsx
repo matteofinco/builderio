@@ -35,11 +35,10 @@ export default function Index() {
   return (
     <div className="bg-white flex flex-col homepage-container" style={{ height: "100vh", width: "100vw", overflow: "hidden" }}>
       
-      {/* CSS Inniettato per gestire le animazioni dello sfondo bianco e della dissolvenza in uscita */}
       <style>{`
         @keyframes softBreathing {
           0% { background-color: #ffffff; }
-          50% { background-color: #fcfcfd; } /* Un calo impercettibile verso un grigio caldissimo/panna */
+          50% { background-color: #fcfcfd; }
           100% { background-color: #ffffff; }
         }
 
@@ -47,28 +46,29 @@ export default function Index() {
           animation: softBreathing 8s ease-in-out infinite;
         }
 
-        /* Gestione della dissolvenza asimmetrica delle immagini */
+        /* Gestione dello sfondo con le proporzioni corrette */
         .preview-bg {
           position: absolute;
           inset: 0;
           width: 100%;
           height: 100%;
-          object-cover: cover;
+          /* CRITICO: contain garantisce che l'immagine mantenga le sue proporzioni senza essere deformata o croppata */
+          object-fit: contain; 
           pointer-events: none;
-          /* Quando esci dall'hover (stato di default), ci mette 1.2 secondi a svanire */
           opacity: 0;
           transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+          padding: 4rem; /* Un po' di padding evita che il render tocchi i bordi dello schermo */
+          box-sizing: border-box;
         }
 
-        /* Quando la classe active è applicata, l'immagine appare in soli 250ms */
         .preview-bg.active {
-          opacity: 0.05; /* Rimane finissima come piaceva a te */
+          opacity: 0.05;
           transition: opacity 0.25s ease-out;
         }
       `}</style>
 
-      {/* Background preview - Renderizzate tutte in posizionato assoluto per permettere il crossfade pulito */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+      {/* Background preview con proporzioni bloccate */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 flex items-center justify-center">
         {navItems.map((item) => (
           <img
             key={item.label}
@@ -107,7 +107,7 @@ export default function Index() {
                 </h2>
                 <div
                   className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-px bg-black transition-all duration-300 ${
-                    hoveredItem === item.label ? "w-32" : "w-0" // Sottolineatura controllata invece che a tutto schermo, molto elegante
+                    hoveredItem === item.label ? "w-32" : "w-0"
                   }`}
                 />
               </div>
