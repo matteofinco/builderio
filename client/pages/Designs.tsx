@@ -15,7 +15,6 @@ interface Project {
 export default function Designs() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
-  // Avendo spostato i file in /public, il percorso parte direttamente con "/" senza bisogno di import
   const projects: Project[] = [
     { id: "archivia", title: "Archivia", subtitle: "Pen holder", imageUrl: "/archiviamodificato@2x.jpg", path: "/archivia", areaClass: "area-archivia" },
     { id: "pizzamente", title: "Pizza Machine", subtitle: "Academic Workshop", imageUrl: "/pizzamodificato@2x.jpg", path: "/pizzamente", areaClass: "area-pizza" },
@@ -132,6 +131,9 @@ export default function Designs() {
       <main style={{ flex: 1, overflowY: "auto", overflowX: "hidden", width: "100%" }}>
         <div className="collage-container">
           {projects.map((project) => {
+            // Risoluzione dell'errore: calcoliamo lo stato di hover qui fuori
+            const isHovered = hoveredId === project.id;
+
             if (project.isProfile) {
               return (
                 <Link
@@ -145,4 +147,74 @@ export default function Designs() {
                     fontSize: "24px", 
                     fontFamily: "Crimson Text, serif", 
                     fontWeight: 400, 
-                    color: hoveredId ===
+                    color: isHovered ? "#ffffff" : "#1f2937", 
+                    margin: 0,
+                    transition: "color 0.4s ease"
+                  }}>
+                    {project.title}
+                  </h2>
+                  <p style={{ 
+                    fontSize: "13px", 
+                    fontFamily: "Lato, sans-serif", 
+                    fontWeight: 300, 
+                    color: isHovered ? "#9ca3af" : "#6b7280", 
+                    margin: "8px 0 0 0",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.05em",
+                    transition: "color 0.4s ease"
+                  }}>
+                    {project.subtitle}
+                  </p>
+                </Link>
+              );
+            }
+
+            return (
+              <Link
+                key={project.id}
+                to={project.path}
+                className={`collage-item ${project.areaClass}`}
+                onMouseEnter={() => setHoveredId(project.id)}
+                onMouseLeave={() => setHoveredId(null)}
+              >
+                <div className="image-wrapper">
+                  <img
+                    src={project.imageUrl}
+                    alt={project.title}
+                    className="collage-image"
+                    style={{
+                      filter: isHovered ? "grayscale(0%)" : "grayscale(100%)",
+                    }}
+                    loading="eager"
+                  />
+                </div>
+
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "0",
+                    left: "0",
+                    right: "0",
+                    padding: "16px",
+                    background: "linear-gradient(to top, rgba(255,255,255,0.95) 60%, rgba(255,255,255,0))",
+                    opacity: isHovered ? 1 : 0,
+                    transform: isHovered ? "translateY(0)" : "translateY(8px)",
+                    transition: "opacity 0.4s ease, transform 0.4s ease",
+                    pointerEvents: "none",
+                  }}
+                >
+                  <h3 style={{ fontSize: "15px", fontFamily: "Crimson Text, serif", fontWeight: 400, color: "#1f2937", margin: 0 }}>
+                    {project.title}
+                  </h3>
+                  <p style={{ fontSize: "12px", fontFamily: "Lato, sans-serif", fontWeight: 300, color: "#4b5563", margin: "2px 0 0 0" }}>
+                    {project.subtitle}
+                  </p>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </main>
+    </div>
+  );
+}
