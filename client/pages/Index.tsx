@@ -12,19 +12,19 @@ const navItems: NavItem[] = [
   {
     label: "Designs",
     path: "/portfolio",
-    preview: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F17ef57a71cc44e878c29aeb37ddc3cce?width=2000",
+    preview: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F61cecd5c6bdd4a18bae9f79b93c48925?width=2000",
     description: "Selected industrial products & functional concepts.",
   },
   {
     label: "About",
     path: "/about",
-    preview: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F1c5a2d8f3e4b4e0a8f5c3b2d1e0f9a8b?width=2000",
+    preview: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F2384c8c54fac4c19bd6981e876dba4bb?width=2000",
     description: "Design student & maker based in Italy",
   },
   {
     label: "Curriculum Vitae",
     path: "/cv",
-    preview: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c?width=2000",
+    preview: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F48478739d9b64486901e55f8fe343f61?width=2000",
     description: "Experience, tools, and background.",
   },
 ];
