@@ -122,7 +122,6 @@ export default function Index() {
     <div className="bg-white flex flex-col relative" style={{ height: "100vh", width: "100vw", overflow: "hidden", overflowX: "hidden" }}>
       
       <style>{`
-        /* Gestione della dissolvenza graduale del Canvas */
         .particles-canvas {
           position: absolute;
           inset: 0;
@@ -130,12 +129,10 @@ export default function Index() {
           z-index: 0;
           mix-blend-mode: multiply;
           opacity: 1;
-          /* Quando riappaiono ci mettono 1 secondo per tornare (morbido) */
           transition: opacity 1s ease-in-out; 
         }
 
         .particles-canvas.hidden {
-          /* Quando fai hover su un link, le particelle svaniscono gradualmente in 0.4 secondi */
           opacity: 0;
           transition: opacity 0.4s ease-out;
         }
@@ -151,76 +148,4 @@ export default function Index() {
         }
       `}</style>
 
-      {/* Canvas per le particelle - la classe "hidden" si attiva dinamicamente */}
-      <canvas 
-        ref={canvasRef} 
-        className={`particles-canvas ${hoveredItem ? "hidden" : ""}`}
-      />
-
-      {/* Background preview dei progetti */}
-      {lastActivePreview && (
-        <div className="fixed inset-0 pointer-events-none overflow-hidden z-10">
-          <img
-            src={lastActivePreview}
-            alt="Preview"
-            className={`w-full h-full object-cover fade-preview ${hoveredItem ? "visible" : ""}`}
-          />
-        </div>
-      )}
-
-      {/* Main content */}
-      <div className="flex-1 flex flex-col items-center justify-center px-4 py-20 relative z-20">
-        {/* Designer info */}
-        <div className="text-center mb-24">
-          <h1 className="font-serif text-6xl font-light tracking-tight mb-3">
-            Matteo Finco
-          </h1>
-          <p className="text-lg font-light text-gray-600">
-            Product Designer & Maker
-          </p>
-        </div>
-
-        {/* Navigation */}
-        <nav className="space-y-8 max-w-2xl w-full">
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              onMouseEnter={() => handleMouseEnter(item.label, item.preview)}
-              onMouseLeave={handleMouseLeave}
-              className="block group cursor-pointer"
-            >
-              <div className="relative text-center">
-                <h2 className="text-4xl font-serif font-light transition-opacity duration-300 group-hover:opacity-50">
-                  {item.label}
-                </h2>
-                <div
-                  className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-px bg-black transition-all duration-300 ${
-                    hoveredItem === item.label ? "w-full" : "w-0"
-                  }`}
-                />
-              </div>
-              <p
-                className={`text-sm text-gray-600 mt-3 transition-opacity duration-300 text-center ${
-                  hoveredItem === item.label ? "opacity-100" : "opacity-0"
-                }`}
-              >
-                {item.description}
-              </p>
-            </Link>
-          ))}
-        </nav>
-      </div>
-
-      {/* Footer contact link */}
-      <div className="text-center pb-12 relative z-20">
-        <Link
-          to="/contact"
-          className="text-sm font-light text-gray-600 hover:text-black transition-colors"
-        >
-          Get in touch
-        </Link>
-      </div>
-
-    </div>
-  );
+      {/* Canvas per le
