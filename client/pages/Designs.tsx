@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header";
 
 // 1. Importiamo le immagini direttamente dagli asset per mapparne i percorsi corretti in build
-import archiviaImg from "../assets/archiviamodificato@2x.jpg";
-import intarsiImg from "../assets/intarsimodificato@2x.jpg";
-import nandoImg from "../assets/nandomodificato@2x.jpg";
-import pizzaImg from "../assets/pizzamodificato@2x.jpg";
-import snakeImg from "../assets/snakemodificato@2x.jpg";
-import ttableImg from "../assets/ttablemodificato@2x.jpg";
-import waffleImg from "../assets/wafflemodificato@2x.jpg";
+import archiviaImg from "../assets/archiviamodificato@2x.png";
+import intarsiImg from "../assets/intarsimodificato@2x.png";
+import nandoImg from "../assets/nandomodificato@2x.png";
+import pizzaImg from "../assets/pizzamodificato@2x.png";
+import snakeImg from "../assets/snakemodificato@2x.png";
+import ttableImg from "../assets/ttablemodificato@2x.png";
+import waffleImg from "../assets/wafflemodificato@2x.png";
 
 interface Project {
   id: string;
