@@ -93,9 +93,10 @@ export default function Designs() {
                   }}
                 >
                   <img
-                    src={`${project.imageUrl}?width=600&height=600&fit=crop`}
+                    src={project.imageUrl}
                     alt={project.title}
                     className="w-full h-full object-cover"
+                    loading="eager"
                   />
                 </div>
 
