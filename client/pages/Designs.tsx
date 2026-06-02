@@ -66,55 +66,60 @@ export default function Designs() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen bg-white flex flex-col" style={{ overflow: "hidden", height: "100vh", width: "100vw" }}>
+    <div className="bg-white" style={{ height: "100vh", width: "100vw", overflow: "hidden", overflowX: "hidden", display: "flex", flexDirection: "column" }}>
       <Header />
 
-      <main className="flex-1 overflow-y-auto px-8 py-16" style={{ overflowX: "hidden" }}>
-        <div className="max-w-7xl mx-auto">
-          {/* Grid layout with dynamic rectangles */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {projects.map((project) => (
-              <Link
-                key={project.id}
-                to={project.path}
-                className="group cursor-pointer"
-                onMouseEnter={() => setHoveredId(project.id)}
-                onMouseLeave={() => setHoveredId(null)}
+      <main style={{ flex: 1, overflowY: "auto", overflowX: "hidden", width: "100%", padding: "2rem" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", maxWidth: "1200px", margin: "0 auto" }}>
+          {projects.map((project) => (
+            <Link
+              key={project.id}
+              to={project.path}
+              className="no-underline"
+              onMouseEnter={() => setHoveredId(project.id)}
+              onMouseLeave={() => setHoveredId(null)}
+              style={{ flex: "1 1 30%", minWidth: "250px", cursor: "pointer" }}
+            >
+              {/* Image container - respects natural proportions */}
+              <div
+                style={{
+                  width: "100%",
+                  overflow: "hidden",
+                  backgroundColor: "#f3f4f6",
+                  filter: hoveredId === project.id ? "grayscale(0%)" : "grayscale(100%)",
+                  transition: "filter 0.5s ease-in-out",
+                }}
               >
-                {/* Image with dynamic aspect ratio */}
-                <div
-                  className="overflow-hidden bg-gray-100"
+                <img
+                  src={project.imageUrl}
+                  alt={project.title}
                   style={{
+                    display: "block",
+                    width: "100%",
                     height: "auto",
-                    filter: hoveredId === project.id ? "grayscale(0%)" : "grayscale(100%)",
-                    transition: "filter 0.5s ease-in-out",
+                    objectFit: "cover",
                   }}
-                >
-                  <img
-                    src={project.imageUrl}
-                    alt={project.title}
-                    className="w-full h-auto object-cover block"
-                    loading="eager"
-                    style={{ display: "block", width: "100%", height: "auto" }}
-                  />
-                </div>
+                  loading="eager"
+                />
+              </div>
 
-                {/* Typography below image */}
-                <div
-                  className={`mt-4 transition-opacity duration-500 ${
-                    hoveredId === project.id ? "opacity-100" : "opacity-0"
-                  }`}
-                >
-                  <h3 className="text-lg font-serif font-light text-gray-800 mb-1">
-                    {project.title}
-                  </h3>
-                  <p className="text-sm font-light text-gray-600">
-                    {project.subtitle}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
+              {/* Typography below image */}
+              <div
+                style={{
+                  marginTop: "16px",
+                  opacity: hoveredId === project.id ? 1 : 0,
+                  transition: "opacity 0.5s ease-in-out",
+                }}
+              >
+                <h3 style={{ fontSize: "18px", fontFamily: "Crimson Text, serif", fontWeight: 300, color: "#1f2937", marginBottom: "4px", marginTop: 0 }}>
+                  {project.title}
+                </h3>
+                <p style={{ fontSize: "14px", fontFamily: "Lato, sans-serif", fontWeight: 300, color: "#4b5563", marginTop: 0 }}>
+                  {project.subtitle}
+                </p>
+              </div>
+            </Link>
+          ))}
         </div>
       </main>
     </div>
