@@ -21,8 +21,8 @@ export default function Header({ showBackToDesigns = false }: HeaderProps) {
   return (
     <header className="border-b border-gray-200 bg-white sticky top-0 z-50">
       <div className="px-8 py-6 flex items-center justify-between">
-        {/* Name on the left */}
-        <Link to="/designs" className="font-serif text-xl font-light tracking-tight">
+        {/* Name on the left - links to homepage */}
+        <Link to="/" className="font-serif text-xl font-light tracking-tight">
           Matteo Finco
         </Link>
 

@@ -47,7 +47,7 @@ const projects: Project[] = [
     path: "/wafflemaker",
   },
   {
-    id: "intarsi",
+    id: "inlays",
     title: "Inlays",
     subtitle: "Academic inlays laboratory",
     imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F2e3d6dcda5704dadb2dbcd15072c729c",
@@ -82,11 +82,15 @@ export default function Designs() {
                 onMouseLeave={() => setHoveredId(null)}
               >
                 <div
-                  className={`overflow-hidden bg-gray-100 aspect-square transition-all duration-500 ${
+                  className={`overflow-hidden bg-gray-100 aspect-square ${
                     hoveredId && hoveredId !== project.id
-                      ? "blur-sm opacity-50 scale-98 grayscale"
+                      ? "opacity-50 scale-98 grayscale"
                       : "opacity-100 scale-100 grayscale"
                   } ${hoveredId === project.id ? "grayscale-0" : ""}`}
+                  style={{
+                    transition: "all 1.0s ease-in-out",
+                    filter: hoveredId && hoveredId !== project.id ? "blur(0.6px)" : "blur(0px)",
+                  }}
                 >
                   <img
                     src={`${project.imageUrl}?width=600&height=600&fit=crop`}

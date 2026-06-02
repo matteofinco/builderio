@@ -24,7 +24,7 @@ const navItems: NavItem[] = [
   {
     label: "Curriculum Vitae",
     path: "/cv",
-    preview: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F48478739d9b64486901e55f8fe343f61?width=2000",
+    preview: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2Fa24ebec7a28b475aa86b685459ba9248?width=2000",
     description: "Experience, tools, and background.",
   },
 ];
