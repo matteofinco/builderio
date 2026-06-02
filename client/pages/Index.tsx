@@ -68,12 +68,12 @@ export default function Index() {
 
     const initParticles = () => {
       particles = [];
-      const numberOfParticles = 150;
+      const numberOfParticles = 100;
       for (let i = 0; i < numberOfParticles; i++) {
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          radius: Math.random() * 1.5 + 1.5,
+          radius: Math.random() * 1.5 + 1,
           opacity: Math.random() * 0.4 + 0.1,
           speedY: -(Math.random() * 0.4 + 0.1),
           speedX: Math.random() * 0.5 + 0.2,
