@@ -6,19 +6,21 @@ interface Project {
   id: string;
   title: string;
   subtitle: string;
-  imageUrl: string;
+  imageUrl?: string;
   path: string;
-  gridClass: string;
+  areaClass: string; // Definisce la posizione esatta nella scacchiera
+  isProfile?: boolean;
 }
 
 const projects: Project[] = [
-  { id: "archivia", title: "Archivia", subtitle: "Pen holder", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F058f28df5b3a4bdebc4975d0cebef9db", path: "/archivia", gridClass: "card-wide" },
-  { id: "pizzamente", title: "Pizza Machine", subtitle: "Academic Workshop", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2Fe186b1b1b013459f94a05a22f6ea48e5", path: "/pizzamente", gridClass: "card-tall" },
-  { id: "nando", title: "Nando", subtitle: "Hyperplastic cutlery handle", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2Fa9e74a667878418daf9addb3fd5afc14", path: "/nando", gridClass: "card-standard" },
-  { id: "snake", title: "Snake", subtitle: "Hockey stickhandling trainer", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2Fd1ecc3c7a4a944519dd5d81fb7bca591", path: "/snake", gridClass: "card-standard" },
-  { id: "wafflemaker", title: "Waffle Maker", subtitle: "Academic product basic design course", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F45f1f86b218c433c861c1d083909abfe", path: "/wafflemaker", gridClass: "card-wide" },
-  { id: "inlays", title: "Inlays", subtitle: "Academic inlays laboratory", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F2e3d6dcda5704dadb2dbcd15072c729c", path: "/inlays", gridClass: "card-tall" },
-  { id: "ttable", title: "T-Table", subtitle: "Interactive feeding friendly table", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2Ff232edcad30b47609d5e4f480c51e3e3", path: "/ttable", gridClass: "card-standard" },
+  { id: "archivia", title: "Archivia", subtitle: "Pen holder", imageUrl: "archiviamodificato@2x", path: "/archivia", areaClass: "area-archivia" },
+  { id: "pizzamente", title: "Pizza Machine", subtitle: "Academic Workshop", imageUrl: "pizzamodificato@2x", path: "/pizzamente", areaClass: "area-pizza" },
+  { id: "nando", title: "Nando", subtitle: "Hyperplastic cutlery handle", imageUrl: "nandomodificato@2x", path: "/nando", areaClass: "area-nando" },
+  { id: "snake", title: "Snake", subtitle: "Hockey stickhandling trainer", imageUrl: "snakemodificato@2x", path: "/snake", areaClass: "area-snake" },
+  { id: "wafflemaker", title: "Waffle Maker", subtitle: "Academic product basic design course", imageUrl: "wafflemodificato@2x", path: "/wafflemaker", areaClass: "area-waffle" },
+  { id: "inlays", title: "Inlays", subtitle: "Academic inlays laboratory", imageUrl: "intarsimodificato@2x", path: "/inlays", areaClass: "area-inlays" },
+  { id: "ttable", title: "T-Table", subtitle: "Interactive feeding friendly table", imageUrl: "ttablemodificato@2x", path: "/ttable", areaClass: "area-ttable" },
+  { id: "matteo-finco", title: "Matteo Finco", subtitle: "Industrial Design Portfolio", path: "/about", areaClass: "area-profile", isProfile: true },
 ];
 
 export default function Designs() {
@@ -27,16 +29,31 @@ export default function Designs() {
   return (
     <div className="bg-white" style={{ height: "100vh", width: "100vw", overflow: "hidden", display: "flex", flexDirection: "column" }}>
       <style>{`
+        /* Mappa esplicita del collage 3x3 per bloccare i posizionamenti */
         .collage-container {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          grid-auto-rows: 300px; /* Altezza ottimizzata */
-          grid-auto-flow: dense;
+          grid-template-rows: repeat(3, 300px);
+          grid-template-areas: 
+            "archivia archivia pizza"
+            "nando    snake    pizza"
+            "waffle   waffle   inlays"
+            "ttable   profile  inlays";
           gap: 24px;
           max-width: 1200px;
           margin: 0 auto;
           padding: 2rem;
         }
+
+        /* Assegnazione delle aree */
+        .area-archivia { grid-area: archivia; }
+        .area-pizza { grid-area: pizza; }
+        .area-nando { grid-area: nando; }
+        .area-snake { grid-area: snake; }
+        .area-waffle { grid-area: waffle; }
+        .area-inlays { grid-area: inlays; }
+        .area-ttable { grid-area: ttable; }
+        .area-profile { grid-area: profile; }
 
         .collage-item {
           position: relative;
@@ -48,13 +65,9 @@ export default function Designs() {
           cursor: pointer;
         }
 
-        .card-standard { grid-column: span 1; grid-row: span 1; }
-        .card-wide { grid-column: span 2; grid-row: span 1; }
-        .card-tall { grid-column: span 1; grid-row: span 2; }
-
-        /* L'effetto scala richiesto che muove i vicini */
+        /* L'effetto scala dinamico */
         .collage-item:hover {
-          transform: scale(1.03);
+          transform: scale(1.04);
           z-index: 10;
         }
 
@@ -62,38 +75,58 @@ export default function Designs() {
           width: 100%;
           height: 100%;
           overflow: hidden;
-          /* Sfondo grigio chiarissimo/neutro per accogliere le immagini intere senza tagli */
-          background-color: #f6f6f6; 
+          background-color: #f3f4f6;
           position: relative;
           flex: 1;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: background-color 0.4s ease;
-        }
-
-        .collage-item:hover .image-wrapper {
-          background-color: #eaeaea; /* Scurisce leggermente lo sfondo in hover per dare stacco */
         }
 
         .collage-image {
           display: block;
-          max-width: 100%;
-          max-height: 100%;
-          width: auto;
-          height: auto;
-          /* LA SVOLTA: contain mostra l'immagine al 100% delle sue proporzioni native, zero tagli */
-          object-fit: contain; 
+          width: 100%;
+          height: 100%;
+          /* 'fill' mappa l'immagine al 100% delle dimensioni da te create senza crop residui */
+          object-fit: fill; 
           transition: filter 0.5s ease-in-out;
         }
 
-        @media (max-width: 1024px) {
-          .collage-container { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 250px; }
-          .card-wide { grid-column: span 2; }
+        /* Card tipografica Matteo Finco */
+        .text-profile-card {
+          background-color: #f9fafb;
+          border: 1px solid #e5e7eb;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 24px;
+          text-align: center;
+          box-sizing: border-box;
+          transition: background-color 0.4s ease, border-color 0.4s ease;
         }
+
+        .text-profile-card:hover {
+          background-color: #1f2937;
+          border-color: #1f2937;
+        }
+
+        /* Responsività fluida */
+        @media (max-width: 1024px) {
+          .collage-container { 
+            grid-template-columns: repeat(2, 1fr); 
+            grid-template-rows: auto;
+            grid-template-areas: none;
+            grid-auto-rows: 250px;
+          }
+          .area-archivia, .area-waffle { grid-column: span 2; grid-row: span 1; }
+          .area-pizza, .area-inlays { grid-column: span 1; grid-row: span 2; }
+          .area-nando, .area-snake, .area-ttable, .area-profile { grid-column: span 1; grid-row: span 1; }
+        }
+        
         @media (max-width: 640px) {
           .collage-container { grid-template-columns: 1fr; grid-auto-rows: 280px; gap: 16px; }
-          .card-wide, .card-tall { grid-column: span 1; grid-row: span 1; }
+          .area-archivia, .area-waffle, .area-pizza, .area-inlays, .area-nando, .area-snake, .area-ttable, .area-profile { 
+            grid-column: span 1 !important; 
+            grid-row: span 1 !important; 
+          }
         }
       `}</style>
 
@@ -101,50 +134,86 @@ export default function Designs() {
 
       <main style={{ flex: 1, overflowY: "auto", overflowX: "hidden", width: "100%" }}>
         <div className="collage-container">
-          {projects.map((project) => (
-            <Link
-              key={project.id}
-              to={project.path}
-              className={`collage-item ${project.gridClass}`}
-              onMouseEnter={() => setHoveredId(project.id)}
-              onMouseLeave={() => setHoveredId(null)}
-            >
-              <div className="image-wrapper">
-                <img
-                  src={project.imageUrl}
-                  alt={project.title}
-                  className="collage-image"
-                  style={{
-                    filter: hoveredId === project.id ? "grayscale(0%)" : "grayscale(100%)",
-                  }}
-                  loading="eager"
-                />
-              </div>
+          {projects.map((project) => {
+            if (project.isProfile) {
+              return (
+                <Link
+                  key={project.id}
+                  to={project.path}
+                  className={`collage-item ${project.areaClass} text-profile-card`}
+                  onMouseEnter={() => setHoveredId(project.id)}
+                  onMouseLeave={() => setHoveredId(null)}
+                >
+                  <h2 style={{ 
+                    fontSize: "24px", 
+                    fontFamily: "Crimson Text, serif", 
+                    fontWeight: 400, 
+                    color: hoveredId === project.id ? "#ffffff" : "#1f2937", 
+                    margin: 0,
+                    transition: "color 0.4s ease"
+                  }}>
+                    {project.title}
+                  </h2>
+                  <p style={{ 
+                    fontSize: "13px", 
+                    fontFamily: "Lato, sans-serif", 
+                    fontWeight: 300, 
+                    color: hoveredId === project.id ? "#9ca3af" : "#6b7280", 
+                    margin: "8px 0 0 0",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.05em",
+                    transition: "color 0.4s ease"
+                  }}>
+                    {project.subtitle}
+                  </p>
+                </Link>
+              );
+            }
 
-              {/* Didascalia minimale */}
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "0",
-                  left: "0",
-                  right: "0",
-                  padding: "16px",
-                  background: "linear-gradient(to top, rgba(255,255,255,0.95) 60%, rgba(255,255,255,0))",
-                  opacity: hoveredId === project.id ? 1 : 0,
-                  transform: hoveredId === project.id ? "translateY(0)" : "translateY(8px)",
-                  transition: "opacity 0.4s ease, transform 0.4s ease",
-                  pointerEvents: "none",
-                }}
+            return (
+              <Link
+                key={project.id}
+                to={project.path}
+                className={`collage-item ${project.areaClass}`}
+                onMouseEnter={() => setHoveredId(project.id)}
+                onMouseLeave={() => setHoveredId(null)}
               >
-                <h3 style={{ fontSize: "15px", fontFamily: "Crimson Text, serif", fontWeight: 400, color: "#1f2937", margin: 0 }}>
-                  {project.title}
-                </h3>
-                <p style={{ fontSize: "12px", fontFamily: "Lato, sans-serif", fontWeight: 300, color: "#4b5563", margin: "2px 0 0 0" }}>
-                  {project.subtitle}
-                </p>
-              </div>
-            </Link>
-          ))}
+                <div className="image-wrapper">
+                  <img
+                    src={project.imageUrl}
+                    alt={project.title}
+                    className="collage-image"
+                    style={{
+                      filter: hoveredId === project.id ? "grayscale(0%)" : "grayscale(100%)",
+                    }}
+                    loading="eager"
+                  />
+                </div>
+
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "0",
+                    left: "0",
+                    right: "0",
+                    padding: "16px",
+                    background: "linear-gradient(to top, rgba(255,255,255,0.95) 60%, rgba(255,255,255,0))",
+                    opacity: hoveredId === project.id ? 1 : 0,
+                    transform: hoveredId === project.id ? "translateY(0)" : "translateY(8px)",
+                    transition: "opacity 0.4s ease, transform 0.4s ease",
+                    pointerEvents: "none",
+                  }}
+                >
+                  <h3 style={{ fontSize: "15px", fontFamily: "Crimson Text, serif", fontWeight: 400, color: "#1f2937", margin: 0 }}>
+                    {project.title}
+                  </h3>
+                  <p style={{ fontSize: "12px", fontFamily: "Lato, sans-serif", fontWeight: 300, color: "#4b5563", margin: "2px 0 0 0" }}>
+                    {project.subtitle}
+                  </p>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </main>
     </div>
