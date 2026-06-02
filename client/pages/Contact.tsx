@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 
 export default function Contact() {
   return (
-    <div className="h-screen w-screen bg-white flex flex-col overflow-hidden breathing">
+    <div className="bg-white flex flex-col breathing" style={{ height: "100vh", width: "100vw", overflow: "hidden", overflowX: "hidden" }}>
       <Header />
 
-      <main className="flex-1 px-8 py-20 overflow-y-auto">
+      <main className="flex-1 px-8 py-20 overflow-y-auto" style={{ overflowX: "hidden" }}>
         <div className="max-w-3xl mx-auto">
           <div className="mb-16">
             <h1 className="text-5xl font-serif font-light tracking-tight mb-6">

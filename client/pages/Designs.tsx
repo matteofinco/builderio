@@ -66,12 +66,12 @@ export default function Designs() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white flex flex-col" style={{ overflow: "hidden", height: "100vh", width: "100vw" }}>
       <Header />
 
-      <main className="px-8 py-16">
+      <main className="flex-1 overflow-y-auto px-8 py-16" style={{ overflowX: "hidden" }}>
         <div className="max-w-7xl mx-auto">
-          {/* Grid layout */}
+          {/* Grid layout with dynamic rectangles */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {projects.map((project) => (
               <Link
@@ -81,22 +81,21 @@ export default function Designs() {
                 onMouseEnter={() => setHoveredId(project.id)}
                 onMouseLeave={() => setHoveredId(null)}
               >
+                {/* Image with dynamic aspect ratio */}
                 <div
-                  className={`overflow-hidden bg-gray-100 aspect-square ${
-                    hoveredId && hoveredId !== project.id
-                      ? "opacity-50 scale-98 grayscale"
-                      : "opacity-100 scale-100 grayscale"
-                  } ${hoveredId === project.id ? "grayscale-0" : ""}`}
+                  className="overflow-hidden bg-gray-100"
                   style={{
-                    transition: "all 1.0s ease-in-out",
-                    filter: hoveredId && hoveredId !== project.id ? "blur(0.6px)" : "blur(0px)",
+                    height: "auto",
+                    filter: hoveredId === project.id ? "grayscale(0%)" : "grayscale(100%)",
+                    transition: "filter 0.5s ease-in-out",
                   }}
                 >
                   <img
                     src={project.imageUrl}
                     alt={project.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-auto object-cover block"
                     loading="eager"
+                    style={{ display: "block", width: "100%", height: "auto" }}
                   />
                 </div>
 

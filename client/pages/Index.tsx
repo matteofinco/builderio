@@ -33,7 +33,7 @@ export default function Index() {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   return (
-    <div className="h-screen w-screen bg-white flex flex-col overflow-hidden breathing">
+    <div className="bg-white flex flex-col breathing" style={{ height: "100vh", width: "100vw", overflow: "hidden", overflowX: "hidden" }}>
       {/* Background preview - positioned absolutely */}
       {hoveredItem && (
         <div className="fixed inset-0 pointer-events-none overflow-hidden">
