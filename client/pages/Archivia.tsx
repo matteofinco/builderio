@@ -20,7 +20,7 @@ export default function Archivia() {
           style={{
             position: "absolute",
             bottom: "0px",
-            right: "0px",
+            right: "10px",
             width: "200px",
             height: "80px",
             backgroundColor: "#ffffff", // Assicurati che corrisponda al colore di fondo del tuo sito Framer
