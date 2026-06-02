@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Contact() {
   return (
-    <div className="h-screen w-screen bg-white flex flex-col overflow-hidden">
+    <div className="h-screen w-screen bg-white flex flex-col overflow-hidden breathing">
       <Header />
 
       <main className="flex-1 px-8 py-20 overflow-y-auto">

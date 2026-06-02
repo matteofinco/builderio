@@ -1,13 +1,18 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { X, Menu } from "lucide-react";
 
-export default function Header() {
+interface HeaderProps {
+  showBackToDesigns?: boolean;
+}
+
+export default function Header({ showBackToDesigns = false }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   const navLinks = [
     { label: "Home", path: "/" },
-    { label: "Designs", path: "/portfolio" },
+    { label: "Designs", path: "/designs" },
     { label: "About", path: "/about" },
     { label: "Curriculum Vitae", path: "/cv" },
     { label: "Contact", path: "/contact" },
@@ -17,22 +22,34 @@ export default function Header() {
     <header className="border-b border-gray-200 bg-white sticky top-0 z-50">
       <div className="px-8 py-6 flex items-center justify-between">
         {/* Name on the left */}
-        <Link to="/" className="font-serif text-xl font-light tracking-tight">
+        <Link to="/designs" className="font-serif text-xl font-light tracking-tight">
           Matteo Finco
         </Link>
 
-        {/* Hamburger menu on the right */}
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="p-2 hover:opacity-60 transition-opacity"
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? (
-            <X size={24} strokeWidth={1.5} />
-          ) : (
-            <Menu size={24} strokeWidth={1.5} />
+        {/* Right side: Back to Designs + Hamburger */}
+        <div className="flex items-center gap-4">
+          {showBackToDesigns && (
+            <Link
+              to="/designs"
+              className="text-sm font-light text-gray-600 hover:text-gray-800 transition-colors"
+            >
+              ← Designs
+            </Link>
           )}
-        </button>
+
+          {/* Hamburger menu */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="p-2 hover:opacity-60 transition-opacity"
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? (
+              <X size={24} strokeWidth={1.5} />
+            ) : (
+              <Menu size={24} strokeWidth={1.5} />
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}

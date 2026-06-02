@@ -5,6 +5,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.003);
+  }
+}
+
+.breathing {
+  animation: breathe 20s ease-in-out infinite;
+  will-change: transform;
+}
+
 @layer base {
   /**
    * Tailwind CSS theme

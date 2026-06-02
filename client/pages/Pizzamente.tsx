@@ -1,14 +1,13 @@
 import Header from "../components/Header";
 
-export default function CV() {
+export default function Pizzamente() {
   return (
     <div className="h-screen w-screen bg-white flex flex-col overflow-hidden">
-      <Header />
+      <Header showBackToDesigns={true} />
 
-      {/* Main content with iframe - full width, no constraints */}
       <main className="flex-1 overflow-hidden w-full" style={{ maxWidth: "100vw", margin: 0, padding: 0 }}>
         <iframe
-          src="https://docs.google.com/document/d/e/2PACX-1vQ0UBAQs6GYgQBo387LBWB4FP7TRqKh5J4A0INrxOIUgjkfwcAwlANsKgZ1J4W-SmS1d0dRgaI4lj3r/pub?embedded=true"
+          src="https://docs.google.com/document/d/e/2PACX-1vSo4iK4OhApPwXjOoNsXJE6ZB9bP8oY1uMHBFP0a0TUAN_MOSkCIuQ4fft6iYiZBB0xsEBS5F9x7T7x/pub?embedded=true"
           style={{ width: "100%", height: "100%", border: "none", display: "block" }}
         />
       </main>

@@ -11,14 +11,14 @@ interface NavItem {
 const navItems: NavItem[] = [
   {
     label: "Designs",
-    path: "/portfolio",
+    path: "/designs",
     preview: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F61cecd5c6bdd4a18bae9f79b93c48925?width=2000",
     description: "Selected industrial products & functional concepts.",
   },
   {
     label: "About",
     path: "/about",
-    preview: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F2384c8c54fac4c19bd6981e876dba4bb?width=2000",
+    preview: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F0dff9858120643d29f4c40e3092f5439?width=2000",
     description: "Design student & maker based in Italy",
   },
   {
@@ -33,7 +33,7 @@ export default function Index() {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   return (
-    <div className="h-screen w-screen bg-white flex flex-col overflow-hidden">
+    <div className="h-screen w-screen bg-white flex flex-col overflow-hidden breathing">
       {/* Background preview - positioned absolutely */}
       {hoveredItem && (
         <div className="fixed inset-0 pointer-events-none overflow-hidden">

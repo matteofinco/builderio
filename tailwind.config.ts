@@ -121,6 +121,9 @@ export default {
         "3xl": "64px",
         "4xl": "80px",
       },
+      scale: {
+        "98": "0.98",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
