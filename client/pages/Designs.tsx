@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 
-
 interface Project {
   id: string;
   title: string;
@@ -13,10 +12,8 @@ interface Project {
   isProfile?: boolean;
 }
 
-
 export default function Designs() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
-
 
   const projects: Project[] = [
     { id: "archivia", title: "Archivia", subtitle: "Pen holder", imageUrl: "/archiviamodificato@2x.jpg", path: "/archivia", areaClass: "area-archivia" },
@@ -29,15 +26,14 @@ export default function Designs() {
     { id: "matteo-finco", title: "Matteo Finco", subtitle: "Industrial Design Portfolio", path: "/about", areaClass: "area-profile", isProfile: true },
   ];
 
-
   return (
     <div className="bg-white" style={{ height: "100vh", width: "100vw", overflow: "hidden", display: "flex", flexDirection: "column" }}>
       <style>{`
-        /* Mappa del collage geometrico 3x3 per bloccare i posizionamenti */
+        /* Mappa del collage geometrico - Ripristinato esattamente il tuo CSS originale */
         .collage-container {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          grid-template-rows: repeat(3, 300px);
+          grid-template-rows: repeat(4, 300px); /* L'UNICA MODIFICA: bloccate le 4 righe per non far esplodere i file @2x */
           grid-template-areas:
             "archivia archivia pizza"
             "nando    snake    pizza"
@@ -49,7 +45,6 @@ export default function Designs() {
           padding: 2rem;
         }
 
-
         .area-archivia { grid-area: archivia; }
         .area-pizza { grid-area: pizza; }
         .area-nando { grid-area: nando; }
@@ -58,7 +53,6 @@ export default function Designs() {
         .area-inlays { grid-area: inlays; }
         .area-ttable { grid-area: ttable; }
         .area-profile { grid-area: profile; }
-
 
         .collage-item {
           position: relative;
@@ -70,12 +64,10 @@ export default function Designs() {
           cursor: pointer;
         }
 
-
         .collage-item:hover {
           transform: scale(1.04);
           z-index: 10;
         }
-
 
         .image-wrapper {
           width: 100%;
@@ -86,7 +78,6 @@ export default function Designs() {
           flex: 1;
         }
 
-
         .collage-image {
           display: block;
           width: 100%;
@@ -94,7 +85,6 @@ export default function Designs() {
           object-fit: fill;
           transition: filter 0.5s ease-in-out;
         }
-
 
         /* Card tipografica minimale Matteo Finco */
         .text-profile-card {
@@ -110,12 +100,10 @@ export default function Designs() {
           transition: background-color 0.4s ease, border-color 0.4s ease;
         }
 
-
         .text-profile-card:hover {
           background-color: #1f2937;
           border-color: #1f2937;
         }
-
 
         @media (max-width: 1024px) {
           .collage-container {
@@ -138,16 +126,12 @@ export default function Designs() {
         }
       `}</style>
 
-
       <Header />
-
 
       <main style={{ flex: 1, overflowY: "auto", overflowX: "hidden", width: "100%" }}>
         <div className="collage-container">
           {projects.map((project) => {
-            // Risoluzione dell'errore: calcoliamo lo stato di hover qui fuori
             const isHovered = hoveredId === project.id;
-
 
             if (project.isProfile) {
               return (
@@ -184,7 +168,6 @@ export default function Designs() {
               );
             }
 
-
             return (
               <Link
                 key={project.id}
@@ -204,7 +187,6 @@ export default function Designs() {
                     loading="eager"
                   />
                 </div>
-
 
                 <div
                   style={{
@@ -235,6 +217,3 @@ export default function Designs() {
     </div>
   );
 }
-
-
-
