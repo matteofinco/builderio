@@ -8,7 +8,7 @@ export default function Archivia() {
       {/* Aggiungiamo 'position: relative' qui per fare da ancora al rettangolo */}
       <main style={{ flex: 1, overflow: "hidden", width: "100%", height: "100%", margin: 0, padding: 0, position: "relative" }}>
         <iframe
-          src="https://short-united-892728.framer.app/"
+          src="https://short-united-892728.framer.app/archivia"
           title="Progetto Archivia"
           style={{ width: "100%", height: "100%", border: "none", display: "block" }}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
