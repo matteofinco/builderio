@@ -45,7 +45,7 @@ export default function Index() {
   return (
     <div className="bg-white flex flex-col homepage-container" style={{ height: "100vh", width: "100vw", overflow: "hidden", overflowX: "hidden" }}>
       
-      <style>{`
+    <style>{`
         @keyframes ambientGlow {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
@@ -53,9 +53,10 @@ export default function Index() {
         }
 
         .homepage-container {
-          background: linear-gradient(-45deg, #ffffff, #f9f9fb, #ffffff, #fcfcfc);
-          background-size: 400% 400%;
-          animation: ambientGlow 12s ease infinite;
+          /* Usiamo un grigio/panna più marcato (#f0f0f3 e #e5e5ea) alternato al bianco puro */
+          background: linear-gradient(-45deg, #ffffff, #f0f0f3, #ffffff, #e5e5ea);
+          background-size: 300% 300%;
+          animation: ambientGlow 8s ease-in-out infinite;
         }
 
         .fade-preview {
