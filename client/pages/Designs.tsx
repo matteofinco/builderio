@@ -29,11 +29,11 @@ export default function Designs() {
   return (
     <div className="bg-white" style={{ height: "100vh", width: "100vw", overflow: "hidden", display: "flex", flexDirection: "column" }}>
       <style>{`
-        /* Mappa del collage geometrico - Ripristinato esattamente il tuo CSS originale */
+        /* Mappa del collage geometrico */
         .collage-container {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          grid-template-rows: repeat(4, 300px); /* L'UNICA MODIFICA: bloccate le 4 righe per non far esplodere i file @2x */
+          grid-template-rows: repeat(4, 300px);
           grid-template-areas:
             "archivia archivia pizza"
             "nando    snake    pizza"
@@ -86,10 +86,10 @@ export default function Designs() {
           transition: filter 0.5s ease-in-out;
         }
 
-        /* Card tipografica minimale Matteo Finco */
+        /* Card tipografica minimale - Tolto box, bordi e background invasivi */
         .text-profile-card {
-          background-color: #f9fafb;
-          border: 1px solid #e5e7eb;
+          background-color: transparent;
+          border: none;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -97,12 +97,14 @@ export default function Designs() {
           padding: 24px;
           text-align: center;
           box-sizing: border-box;
-          transition: background-color 0.4s ease, border-color 0.4s ease;
+          transition: opacity 0.4s ease;
         }
 
+        /* All'hover non cambia lo sfondo, ma diamo un feedback visivo soft (opacità leggera) */
         .text-profile-card:hover {
-          background-color: #1f2937;
-          border-color: #1f2937;
+          background-color: transparent;
+          border-color: transparent;
+          opacity: 0.7;
         }
 
         @media (max-width: 1024px) {
@@ -116,7 +118,7 @@ export default function Designs() {
           .area-pizza, .area-inlays { grid-column: span 1; grid-row: span 2; }
           .area-nando, .area-snake, .area-ttable, .area-profile { grid-column: span 1; grid-row: span 1; }
         }
-       
+        
         @media (max-width: 640px) {
           .collage-container { grid-template-columns: 1fr; grid-auto-rows: 280px; gap: 16px; }
           .area-archivia, .area-waffle, .area-pizza, .area-inlays, .area-nando, .area-snake, .area-ttable, .area-profile {
@@ -146,7 +148,7 @@ export default function Designs() {
                     fontSize: "24px",
                     fontFamily: "Crimson Text, serif",
                     fontWeight: 400,
-                    color: isHovered ? "#ffffff" : "#1f2937",
+                    color: "#1f2937", // Mantenuto il colore scuro della toolbar coerente
                     margin: 0,
                     transition: "color 0.4s ease"
                   }}>
@@ -156,7 +158,7 @@ export default function Designs() {
                     fontSize: "13px",
                     fontFamily: "Lato, sans-serif",
                     fontWeight: 300,
-                    color: isHovered ? "#9ca3af" : "#6b7280",
+                    color: "#6b7280", // Grigio leggero neutro fisso
                     margin: "8px 0 0 0",
                     textTransform: "uppercase",
                     letterSpacing: "0.05em",
