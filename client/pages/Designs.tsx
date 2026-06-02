@@ -23,7 +23,7 @@ export default function Designs() {
     { id: "wafflemaker", title: "Waffle Maker", subtitle: "Academic product basic design course", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F87847bb01fa04b8e8d65af4f273612bc", path: "/wafflemaker", areaClass: "area-waffle" },
     { id: "inlays", title: "Inlays", subtitle: "Academic inlays laboratory", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2Ff06baaa8d7254b9fb1ccc91cc33a8538", path: "/inlays", areaClass: "area-inlays" },
     { id: "ttable", title: "T-Table", subtitle: "Interactive feeding friendly table", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F0af25cd3686f4a74863491dfeb75ca6d", path: "/ttable", areaClass: "area-ttable" },
-    { id: "matteo-finco", title: "Matteo Finco", subtitle: "Industrial Design Portfolio", path: "/about", areaClass: "area-profile", isProfile: true },
+    { id: "matteo-finco", title: "Matteo Finco", subtitle: "Get in touch", path: "/Contact", areaClass: "area-profile", isProfile: true },
   ];
 
   return (
