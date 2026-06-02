@@ -2,14 +2,14 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 
-// 1. Importiamo le immagini direttamente dagli asset per mapparne i percorsi corretti in build
-import archiviaImg from "../assets/archiviamodificato@2x.png";
-import intarsiImg from "../assets/intarsimodificato@2x.png";
-import nandoImg from "../assets/nandomodificato@2x.png";
-import pizzaImg from "../assets/pizzamodificato@2x.png";
-import snakeImg from "../assets/snakemodificato@2x.png";
-import ttableImg from "../assets/ttablemodificato@2x.png";
-import waffleImg from "../assets/wafflemodificato@2x.png";
+// Importazione esplicita dei file con estensione .jpg
+import archiviaImg from "../assets/archiviamodificato@2x.jpg";
+import intarsiImg from "../assets/intarsimodificato@2x.jpg";
+import nandoImg from "../assets/nandomodificato@2x.jpg";
+import pizzaImg from "../assets/pizzamodificato@2x.jpg";
+import snakeImg from "../assets/snakemodificato@2x.jpg";
+import ttableImg from "../assets/ttablemodificato@2x.jpg";
+import waffleImg from "../assets/wafflemodificato@2x.jpg";
 
 interface Project {
   id: string;
@@ -24,7 +24,6 @@ interface Project {
 export default function Designs() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
-  // 2. L'array è dentro al componente così legge i riferimenti delle immagini importate sopra
   const projects: Project[] = [
     { id: "archivia", title: "Archivia", subtitle: "Pen holder", imageUrl: archiviaImg, path: "/archivia", areaClass: "area-archivia" },
     { id: "pizzamente", title: "Pizza Machine", subtitle: "Academic Workshop", imageUrl: pizzaImg, path: "/pizzamente", areaClass: "area-pizza" },
@@ -39,7 +38,7 @@ export default function Designs() {
   return (
     <div className="bg-white" style={{ height: "100vh", width: "100vw", overflow: "hidden", display: "flex", flexDirection: "column" }}>
       <style>{`
-        /* Mappa esplicita del collage 3x3 per bloccare i posizionamenti */
+        /* Mappa del collage geometrico 3x3 per bloccare i posizionamenti */
         .collage-container {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
@@ -96,6 +95,7 @@ export default function Designs() {
           transition: filter 0.5s ease-in-out;
         }
 
+        /* Card tipografica minimale Matteo Finco */
         .text-profile-card {
           background-color: #f9fafb;
           border: 1px solid #e5e7eb;
