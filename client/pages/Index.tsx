@@ -12,19 +12,19 @@ const navItems: NavItem[] = [
   {
     label: "Designs",
     path: "/portfolio",
-    preview: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop",
+    preview: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F17ef57a71cc44e878c29aeb37ddc3cce?width=2000",
     description: "Selected industrial products & functional concepts.",
   },
   {
     label: "About",
     path: "/about",
-    preview: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop",
+    preview: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F1c5a2d8f3e4b4e0a8f5c3b2d1e0f9a8b?width=2000",
     description: "Design student & maker based in Italy",
   },
   {
     label: "Curriculum Vitae",
     path: "/cv",
-    preview: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop",
+    preview: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c?width=2000",
     description: "Experience, tools, and background.",
   },
 ];
@@ -33,7 +33,7 @@ export default function Index() {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="h-screen w-screen bg-white flex flex-col overflow-hidden">
       {/* Background preview - positioned absolutely */}
       {hoveredItem && (
         <div className="fixed inset-0 pointer-events-none overflow-hidden">

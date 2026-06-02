@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 
-export default function About() {
+export default function CV() {
   return (
     <div className="h-screen w-screen bg-white flex flex-col overflow-hidden">
       <Header />
@@ -8,10 +8,8 @@ export default function About() {
       {/* Main content with iframe */}
       <main className="flex-1 overflow-hidden">
         <iframe
-          src="https://docs.google.com/document/d/e/2PACX-1vSkHZXTWxDxnsK5l07-SpCoPsZRM-uFGvCX3TQUcn-4IXpoD6i5Bhs0aLpVQMqanm-d2OenkKx0hZf9/pub?embedded=true"
-          width="100%"
-          height="100%"
-          style={{ border: "none" }}
+          src="https://docs.google.com/document/d/e/2PACX-1vQ0UBAQs6GYgQBo387LBWB4FP7TRqKh5J4A0INrxOIUgjkfwcAwlANsKgZ1J4W-SmS1d0dRgaI4lj3r/pub?embedded=true"
+          style={{ width: "100%", height: "100%", border: "none" }}
         />
       </main>
     </div>
