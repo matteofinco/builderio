@@ -29,20 +29,22 @@ export default function Designs() {
   return (
     <div className="bg-white" style={{ height: "100vh", width: "100vw", overflow: "hidden", display: "flex", flexDirection: "column" }}>
       <style>{`
-        /* Mappa del collage geometrico 3x3 per bloccare i posizionamenti */
+        /* Mappa del collage geometrico 3x3 (4 righe totali) */
         .collage-container {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          grid-template-rows: repeat(3, 300px);
-          grid-template-areas: 
+          grid-template-rows: repeat(4, 280px); /* Corretto a 4 righe stabili */
+          grid-template-areas:
             "archivia archivia pizza"
             "nando    snake    pizza"
             "waffle   waffle   inlays"
             "ttable   profile  inlays";
           gap: 24px;
           max-width: 1200px;
+          width: 100%;
           margin: 0 auto;
           padding: 2rem;
+          box-sizing: border-box;
         }
 
         .area-archivia { grid-area: archivia; }
@@ -59,13 +61,14 @@ export default function Designs() {
           display: flex;
           flex-direction: column;
           text-decoration: none;
-          overflow: visible;
+          overflow: hidden;
+          height: 100%; /* Forza l'elemento a riempire la cella della griglia */
           transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
           cursor: pointer;
         }
 
         .collage-item:hover {
-          transform: scale(1.04);
+          transform: scale(1.03);
           z-index: 10;
         }
 
@@ -82,7 +85,7 @@ export default function Designs() {
           display: block;
           width: 100%;
           height: 100%;
-          object-fit: fill; 
+          object-fit: cover; /* Cambiato in cover per non distorcere i render dei prodotti */
           transition: filter 0.5s ease-in-out;
         }
 
@@ -106,8 +109,8 @@ export default function Designs() {
         }
 
         @media (max-width: 1024px) {
-          .collage-container { 
-            grid-template-columns: repeat(2, 1fr); 
+          .collage-container {
+            grid-template-columns: repeat(2, 1fr);
             grid-template-rows: auto;
             grid-template-areas: none;
             grid-auto-rows: 250px;
@@ -116,12 +119,12 @@ export default function Designs() {
           .area-pizza, .area-inlays { grid-column: span 1; grid-row: span 2; }
           .area-nando, .area-snake, .area-ttable, .area-profile { grid-column: span 1; grid-row: span 1; }
         }
-        
+       
         @media (max-width: 640px) {
           .collage-container { grid-template-columns: 1fr; grid-auto-rows: 280px; gap: 16px; }
-          .area-archivia, .area-waffle, .area-pizza, .area-inlays, .area-nando, .area-snake, .area-ttable, .area-profile { 
-            grid-column: span 1 !important; 
-            grid-row: span 1 !important; 
+          .area-archivia, .area-waffle, .area-pizza, .area-inlays, .area-nando, .area-snake, .area-ttable, .area-profile {
+            grid-column: span 1 !important;
+            grid-row: span 1 !important;
           }
         }
       `}</style>
@@ -131,7 +134,6 @@ export default function Designs() {
       <main style={{ flex: 1, overflowY: "auto", overflowX: "hidden", width: "100%" }}>
         <div className="collage-container">
           {projects.map((project) => {
-            // Risoluzione dell'errore: calcoliamo lo stato di hover qui fuori
             const isHovered = hoveredId === project.id;
 
             if (project.isProfile) {
