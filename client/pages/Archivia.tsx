@@ -31,8 +31,9 @@ export default function Archivia() {
             zIndex: 10
           }}
         >
-          <button 
-            onClick={() => window.history.back()} 
+         <button 
+            // Se usi React Router puoi usare navigate("/tuarotta") o semplicemente window.location.href
+            onClick={() => window.location.href = "/Designs"} // Sostituisci "/" con "/designs" se la pagina ha quel percorso specifico
             className="text-sm font-medium text-neutral-800 tracking-wider hover:text-neutral-500 transition-colors duration-200 uppercase"
           >
             ← Back to Designs
