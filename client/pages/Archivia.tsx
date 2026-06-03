@@ -20,7 +20,7 @@ export default function Archivia() {
             bottom: "0px",
             right: "13px",
             width: "200px",
-            height: "50px",
+            height: "55px",
             backgroundColor: "#ffffff", // Assicurati che corrisponda al colore di fondo del tuo sito Framer
             zIndex: 10
           }}
