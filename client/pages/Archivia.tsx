@@ -19,7 +19,7 @@ export default function Archivia() {
           style={{
             position: "absolute",
             bottom: "0px",
-            left: "0px",
+            right: "10px",
             width: "100%",
             height: "60px",
             backgroundColor: "#ffffff", 
