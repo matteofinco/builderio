@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 
 export default function Contact() {
   return (
-    <div className="bg-white flex flex-col breathing" style={{ height: "100vh", width: "100vw", overflow: "hidden", overflowX: "hidden" }}>
+    // Rimossa la classe 'breathing' per eliminare l'effetto di sfocatura/pulsazione
+    <div className="bg-white flex flex-col" style={{ height: "100vh", width: "100vw", overflow: "hidden", overflowX: "hidden" }}>
       <Header />
 
       <main className="flex-1 px-8 py-20 overflow-y-auto" style={{ overflowX: "hidden" }}>
