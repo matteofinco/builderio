@@ -9,28 +9,31 @@ export default function Contact() {
     >
       <Header />
 
-      {/* Cambiato in overflow-hidden per bloccare tassativamente ogni tipo di scroll */}
-      <main className="flex-1 px-8 py-20 overflow-hidden" style={{ width: "100%", height: "100%" }}>
-        <div className="max-w-3xl mx-auto h-full flex flex-col justify-between">
+      {/* Centriamo verticalmente l'intero contenuto nel viewport */}
+      <main className="flex-1 px-8 flex flex-col justify-center overflow-hidden" style={{ width: "100%", height: "100%" }}>
+        <div className="max-w-3xl w-full mx-auto h-full flex flex-col justify-between py-8">
           
-          {/* Blocco testi principale */}
-          <div>
-            <div className="mb-16">
-              <h1 className="text-5xl font-serif font-light tracking-tight mb-6">
+          {/* Contenitore informazioni: centrato e compatto */}
+          <div className="my-auto space-y-8">
+            
+            {/* Intestazione più compatta */}
+            <div>
+              <h1 className="text-4xl md:text-5xl font-serif font-light tracking-tight mb-4">
                 Get in touch
               </h1>
-              <p className="text-lg font-light text-gray-600 leading-relaxed">
+              <p className="text-base md:text-lg font-light text-gray-600 leading-relaxed max-w-2xl">
                 Open to collaborations, new product ideas, and projects that value thoughtful design and making.
               </p>
             </div>
 
-            <div className="space-y-12">
+            {/* Spaziature ridotte (space-y-6) per garantire la visibilità totale */}
+            <div className="space-y-6">
               {/* Email */}
               <div>
-                <p className="text-xs uppercase tracking-widest text-gray-500 mb-3">Email</p>
+                <p className="text-xs uppercase tracking-widest text-gray-400 mb-1">Email</p>
                 <a
                   href="mailto:matteofinco05@gmail.com"
-                  className="text-2xl font-serif font-light text-gray-800 hover:text-gray-600 transition-colors break-all"
+                  className="text-xl md:text-2xl font-serif font-light text-gray-800 hover:text-gray-600 transition-colors break-all"
                 >
                   matteofinco05@gmail.com
                 </a>
@@ -38,10 +41,10 @@ export default function Contact() {
 
               {/* Phone */}
               <div>
-                <p className="text-xs uppercase tracking-widest text-gray-500 mb-3">Phone</p>
+                <p className="text-xs uppercase tracking-widest text-gray-400 mb-1">Phone</p>
                 <a
                   href="tel:+39-320-053-7133"
-                  className="text-2xl font-serif font-light text-gray-800 hover:text-gray-600 transition-colors"
+                  className="text-xl md:text-2xl font-serif font-light text-gray-800 hover:text-gray-600 transition-colors"
                 >
                   +39 320 053 7133
                 </a>
@@ -49,31 +52,29 @@ export default function Contact() {
 
               {/* Location */}
               <div>
-                <p className="text-xs uppercase tracking-widest text-gray-500 mb-3">Location</p>
-                <p className="text-2xl font-serif font-light text-gray-800">
+                <p className="text-xs uppercase tracking-widest text-gray-400 mb-1">Location</p>
+                <p className="text-xl md:text-2xl font-serif font-light text-gray-800">
                   Vicenza, Italy
                 </p>
               </div>
 
               {/* Social */}
               <div>
-                <p className="text-xs uppercase tracking-widest text-gray-500 mb-4">Social</p>
-                <div className="space-y-2">
-                  <a
-                    href="https://www.linkedin.com/in/finco-matteo-2k05/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block text-base font-light text-gray-800 hover:text-gray-600 transition-colors"
-                  >
-                    LinkedIn
-                  </a>
-                </div>
+                <p className="text-xs uppercase tracking-widest text-gray-400 mb-2">Social</p>
+                <a
+                  href="https://www.linkedin.com/in/finco-matteo-2k05/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block text-sm md:text-base font-light text-gray-800 hover:text-gray-600 transition-colors"
+                >
+                  LinkedIn
+                </a>
               </div>
             </div>
           </div>
 
-          {/* Back to home - Spinto elegantemente in fondo dal flexbox senza bisogno di scrollare */}
-          <div className="pt-6 border-t border-gray-200">
+          {/* Back to home - Ancorato sul fondo del viewport */}
+          <div className="pt-4 border-t border-gray-200 mt-auto">
             <Link
               to="/"
               className="text-sm font-light text-gray-600 hover:text-black transition-colors"
