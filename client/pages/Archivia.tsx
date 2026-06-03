@@ -3,7 +3,8 @@ import Header from "../components/Header";
 export default function Archivia() {
   return (
     <div className="bg-white flex flex-col" style={{ height: "100vh", width: "100vw", overflow: "hidden", margin: 0, padding: 0 }}>
-      <Header showBackToDesigns={true} />
+      {/* Impostato su false per togliere il pulsante dalla barra superiore */}
+      <Header showBackToDesigns={false} />
 
       {/* Contenitore principale */}
       <main style={{ flex: 1, overflow: "hidden", width: "100%", height: "100%", margin: 0, padding: 0, position: "relative" }}>
@@ -13,7 +14,7 @@ export default function Archivia() {
           className="absolute top-0 left-0 w-full h-full border-none"
         />
         
-        {/* Barra inferiore di copertura e navigazione */}
+        {/* Barra inferiore minimale coordinata all'Header */}
         <div 
           style={{
             position: "absolute",
@@ -22,8 +23,7 @@ export default function Archivia() {
             width: "100%",
             height: "60px",
             backgroundColor: "#ffffff", 
-            borderTop: "1px solid #efefef", // Sottile linea di separazione
-            boxShadow: "0 -4px 12px rgba(0, 0, 0, 0.03)", // Ombra leggera verso l'alto per dare profondità
+            borderTop: "1px solid #e5e5e5", // Sottile linea grigia pulita stile nav-bar
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -31,10 +31,10 @@ export default function Archivia() {
           }}
         >
           <button 
-            onClick={() => window.history.back()} // Torna alla pagina precedente, personalizzabile con il tuo router (es. useNavigate)
-            className="px-6 py-2 bg-neutral-900 text-white text-sm font-medium rounded-full hover:bg-neutral-800 transition-all duration-200 shadow-sm"
+            onClick={() => window.history.back()} 
+            className="text-sm font-medium text-neutral-800 tracking-wider hover:text-neutral-500 transition-colors duration-200 uppercase"
           >
-            ← Torna ai Progetti
+            ← Back to Designs
           </button>
         </div>
       </main>
