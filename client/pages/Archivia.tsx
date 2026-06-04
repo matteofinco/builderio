@@ -19,22 +19,32 @@ export default function Archivia() {
           style={{
             position: "absolute",
             bottom: "0px",
-            right: "15px",
-        
+            left: "0px", // Sistemato l'allineamento per coprire l'intera larghezza in modo pulito
             width: "100%",
             height: "60px",
-            backgroundColor: "#ffffff", 
-            borderTop: "1px solid #e5e5e5", // Sottile linea grigia pulita stile nav-bar
+            // Stesso effetto frosted glass dell'header (bianco/95)
+            backgroundColor: "rgba(255, 255, 255, 0.95)", 
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)", // Supporto per Safari
+            // Grigio più morbido coerente con border-gray-100
+            borderTop: "1px solid #f3f4f6", 
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            zIndex: 10
+            zIndex: 10,
+            // Ombra speculare rispetto a quella dell'header, proiettata verso l'alto
+            boxShadow: "0 -15px 30px -10px rgba(0, 0, 0, 0.04), 0 -10px 15px -5px rgba(0, 0, 0, 0.02)"
           }}
         >
-         <button 
-            // Se usi React Router puoi usare navigate("/tuarotta") o semplicemente window.location.href
-            onClick={() => window.location.href = "/Designs"} // Sostituisci "/" con "/designs" se la pagina ha quel percorso specifico
-            className="text-sm font-medium text-neutral-800 tracking-wider hover:text-neutral-500 transition-colors duration-200 uppercase"
+          <button 
+            onClick={() => window.location.href = "/Designs"}
+            className="text-sm font-light text-gray-500 tracking-widest hover:text-black transition-colors duration-200 uppercase"
+            style={{
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              fontFamily: "inherit" // Mantiene la coerenza del font globale
+            }}
           >
             ← Back to Designs
           </button>
