@@ -19,34 +19,49 @@ export default function Archivia() {
           style={{
             position: "absolute",
             bottom: "0px",
-            left: "0px", // Sistemato l'allineamento per coprire l'intera larghezza in modo pulito
+            right: "15px",
             width: "100%",
             height: "60px",
-            // Stesso effetto frosted glass dell'header (bianco/95)
+            // Stile coordinato all'header (bianco/95 sfuocato)
             backgroundColor: "rgba(255, 255, 255, 0.95)", 
             backdropFilter: "blur(12px)",
-            WebkitBackdropFilter: "blur(12px)", // Supporto per Safari
-            // Grigio più morbido coerente con border-gray-100
-            borderTop: "1px solid #f3f4f6", 
+            WebkitBackdropFilter: "blur(12px)",
+            borderTop: "1px solid #f3f4f6", // Linea grigio morbido coerente
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             zIndex: 10,
-            // Ombra speculare rispetto a quella dell'header, proiettata verso l'alto
+            // Ombra speculare verso l'alto
             boxShadow: "0 -15px 30px -10px rgba(0, 0, 0, 0.04), 0 -10px 15px -5px rgba(0, 0, 0, 0.02)"
           }}
         >
           <button 
             onClick={() => window.location.href = "/Designs"}
-            className="text-sm font-light text-gray-500 tracking-widest hover:text-black transition-colors duration-200 uppercase"
+            // Ripristinato esattamente il tuo stile di font originario per massima coerenza
+            className="text-sm font-medium text-neutral-800 tracking-wider hover:text-neutral-500 transition-colors duration-200 uppercase flex items-center gap-2"
             style={{
               background: "none",
               border: "none",
               cursor: "pointer",
-              fontFamily: "inherit" // Mantiene la coerenza del font globale
+              padding: 0
             }}
           >
-            ← Back to Designs
+            {/* Freccia vettoriale integrata nel flusso flex: garantisce la centratura millimetrica */}
+            <svg 
+              width="16" 
+              height="16" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+              style={{ display: "block" }}
+            >
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Back to Designs</span>
           </button>
         </div>
       </main>
