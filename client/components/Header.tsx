@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { X, Menu } from "lucide-react";
 
 interface HeaderProps {
@@ -8,7 +8,6 @@ interface HeaderProps {
 
 export default function Header({ showBackToDesigns = false }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const location = useLocation();
 
   const navLinks = [
     { label: "Home", path: "/" },
@@ -18,80 +17,79 @@ export default function Header({ showBackToDesigns = false }: HeaderProps) {
     { label: "Contact", path: "/contact" },
   ];
 
-  // Classi comuni per i link della navigazione
+  // Classi per lo stato attivo dei link
   const linkStyles = ({ isActive }: { isActive: boolean }) =>
-    `text-sm font-light transition-colors duration-200 ${
-      isActive
-        ? "text-black font-normal border-b border-black pb-1 md:pb-0 md:border-none md:text-black"
-        : "text-gray-500 hover:text-black"
+    `text-lg font-light tracking-wide transition-colors duration-200 py-2 block ${
+      isActive ? "text-black font-normal" : "text-gray-400 hover:text-black"
     }`;
 
   return (
-    <header className="border-b border-gray-100 bg-white/80 backdrop-blur-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-5 flex items-center justify-between">
-        
-        {/* Nome a sinistra (Logo) */}
-        <Link 
-          to="/" 
-          className="font-serif text-xl font-light tracking-tight hover:opacity-70 transition-opacity"
-        >
-          Matteo Finco
-        </Link>
+    <>
+      {/* BARRA DI NAVIGAZIONE PRINCIPALE */}
+      <header className="border-b border-gray-100 bg-white sticky top-0 z-50">
+        <div className="px-8 py-6 flex items-center justify-between">
+          
+          {/* Nome a sinistra */}
+          <Link to="/" className="font-serif text-xl font-light tracking-tight hover:opacity-75 transition-opacity">
+            Matteo Finco
+          </Link>
 
-        {/* Navigazione Desktop (Nascosta su mobile, visibile da md in su) */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <NavLink
-              key={link.path}
-              to={link.path}
-              className={linkStyles}
-            >
-              {link.label}
-            </NavLink>
-          ))}
-        </nav>
-
-        {/* Lato destro: Bottone Indietro + Hamburger (solo mobile) */}
-        <div className="flex items-center gap-4">
-          {showBackToDesigns && (
-            <Link
-              to="/designs"
-              className="text-xs uppercase tracking-wider font-light text-gray-400 hover:text-black transition-colors"
-            >
-              ← Back to Designs
-            </Link>
-          )}
-
-          {/* Hamburger Menu - Visibile solo su mobile (hidden md:block) */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="p-2 text-gray-600 hover:text-black transition-colors md:hidden"
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? (
-              <X size={20} strokeWidth={1.5} />
-            ) : (
-              <Menu size={20} strokeWidth={1.5} />
+          {/* Lato destro: Back to Designs + Hamburger sempre visibile */}
+          <div className="flex items-center gap-6">
+            {showBackToDesigns && (
+              <Link
+                to="/designs"
+                className="text-xs uppercase tracking-wider font-light text-gray-400 hover:text-black transition-colors"
+              >
+                ← Back to Designs
+              </Link>
             )}
-          </button>
-        </div>
-      </div>
 
-      {/* Menu Mobile Dropdown (Apertura fluida opzionale con classi CSS) */}
-      {isMenuOpen && (
-        <nav className="md:hidden border-t border-gray-100 bg-white px-6 py-6 flex flex-col gap-5 shadow-sm absolute w-full left-0 animate-fade-in">
-          {navLinks.map((link) => (
-            <NavLink
-              key={link.path}
-              to={link.path}
-              className={linkStyles}
-              onClick={() => setIsMenuOpen(false)}
+            {/* Pulsante Menu - Rimane sempre visibile (rimosso hidden md) */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 text-gray-800 hover:opacity-60 transition-opacity relative z-50"
+              aria-label="Toggle menu"
             >
-              {link.label}
-            </NavLink>
-          ))}
-        </nav>
+              {isMenuOpen ? (
+                <X size={22} strokeWidth={1.5} />
+              ) : (
+                <Menu size={22} strokeWidth={1.5} />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* MENU A DISCESA CON EFFETTO DI RILIEVO E OMBRA */}
+        {isMenuOpen && (
+          <nav 
+            className="absolute top-full left-0 w-full bg-white/95 backdrop-blur-md border-b border-gray-100 px-8 py-8 flex flex-col gap-2 z-50"
+            style={{
+              // Ombra morbida e profonda studiata per staccare nettamente sulla pagina
+              boxShadow: "0 20px 40px -15px rgba(0, 0, 0, 0.08), 0 15px 25px -10px rgba(0, 0, 0, 0.04)"
+            }}
+          >
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.path}
+                to={link.path}
+                className={linkStyles}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {link.label}
+              </NavLink>
+            ))}
+          </nav>
+        )}
+      </header>
+
+      {/* OVERLAY DI SFONDO (Oscura delicatamente la pagina sottostante quando il menu è aperto) */}
+      {isMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/5 backdrop-blur-[1px] z-40 transition-opacity duration-300 pointer-events-auto"
+          onClick={() => setIsMenuOpen(false)} // Chiude il menu se clicchi fuori
+        />
       )}
-    </header>
+    </>
   );
 }
