@@ -137,13 +137,13 @@ export default function Designs() {
           .area-nando, .area-snake, .area-ttable, .area-profile { grid-column: span 1; grid-row: span 1; }
         }
         
-        /* 3. GRIGLIA GEOMETRICA MOBILE */
+        /* 3. GRIGLIA GEOMETRICA MOBILE MODIFICATA */
         @media (max-width: 640px) {
           .collage-container { 
             grid-template-columns: repeat(2, 1fr);
             grid-template-rows: auto;
-            grid-auto-rows: 150px; /* Ridotto leggermente per farlo stare meglio in verticale */
-            gap: 12px; 
+            grid-auto-rows: 185px; /* Aumentato leggermente per ospitare testo + immagine puliti */
+            gap: 16px; 
             padding: 1rem; 
             grid-template-areas:
               "archivia    archivia"
@@ -163,16 +163,30 @@ export default function Designs() {
           .area-ttable { grid-area: ttable; }
           .area-profile { grid-area: profile; }
 
+          .collage-item {
+            overflow: visible; /* Permette al testo sotto di non venire tagliato */
+          }
+
+          /* Gestione ottimizzata dell'altezza immagine nel flusso flex */
+          .image-wrapper {
+            height: auto !important; 
+          }
+
           /* Forza le immagini a vedersi a colori su mobile */
           .collage-image {
             filter: grayscale(0%) !important;
           }
 
-          /* Mostra sempre le scritte descrittive su mobile visto che non esiste l'hover */
+          /* SPOSTA IL TESTO SOTTO L'IMMAGINE (Rimuove overlay) */
           .project-info-overlay {
+            position: relative !important;
+            bottom: auto !important;
+            left: auto !important;
+            right: auto !important;
             opacity: 1 !important;
             transform: translateY(0) !important;
-            padding: 8px 12px;
+            background: transparent !important; /* Toglie il gradiente bianco invasivo */
+            padding: 6px 2px 0 2px !important;  /* Margine pulito sotto la foto */
           }
 
           .collage-item:active {
@@ -243,12 +257,12 @@ export default function Designs() {
                   />
                 </div>
 
-                {/* Overlay testo controllato via CSS puro (sicuro al 100% su Vite) */}
+                {/* Il blocco rimane identico nel DOM, ma viene spostato sotto via CSS su mobile */}
                 <div className="project-info-overlay">
-                  <h3 style={{ fontSize: "15px", fontFamily: "Crimson Text, serif", fontWeight: 400, color: "#1f2937", margin: 0 }}>
+                  <h3 style={{ fontSize: "14px", fontFamily: "Crimson Text, serif", fontWeight: 400, color: "#1f2937", margin: 0 }}>
                     {project.title}
                   </h3>
-                  <p style={{ fontSize: "12px", fontFamily: "Lato, sans-serif", fontWeight: 300, color: "#4b5563", margin: "2px 0 0 0" }}>
+                  <p style={{ fontSize: "11px", fontFamily: "Lato, sans-serif", fontWeight: 300, color: "#6b7280", margin: "1px 0 0 0" }}>
                     {project.subtitle}
                   </p>
                 </div>
