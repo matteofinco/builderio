@@ -138,7 +138,7 @@ export default function Index() {
             style={{
               opacity: hoveredItem ? 0.05 : 0,
               transition: hoveredItem 
-                ? "opacity 1200ms ease-out" 
+                ? "opacity 2000ms ease-out" 
                 : "opacity 1200ms cubic-bezier(0.25, 1, 0.5, 1)"
             }}
           />
