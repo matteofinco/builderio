@@ -107,7 +107,7 @@ export default function Index() {
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
     animate();
-
+<link rel="icon" href="/favicon.ico" />
     return () => {
       window.removeEventListener("resize", resizeCanvas);
       cancelAnimationFrame(animationFrameId);
