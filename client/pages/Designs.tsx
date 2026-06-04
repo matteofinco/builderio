@@ -16,14 +16,14 @@ export default function Designs() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   const projects: Project[] = [
-    { id: "archivia", title: "Archivia", subtitle: "Pen holder", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F65c9f3670b2a484ba3d71220897004f0", path: "/archivia", areaClass: "area-archivia" },
+    { id: "archivia", title: "Archivia", subtitle: "Pen holder", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F5725216456804c8eaad35f51400a426f", path: "/archivia", areaClass: "area-archivia" },
     { id: "pizzamente", title: "Pizza Machine", subtitle: "Academic Workshop", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F2e3383ac1e3348f0bc9a80ad0e830913", path: "/pizzamente", areaClass: "area-pizza" },
     { id: "nando", title: "Nando", subtitle: "Hyperplastic cutlery handle", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F10f14280000d46bba0cf01339a4b340b", path: "/nando", areaClass: "area-nando" },
-    { id: "snake", title: "Snake", subtitle: "Hockey stickhandling trainer", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F9c5d63a7eabc43d7884582ca0db21ec9", path: "/snake", areaClass: "area-snake" },
-    { id: "wafflemaker", title: "Waffle Maker", subtitle: "Academic basic design course", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F87847bb01fa04b8e8d65af4f273612bc", path: "/wafflemaker", areaClass: "area-waffle" },
+    { id: "snake", title: "Snake", subtitle: "Hockey stickhandling trainer", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F9366df60acf94b0bacc85252a2e3865e", path: "/snake", areaClass: "area-snake" },
+    { id: "wafflemaker", title: "Waffle Maker", subtitle: "Academic basic design course", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2Fedbb2046d3db4d549f4da864fca20382", path: "/wafflemaker", areaClass: "area-waffle" },
     { id: "inlays", title: "Inlays", subtitle: "Academic inlays laboratory", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2Ff06baaa8d7254b9fb1ccc91cc33a8538", path: "/inlays", areaClass: "area-inlays" },
-    { id: "ttable", title: "T-Table", subtitle: "Interactive feeding-friendly table", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F0af25cd3686f4a74863491dfeb75ca6d", path: "/ttable", areaClass: "area-ttable" },
-    { id: "matteo-finco", title: "Matteo Finco", subtitle: "Get in touch", path: "/Contact", areaClass: "area-profile", isProfile: true },
+    { id: "ttable", title: "T-Table", subtitle: "Interactive feeding-friendly table", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F5dd66d19c35f4146a3aadde21219edf5", path: "/ttable", areaClass: "area-ttable" },
+    { id: "matteo-finco", title: "Matteo Finco", subtitle: "Get in touch", path: "/contact", areaClass: "area-profile", isProfile: true },
   ];
 
   return (
