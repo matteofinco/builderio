@@ -115,9 +115,10 @@ export default function Index() {
   }, []);
 
   return (
-    <div className="bg-white flex flex-col relative w-screen h-screen overflow-hidden">
+    // Struttura flex-col sull'intero schermo per gestire le macro-aree (Contenuto e Footer)
+    <div className="bg-white flex flex-col justify-between w-screen h-screen overflow-hidden relative">
       
-      {/* Canvas delle particelle con dissolvenza gestita via inline style */}
+      {/* Canvas delle particelle */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 pointer-events-none z-0 multiply"
@@ -127,7 +128,7 @@ export default function Index() {
         }}
       />
 
-      {/* Render di sfondo con dissolvenza asimmetrica nativa */}
+      {/* Render di sfondo */}
       {lastActivePreview && (
         <div className="fixed inset-0 pointer-events-none overflow-hidden z-10">
           <img
@@ -144,18 +145,21 @@ export default function Index() {
         </div>
       )}
 
-      {/* Contenuto principale */}
-      <div className="flex-1 flex flex-col items-center justify-center px-4 py-20 relative z-20">
-        <div className="text-center mb-24">
-          <h1 className="font-serif text-6xl font-light tracking-tight mb-3">
+      {/* Contenuto centrale: Usa 'my-auto' per centrarsi dinamicamente nello spazio rimanente */}
+      <div className="flex-1 flex flex-col items-center justify-center px-4 my-auto relative z-20 w-full raw-content-container">
+        
+        {/* Ridotto mb-24 fisso a un più fluido mb-12 / md:mb-16 */}
+        <div className="text-center mb-10 md:mb-16">
+          <h1 className="font-serif text-5xl md:text-6xl font-light tracking-tight mb-3">
             Matteo Finco
           </h1>
-          <p className="text-lg font-light text-gray-600">
+          <p className="text-base md:text-lg font-light text-gray-600">
             Product Designer & Maker
           </p>
         </div>
 
-        <nav className="space-y-8 max-w-2xl w-full">
+        {/* Navigazione principale: space-y scalato per schermi bassi */}
+        <nav className="space-y-6 md:space-y-8 max-w-2xl w-full">
           {navItems.map((item) => (
             <Link
               key={item.path}
@@ -165,7 +169,7 @@ export default function Index() {
               className="block group cursor-pointer"
             >
               <div className="relative text-center">
-                <h2 className="text-4xl font-serif font-light transition-opacity duration-300 group-hover:opacity-50">
+                <h2 className="text-3xl md:text-4xl font-serif font-light transition-opacity duration-300 group-hover:opacity-50">
                   {item.label}
                 </h2>
                 <div
@@ -175,7 +179,7 @@ export default function Index() {
                 />
               </div>
               <p
-                className={`text-sm text-gray-600 mt-3 transition-opacity duration-300 text-center ${
+                className={`text-sm text-gray-600 mt-2 transition-opacity duration-300 text-center ${
                   hoveredItem === item.label ? "opacity-100" : "opacity-0"
                 }`}
               >
@@ -186,8 +190,8 @@ export default function Index() {
         </nav>
       </div>
 
-      {/* Footer */}
-      <div className="text-center pb-12 relative z-20">
+      {/* Footer: Rimasto ancorato sul fondo ma protetto dal layout distributivo generale */}
+      <div className="text-center pb-6 md:pb-12 relative z-20 mt-auto">
         <Link
           to="/contact"
           className="text-sm font-light text-gray-600 hover:text-black transition-colors"
