@@ -22,7 +22,7 @@ export default function Designs() {
     { id: "snake", title: "Snake", subtitle: "Hockey stickhandling trainer", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F9366df60acf94b0bacc85252a2e3865e", path: "/snake", areaClass: "area-snake" },
     { id: "wafflemaker", title: "Waffle Maker", subtitle: "Academic basic design course", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2Fedbb2046d3db4d549f4da864fca20382", path: "/wafflemaker", areaClass: "area-waffle" },
     { id: "inlays", title: "Inlays", subtitle: "Academic inlays laboratory", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2Ff06baaa8d7254b9fb1ccc91cc33a8538", path: "/inlays", areaClass: "area-inlays" },
-    { id: "ttable", title: "T-Table", subtitle: "Interactive feeding-friendly table", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F5dd66d19c35f4146a3aadde21219edf5", path: "/ttable", areaClass: "area-ttable" },
+    { id: "ttable", title: "T-Table", subtitle: "Interactive feeding-friendly table", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F25a58bd6222b49dbae6cde131a9e4bb1", path: "/ttable", areaClass: "area-ttable" },
     { id: "matteo-finco", title: "Matteo Finco", subtitle: "Get in touch", path: "/contact", areaClass: "area-profile", isProfile: true },
   ];
 
