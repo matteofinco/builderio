@@ -5,6 +5,7 @@ import { createServer } from "./server";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  base: "/builderio/", // <-- 1. CORREZIONE: Imposta il percorso corretto per GitHub Pages
   server: {
     host: "::",
     port: 8080,
@@ -14,7 +15,7 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    outDir: "dist/spa",
+    outDir: "dist", // <-- 2. CORREZIONE: Riporta l'output su "dist" per allinearlo con le Actions
   },
   plugins: [react(), expressPlugin()],
   resolve: {
