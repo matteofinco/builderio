@@ -115,7 +115,6 @@ export default function Index() {
   }, []);
 
   return (
-    // Struttura flex-col sull'intero schermo per gestire le macro-aree (Contenuto e Footer)
     <div className="bg-white flex flex-col justify-between w-screen h-screen overflow-hidden relative">
       
       {/* Canvas delle particelle */}
@@ -128,7 +127,7 @@ export default function Index() {
         }}
       />
 
-      {/* Render di sfondo */}
+      {/* Render di sfondo con transizione graduale simmetrica */}
       {lastActivePreview && (
         <div className="fixed inset-0 pointer-events-none overflow-hidden z-10">
           <img
@@ -137,18 +136,19 @@ export default function Index() {
             className="w-full h-full object-cover"
             style={{
               opacity: hoveredItem ? 0.05 : 0,
+              // Transizione identica e morbida sia in entrata (800ms) che in uscita (1000ms)
               transition: hoveredItem 
-                ? "opacity 2000ms ease-out" 
-                : "opacity 1200ms cubic-bezier(0.25, 1, 0.5, 1)"
+                ? "opacity 800ms cubic-bezier(0.25, 1, 0.5, 1)" 
+                : "opacity 1000ms cubic-bezier(0.25, 1, 0.5, 1)"
             }}
           />
         </div>
       )}
 
-      {/* Contenuto centrale: Usa 'my-auto' per centrarsi dinamicamente nello spazio rimanente */}
-      <div className="flex-1 flex flex-col items-center justify-center px-4 my-auto relative z-20 w-full raw-content-container">
+      {/* Contenuto principale */}
+      <div className="flex-1 flex flex-col items-center justify-center px-4 my-auto relative z-20 w-full">
         
-        {/* Ridotto mb-24 fisso a un più fluido mb-12 / md:mb-16 */}
+        {/* Intestazione */}
         <div className="text-center mb-10 md:mb-16">
           <h1 className="font-serif text-5xl md:text-6xl font-light tracking-tight mb-3">
             Matteo Finco
@@ -158,7 +158,7 @@ export default function Index() {
           </p>
         </div>
 
-        {/* Navigazione principale: space-y scalato per schermi bassi */}
+        {/* Navigazione principale */}
         <nav className="space-y-6 md:space-y-8 max-w-2xl w-full">
           {navItems.map((item) => (
             <Link
@@ -190,7 +190,7 @@ export default function Index() {
         </nav>
       </div>
 
-      {/* Footer: Rimasto ancorato sul fondo ma protetto dal layout distributivo generale */}
+      {/* Footer protetto e sempre visibile */}
       <div className="text-center pb-6 md:pb-12 relative z-20 mt-auto">
         <Link
           to="/contact"
