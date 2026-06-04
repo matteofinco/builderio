@@ -22,23 +22,21 @@ export default function Archivia() {
             right: "15px",
             width: "100%",
             height: "60px",
-            // Stile coordinato all'header (bianco/95 sfuocato)
             backgroundColor: "rgba(255, 255, 255, 0.95)", 
             backdropFilter: "blur(12px)",
             WebkitBackdropFilter: "blur(12px)",
-            borderTop: "1px solid #f3f4f6", // Linea grigio morbido coerente
+            borderTop: "1px solid #f3f4f6", 
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             zIndex: 10,
-            // Ombra speculare verso l'alto
             boxShadow: "0 -15px 30px -10px rgba(0, 0, 0, 0.04), 0 -10px 15px -5px rgba(0, 0, 0, 0.02)"
           }}
         >
           <button 
             onClick={() => window.location.href = "/Designs"}
-            // Ripristinato esattamente il tuo stile di font originario per massima coerenza
-            className="text-sm font-medium text-neutral-800 tracking-wider hover:text-neutral-500 transition-colors duration-200 uppercase flex items-center gap-2"
+            // Sincronizzato con lo stile dell'Header: font-light, senza uppercase, colori gray-500 -> black
+            className="text-sm font-light text-gray-500 tracking-wide hover:text-black transition-colors duration-200 flex items-center gap-2"
             style={{
               background: "none",
               border: "none",
@@ -46,14 +44,14 @@ export default function Archivia() {
               padding: 0
             }}
           >
-            {/* Freccia vettoriale integrata nel flusso flex: garantisce la centratura millimetrica */}
+            {/* Freccia vettoriale geometrica, matematicamente centrata sull'asse mediano del testo */}
             <svg 
               width="16" 
               height="16" 
               viewBox="0 0 24 24" 
               fill="none" 
               stroke="currentColor" 
-              strokeWidth="2" 
+              strokeWidth="1.5" // Alleggerito a 1.5 per sposarsi con il font-light
               strokeLinecap="round" 
               strokeLinejoin="round"
               style={{ display: "block" }}
