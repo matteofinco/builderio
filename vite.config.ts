@@ -5,7 +5,7 @@ import { createServer } from "./server";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "/builderio/", // <-- 1. CORREZIONE: Imposta il percorso corretto per GitHub Pages
+  base: "/", // <-- 1. CORREZIONE: Imposta il percorso corretto per GitHub Pages
   server: {
     host: "::",
     port: 8080,
