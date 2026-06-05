@@ -35,8 +35,7 @@ export default function Archivia() {
         >
           <button 
             onClick={() => window.location.href = "/"}
-            // Sincronizzato con lo stile dell'Header: font-light, senza uppercase, colori gray-500 -> black
-            className="text-sm font-light text-gray-500 tracking-wide hover:text-black transition-colors duration-200 flex items-center gap-2"
+            className="text-sm font-light text-gray-500 tracking-wide hover:text-black transition-colors duration-200"
             style={{
               background: "none",
               border: "none",
@@ -44,22 +43,7 @@ export default function Archivia() {
               padding: 0
             }}
           >
-            {/* Freccia vettoriale geometrica, matematicamente centrata sull'asse mediano del testo */}
-            <svg 
-              width="16" 
-              height="16" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="1.5" // Alleggerito a 1.5 per sposarsi con il font-light
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-              style={{ display: "block" }}
-            >
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            
-            <span>Get in touch</span>
+            Get in touch
           </button>
         </div>
       </main>
