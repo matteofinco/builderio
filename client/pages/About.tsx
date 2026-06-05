@@ -1,16 +1,51 @@
 import Header from "../components/Header";
 
-export default function About() {
+export default function Archivia() {
   return (
-    <div className="bg-white flex flex-col" style={{ height: "100vh", width: "100vw", overflow: "hidden", overflowX: "hidden", margin: 0, padding: 0 }}>
-      <Header />
+    <div className="bg-white flex flex-col" style={{ height: "100vh", width: "100vw", overflow: "hidden", margin: 0, padding: 0 }}>
+      {/* Impostato su false per togliere il pulsante dalla barra superiore */}
+      <Header showBackToDesigns={false} />
 
-      {/* Main content with iframe - responsive mobile fix */}
-      <main style={{ flex: 1, overflow: "hidden", width: "100%", maxWidth: "100%", height: "100%", margin: 0, padding: 0, overflowX: "hidden" }}>
+      {/* Contenitore principale */}
+      <main style={{ flex: 1, overflow: "hidden", width: "100%", height: "100%", margin: 0, padding: 0, position: "relative" }}>
         <iframe
-          src="https://docs.google.com/document/d/e/2PACX-1vSkHZXTWxDxnsK5l07-SpCoPsZRM-uFGvCX3TQUcn-4IXpoD6i5Bhs0aLpVQMqanm-d2OenkKx0hZf9/pub?embedded=true"
-          style={{ position: "fixed", top: "60px", left: 0, width: "100vw", height: "calc(100vh - 60px)", border: "none", zIndex: 1, overflowX: "hidden" }}
+          src="https://paginematteo.framer.website/archivia"
+          title="Curriculum Vitae"
+          className="absolute top-0 left-0 w-full h-full border-none"
         />
+        
+        {/* Barra inferiore minimale coordinata all'Header */}
+        <div 
+          style={{
+            position: "absolute",
+            bottom: "0px",
+            right: "15px",
+            width: "100%",
+            height: "60px",
+            backgroundColor: "rgba(255, 255, 255, 0.95)", 
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            borderTop: "1px solid #f3f4f6", 
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 10,
+            boxShadow: "0 -15px 30px -10px rgba(0, 0, 0, 0.04), 0 -10px 15px -5px rgba(0, 0, 0, 0.02)"
+          }}
+        >
+          <button 
+            onClick={() => window.location.href = "/"}
+            className="text-sm font-light text-gray-500 tracking-wide hover:text-black transition-colors duration-200"
+            style={{
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              padding: 0
+            }}
+          >
+            Get in touch
+          </button>
+        </div>
       </main>
     </div>
   );
