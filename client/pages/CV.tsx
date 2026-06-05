@@ -58,8 +58,8 @@ export default function Archivia() {
             >
               <line x1="19" y1="12" x2="5" y2="12"></line>
               <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-            <span>Back to Homepage</span>
+            
+            <span>Get in touch</span>
           </button>
         </div>
       </main>
