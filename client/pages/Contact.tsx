@@ -9,14 +9,11 @@ export default function Contact() {
     >
       <Header />
 
-      {/* Centriamo verticalmente l'intero contenuto nel viewport */}
       <main className="flex-1 px-8 flex flex-col justify-center overflow-hidden" style={{ width: "100%", height: "100%" }}>
         <div className="max-w-3xl w-full mx-auto h-full flex flex-col justify-between py-8">
           
-          {/* Contenitore informazioni: centrato e compatto */}
           <div className="my-auto space-y-8">
             
-            {/* Intestazione più compatta */}
             <div>
               <h1 className="text-4xl md:text-5xl font-serif font-light tracking-tight mb-4">
                 Get in touch
@@ -26,7 +23,6 @@ export default function Contact() {
               </p>
             </div>
 
-            {/* Spaziature ridotte (space-y-6) per garantire la visibilità totale */}
             <div className="space-y-6">
               {/* Email */}
               <div>
@@ -36,17 +32,6 @@ export default function Contact() {
                   className="text-xl md:text-2xl font-serif font-light text-gray-800 hover:text-gray-600 transition-colors break-all"
                 >
                   matteofinco05@gmail.com
-                </a>
-              </div>
-
-              {/* Phone */}
-              <div>
-                <p className="text-xs uppercase tracking-widest text-gray-400 mb-1">Phone</p>
-                <a
-                  href="tel:+39-320-053-7133"
-                  className="text-xl md:text-2xl font-serif font-light text-gray-800 hover:text-gray-600 transition-colors"
-                >
-                  +39 320 053 7133
                 </a>
               </div>
 
@@ -73,7 +58,6 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Back to home - Ancorato sul fondo del viewport */}
           <div className="pt-4 border-t border-gray-200 mt-auto">
             <Link
               to="/"
