@@ -34,7 +34,7 @@ export default function Archivia() {
           }}
         >
           <button 
-            onClick={() => window.location.href = "/"}
+            onClick={() => window.location.href = "/Contact"}
             className="text-sm font-light text-gray-500 tracking-wide hover:text-black transition-colors duration-200"
             style={{
               background: "none",
