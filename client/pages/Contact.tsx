@@ -19,7 +19,7 @@ export default function Contact() {
                 Get in touch
               </h1>
               <p className="text-base md:text-lg font-light text-gray-600 leading-relaxed max-w-2xl">
-                Open to collaborations, new product ideas, and projects that value thoughtful design and making.
+                Open to collaborations, new product ideas, and projects.
               </p>
             </div>
 
