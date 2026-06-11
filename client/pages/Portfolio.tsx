@@ -15,7 +15,7 @@ const projects: ProjectItem[] = [
     id: "marble-table",
     title: "Marble Dining Table",
     description: "Sculptural form in white Carrara marble",
-    imageUrl: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&h=800&fit=crop",
+    imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F2c9ec8a6b5fd4d90bb36506ce7b89adc",
     category: "Product Design",
   },
   {
