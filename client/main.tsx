@@ -8,22 +8,26 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
 
-// 1. COMPONENTE CURSORE CUSTOM CON INERZIA (LERP)
-function CustomCursor() {
+// 1. COMPONENTE CURSORE REALE CON EFFETTO RITARDO (LAG)
+function LaggingCursor() {
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   
   const mouseRef = useRef({ x: 0, y: 0 });
-  const ringRef = useRef({ x: 0, y: 0 });
-  const ringElementRef = useRef<HTMLDivElement | null>(null);
+  const cursorRef = useRef({ x: 0, y: 0 });
+  const cursorElementRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    // Nascondiamo il cursore nativo su tutto il body quando il componente è attivo
+    document.body.style.cursor = "none";
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current.x = e.clientX;
       mouseRef.current.y = e.clientY;
       
       if (!isVisible) setIsVisible(true);
 
+      // Rileva se siamo sopra un elemento interattivo
       const target = e.target as HTMLElement;
       const isClickable = 
         target.tagName === "A" || 
@@ -45,13 +49,17 @@ function CustomCursor() {
     let animationFrameId: number;
     
     const updatePosition = () => {
-      const speed = 0.12; // Coefficiente di elasticità dell'anello
+      // REGOLA IL LAG QUI: 
+      // Più abbassi questo valore (es. 0.06), più il puntatore sarà "pesante" e lento.
+      // Più lo alzi (es. 0.20), più sarà reattivo.
+      const speed = 0.09; 
       
-      ringRef.current.x += (mouseRef.current.x - ringRef.current.x) * speed;
-      ringRef.current.y += (mouseRef.current.y - ringRef.current.y) * speed;
+      cursorRef.current.x += (mouseRef.current.x - cursorRef.current.x) * speed;
+      cursorRef.current.y += (mouseRef.current.y - cursorRef.current.y) * speed;
 
-      if (ringElementRef.current) {
-        ringElementRef.current.style.transform = `translate3d(${ringRef.current.x}px, ${ringRef.current.y}px, 0) translate(-50%, -50%)`;
+      if (cursorElementRef.current) {
+        // Usiamo translate3d per attivare l'accelerazione hardware della GPU
+        cursorElementRef.current.style.transform = `translate3d(${cursorRef.current.x}px, ${cursorRef.current.y}px, 0)`;
       }
 
       animationFrameId = requestAnimationFrame(updatePosition);
@@ -60,6 +68,7 @@ function CustomCursor() {
     animationFrameId = requestAnimationFrame(updatePosition);
 
     return () => {
+      document.body.style.cursor = "auto";
       window.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseleave", handleMouseLeave);
       document.removeEventListener("mouseenter", handleMouseEnter);
@@ -71,18 +80,40 @@ function CustomCursor() {
 
   return (
     <div
-      ref={ringElementRef}
-      className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999] hidden md:block"
+      ref={cursorElementRef}
+      className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block select-none"
       style={{
-        width: isHovering ? "48px" : "24px",
-        height: isHovering ? "48px" : "24px",
-        border: "1px solid rgba(0, 0, 0, 0.25)",
-        backgroundColor: isHovering ? "rgba(0, 0, 0, 0.02)" : "transparent",
-        transition: "width 300ms cubic-bezier(0.25, 1, 0.5, 1), height 300ms cubic-bezier(0.25, 1, 0.5, 1), background-color 300ms ease, border-color 300ms ease",
-        borderColor: isHovering ? "rgba(0, 0, 0, 0.1)" : "rgba(0, 0, 0, 0.3)",
-        willChange: "transform, width, height",
+        // Mantiene l'origine della freccia nell'angolo in alto a sinistra esatto del pixel puntato
+        width: "20px",
+        height: "20px",
+        willChange: "transform",
+        // Se sei in hover su un link, incliniamo o cambiamo leggermente lo stile (opzionale)
+        transition: "transform 0.1s ease, opacity 0.2s ease",
+        opacity: isHovering ? 0.7 : 1,
       }}
-    />
+    >
+      {/* SVG di una freccia puntatore minimale e geometrica */}
+      <svg
+        width="100%"
+        height="100%"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        style={{
+          // Se stai facendo hover su un link, possiamo far ruotare la freccia o lasciarla standard
+          transform: isHovering ? "scale(1.1)" : "scale(1)",
+          transition: "transform 0.2s ease",
+        }}
+      >
+        <path
+          d="M4.5 3V19.5L9.75 14.25H18.75L4.5 3Z"
+          fill="black"
+          stroke="white"
+          strokeWidth="2"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </div>
   );
 }
 
@@ -97,8 +128,8 @@ if (root) {
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          {/* Inserito qui per l'esecuzione globale */}
-          <CustomCursor /> 
+          {/* Il cursore con il lag ora gestisce l'intero puntatore */}
+          <LaggingCursor /> 
           <App />
         </TooltipProvider>
       </QueryClientProvider>
