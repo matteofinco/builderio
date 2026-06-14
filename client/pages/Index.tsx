@@ -18,7 +18,7 @@ const navItems: NavItem[] = [
   {
     label: "About",
     path: "/about",
-    preview: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F7a0ba68ea33247deae86bf521f6b414fwidth=2000",
+    preview: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F0dff9858120643d29f4c40e3092f5439?width=2000",
     description: "Design student & maker based in Italy",
   },
   {
