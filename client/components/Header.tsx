@@ -19,7 +19,7 @@ export default function Header({ showBackToDesigns = false }: HeaderProps) {
 
   // Classi per lo stato attivo dei link
   const linkStyles = ({ isActive }: { isActive: boolean }) =>
-    `text-lg font-light tracking-wide transition-colors duration-200 py-2 block ${
+    `text-lg font-light tracking-wide transition-colors duration-300 py-2 block ${
       isActive ? "text-black font-normal" : "text-gray-400 hover:text-black"
     }`;
 
@@ -34,7 +34,7 @@ export default function Header({ showBackToDesigns = false }: HeaderProps) {
             Matteo Finco
           </Link>
 
-          {/* Lato destro: Back to Designs + Hamburger sempre visibile */}
+          {/* Lato destro: Back to Designs + Hamburger */}
           <div className="flex items-center gap-6">
             {showBackToDesigns && (
               <Link
@@ -45,10 +45,11 @@ export default function Header({ showBackToDesigns = false }: HeaderProps) {
               </Link>
             )}
 
-            {/* Pulsante Menu - Rimane sempre visibile (rimosso hidden md) */}
+            {/* Pulsante Menu con micro-rotazione sull'icona */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-gray-800 hover:opacity-60 transition-opacity relative z-50"
+              className="p-2 text-gray-800 hover:opacity-60 transition-all duration-300 relative z-50 focus:outline-none"
+              style={{ transform: isMenuOpen ? "rotate(90deg)" : "rotate(0deg)" }}
               aria-label="Toggle menu"
             >
               {isMenuOpen ? (
@@ -60,36 +61,49 @@ export default function Header({ showBackToDesigns = false }: HeaderProps) {
           </div>
         </div>
 
-        {/* MENU A DISCESA CON EFFETTO DI RILIEVO E OMBRA */}
-        {isMenuOpen && (
-          <nav 
-            className="absolute top-full left-0 w-full bg-white/95 backdrop-blur-md border-b border-gray-100 px-8 py-8 flex flex-col gap-2 z-50"
-            style={{
-              // Ombra morbida e profonda studiata per staccare nettamente sulla pagina
-              boxShadow: "0 20px 40px -15px rgba(0, 0, 0, 0.08), 0 15px 25px -10px rgba(0, 0, 0, 0.04)"
-            }}
-          >
-            {navLinks.map((link) => (
+        {/* MENU A DISCESA ANIMATO CON TRANSIZIONE FLUIDA */}
+        <nav 
+          className="absolute top-full left-0 w-full bg-white/95 backdrop-blur-md border-b border-gray-100 px-8 py-8 flex flex-col gap-2 z-50 transition-all duration-500 pointer-events-none"
+          style={{
+            boxShadow: "0 20px 40px -15px rgba(0, 0, 0, 0.06)",
+            // Usiamo opacity e translate per animare l'ingresso cinematica
+            opacity: isMenuOpen ? 1 : 0,
+            transform: isMenuOpen ? "translateY(0)" : "translateY(-10px)",
+            pointerEvents: isMenuOpen ? "auto" : "none",
+            transition: "transform 500ms cubic-bezier(0.16, 1, 0.3, 1), opacity 400ms ease",
+          }}
+        >
+          {navLinks.map((link, index) => (
+            <div
+              key={link.path}
+              style={{
+                // Effetto cascata (stagger): ogni link aspetta un po' più del precedente
+                transform: isMenuOpen ? "translateY(0)" : "translateY(8px)",
+                opacity: isMenuOpen ? 1 : 0,
+                transition: `transform 500ms cubic-bezier(0.16, 1, 0.3, 1) ${index * 40}ms, opacity 400ms ease ${index * 40}ms`,
+              }}
+            >
               <NavLink
-                key={link.path}
                 to={link.path}
                 className={linkStyles}
                 onClick={() => setIsMenuOpen(false)}
               >
                 {link.label}
               </NavLink>
-            ))}
-          </nav>
-        )}
+            </div>
+          ))}
+        </nav>
       </header>
 
-      {/* OVERLAY DI SFONDO (Oscura delicatamente la pagina sottostante quando il menu è aperto) */}
-      {isMenuOpen && (
-        <div 
-          className="fixed inset-0 bg-black/5 backdrop-blur-[1px] z-40 transition-opacity duration-300 pointer-events-auto"
-          onClick={() => setIsMenuOpen(false)} // Chiude il menu se clicchi fuori
-        />
-      )}
+      {/* OVERLAY DI SFONDO ANIMATO */}
+      <div 
+        className="fixed inset-0 bg-black/5 backdrop-blur-[1px] z-40 transition-opacity duration-500"
+        style={{
+          opacity: isMenuOpen ? 1 : 0,
+          pointerEvents: isMenuOpen ? "auto" : "none"
+        }}
+        onClick={() => setIsMenuOpen(false)}
+      />
     </>
   );
 }
