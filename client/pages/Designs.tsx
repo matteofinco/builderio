@@ -77,7 +77,7 @@ export default function Designs() {
           background-color: #f3f4f6;
           position: relative;
           flex: 1;
-          border-radius: 40px; 
+          border-radius: 20px; 
         }
 
         /* MODIFICA: Copiato l'arrotondamento anche sull'immagine per evitare glitch visivi nel rendering */
@@ -87,7 +87,7 @@ export default function Designs() {
           height: 100%;
           object-fit: cover;
           transition: filter 0.5s ease-in-out;
-          border-radius: 40px; 
+          border-radius: 20px; 
         }
 
         /* Gestione scritte descrittive in Hover (Desktop) */
@@ -103,8 +103,8 @@ export default function Designs() {
           opacity: 0;
           transform: translateY(8px);
           transition: opacity 0.4s ease, transform 0.4s ease;
-          border-bottom-left-radius: 40px;
-          border-bottom-right-radius: 40px;
+          border-bottom-left-radius: 20px;
+          border-bottom-right-radius: 20px;
         }
 
         .collage-item:hover .project-info-overlay {
