@@ -1,6 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
+// Inseriamo lo stile CSS per l'animazione direttamente nel file per semplicità.
+// In un progetto reale, questo andrebbe nel tuo file .css principale.
+const breathAnimationCss = `
+  @keyframes breathe {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); } /* Aumento impercettibile del 3% */
+    100% { transform: scale(1); }
+  }
+  .breathe-effect {
+    animation: breathe 8s ease-in-out infinite; /* Respiro molto lento (8 secondi) */
+  }
+`;
+
 interface NavItem {
   label: string;
   path: string;
@@ -107,7 +120,7 @@ export default function Index() {
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
     animate();
-<link rel="icon" href="/favicon.ico" />
+
     return () => {
       window.removeEventListener("resize", resizeCanvas);
       cancelAnimationFrame(animationFrameId);
@@ -117,6 +130,9 @@ export default function Index() {
   return (
     <div className="bg-white flex flex-col justify-between w-screen h-screen overflow-hidden relative">
       
+      {/* Iniettiamo l'animazione CSS */}
+      <style>{breathAnimationCss}</style>
+
       {/* Canvas delle particelle */}
       <canvas
         ref={canvasRef}
@@ -127,19 +143,23 @@ export default function Index() {
         }}
       />
 
-      {/* Render di sfondo con transizione graduale simmetrica */}
+      {/* Render di sfondo con effetto RESPIRO e dissolvenza RALLENTATA */}
       {lastActivePreview && (
         <div className="fixed inset-0 pointer-events-none overflow-hidden z-10">
           <img
             src={lastActivePreview}
             alt="Preview"
-            className="w-full h-full object-cover"
+            // Aggiungiamo la classe per l'effetto respiro
+            className="w-full h-full object-cover breathe-effect"
             style={{
+              // Manteniamo l'opacità molto bassa al 5%
               opacity: hoveredItem ? 0.05 : 0,
-              // Transizione identica e morbida sia in entrata (800ms) che in uscita (1000ms)
+              
+              // MODIFICA: Rallentiamo la dissolvenza in entrata (2500ms) 
+              // e manteniamo quella in uscita (1000ms)
               transition: hoveredItem 
-                ? "opacity 800ms cubic-bezier(0.25, 1, 0.5, 1)" 
-                : "opacity 1000ms cubic-bezier(0.25, 1, 0.5, 1)"
+                ? "opacity 2500ms cubic-bezier(0.25, 0.1, 0.25, 1)" // Molto lenta in entrata
+                : "opacity 1000ms cubic-bezier(0.25, 1, 0.5, 1)"   // Normale in uscita
             }}
           />
         </div>
