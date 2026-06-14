@@ -69,6 +69,7 @@ export default function Designs() {
           z-index: 10;
         }
 
+        /* MODIFICA: Aggiunto arrotondamento al wrapper */
         .image-wrapper {
           width: 100%;
           height: 100%;
@@ -76,28 +77,34 @@ export default function Designs() {
           background-color: #f3f4f6;
           position: relative;
           flex: 1;
+          border-radius: 40px; 
         }
 
+        /* MODIFICA: Copiato l'arrotondamento anche sull'immagine per evitare glitch visivi nel rendering */
         .collage-image {
           display: block;
           width: 100%;
           height: 100%;
           object-fit: cover;
           transition: filter 0.5s ease-in-out;
+          border-radius: 40px; 
         }
 
         /* Gestione scritte descrittive in Hover (Desktop) */
+        /* MODIFICA: Adattato il raggio inferiore dell'overlay per seguire la curva della card */
         .project-info-overlay {
           position: absolute;
           bottom: 0;
           left: 0;
           right: 0;
-          padding: 16px;
+          padding: 24px 24px 20px 24px; /* Aumentato leggermente il padding interno visto l'angolo stretto */
           background: linear-gradient(to top, rgba(255,255,255,0.95) 60%, rgba(255,255,255,0));
           pointer-events: none;
           opacity: 0;
           transform: translateY(8px);
           transition: opacity 0.4s ease, transform 0.4s ease;
+          border-bottom-left-radius: 40px;
+          border-bottom-right-radius: 40px;
         }
 
         .collage-item:hover .project-info-overlay {
@@ -105,6 +112,7 @@ export default function Designs() {
           transform: translateY(0);
         }
 
+        /* MODIFICA: Se deciderai di dare uno sfondo o un bordo anche alla card profilo, ha già il raggio pronto */
         .text-profile-card {
           background-color: transparent;
           border: none;
@@ -116,6 +124,7 @@ export default function Designs() {
           text-align: center;
           box-sizing: border-box;
           transition: opacity 0.4s ease;
+          border-radius: 40px;
         }
 
         .text-profile-card:hover {
@@ -142,7 +151,7 @@ export default function Designs() {
           .collage-container { 
             grid-template-columns: repeat(2, 1fr);
             grid-template-rows: auto;
-            grid-auto-rows: 185px; /* Aumentato leggermente per ospitare testo + immagine puliti */
+            grid-auto-rows: 185px; 
             gap: 16px; 
             padding: 1rem; 
             grid-template-areas:
@@ -164,15 +173,13 @@ export default function Designs() {
           .area-profile { grid-area: profile; }
 
           .collage-item {
-            overflow: visible; /* Permette al testo sotto di non venire tagliato */
+            overflow: visible; 
           }
 
-          /* Gestione ottimizzata dell'altezza immagine nel flusso flex */
           .image-wrapper {
             height: auto !important; 
           }
 
-          /* Forza le immagini a vedersi a colori su mobile */
           .collage-image {
             filter: grayscale(0%) !important;
           }
@@ -185,8 +192,9 @@ export default function Designs() {
             right: auto !important;
             opacity: 1 !important;
             transform: translateY(0) !important;
-            background: transparent !important; /* Toglie il gradiente bianco invasivo */
-            padding: 6px 2px 0 2px !important;  /* Margine pulito sotto la foto */
+            background: transparent !important; 
+            padding: 6px 2px 0 2px !important;  
+            border-radius: 0 !important; /* Resetta la curva sotto perché su mobile il testo esce dalla foto */
           }
 
           .collage-item:active {
@@ -257,7 +265,6 @@ export default function Designs() {
                   />
                 </div>
 
-                {/* Il blocco rimane identico nel DOM, ma viene spostato sotto via CSS su mobile */}
                 <div className="project-info-overlay">
                   <h3 style={{ fontSize: "14px", fontFamily: "Crimson Text, serif", fontWeight: 400, color: "#1f2937", margin: 0 }}>
                     {project.title}
