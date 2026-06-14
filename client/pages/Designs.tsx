@@ -124,7 +124,7 @@ export default function Designs() {
           text-align: center;
           box-sizing: border-box;
           transition: opacity 0.4s ease;
-          border-radius: 40px;
+          border-radius: 20px;
         }
 
         .text-profile-card:hover {
