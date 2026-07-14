@@ -14,7 +14,7 @@ export default function Archivia() {
           <iframe 
             src="https://cdn.builder.io/o/assets%2Fb117f80db1214c899c967fecfbdcaa25%2Fae57c8f749b942419e5ef5f1a41aabdd?alt=media&token=4600a34a-7bb4-4445-8ba4-8dbf89c53842&apiKey=b117f80db1214c899c967fecfbdcaa25#toolbar=0&navpanes=0&view=FitH" 
             width="100%" 
-            style={{ height: "100%", border: "none", borderRadius: "16px", backgroundColor: "transparent" }}
+            style={{ height: "100%", border: "none", borderRadius: "0px", backgroundColor: "rgba(255, 255, 255, 0.95)" }}
             title="Curriculum Vitae Matteo Finco"
           ></iframe>
         </div>
