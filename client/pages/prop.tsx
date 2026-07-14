@@ -10,7 +10,7 @@ export default function Archivia() {
       <main style={{ flex: 1, overflow: "hidden", width: "100%", height: "100%", margin: 0, padding: 0, position: "relative" }}>
         <iframe
           src="https://paginematteo.framer.website/prop"
-          title="Coming Soon"
+          title="Prop"
           className="absolute top-0 left-0 w-full h-full border-none"
         />
         
