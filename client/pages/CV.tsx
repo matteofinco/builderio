@@ -8,11 +8,12 @@ export default function Archivia() {
 
       {/* Contenitore principale */}
       <main style={{ flex: 1, overflow: "hidden", width: "100%", height: "100%", margin: 0, padding: 0, position: "relative" }}>
-        <iframe
-          src="https://paginematteo.framer.website/comingsoon"
-          title="Curriculum Vitae"
-          className="absolute top-0 left-0 w-full h-full border-none"
-        />
+        <iframe 
+  src="https://cdn.builder.io/o/assets%2Fb117f80db1214c899c967fecfbdcaa25%2Fae57c8f749b942419e5ef5f1a41aabdd?alt=media&token=4600a34a-7bb4-4445-8ba4-8dbf89c53842&apiKey=b117f80db1214c899c967fecfbdcaa25#toolbar=0&navpanes=0&view=FitH" 
+  width="100%" 
+  style="height: 1120px; border: none; border-radius: 16px; background-color: transparent;"
+  title="Curriculum Vitae Matteo Finco"
+></iframe>
         
         {/* Barra inferiore minimale coordinata all'Header */}
         <div 
