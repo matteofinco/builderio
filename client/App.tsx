@@ -13,6 +13,7 @@ import Snake from "./pages/Snake";
 import About from "./pages/About";
 import CV from "./pages/CV";
 import Contact from "./pages/Contact";
+import Prop from "./pages/prop";
 import NotFound from "./pages/NotFound";
 
 const App = () => (
@@ -32,6 +33,7 @@ const App = () => (
       <Route path="/about" element={<About />} />
       <Route path="/cv" element={<CV />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/prop" element={<Prop />} />
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<NotFound />} />
     </Routes>

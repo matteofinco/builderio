@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 
-export default function Archivia() {
+export default function Prop() {
   return (
     <div className="bg-white flex flex-col" style={{ height: "100vh", width: "100vw", overflow: "hidden", margin: 0, padding: 0 }}>
       {/* Impostato su false per togliere il pulsante dalla barra superiore */}
@@ -34,7 +34,7 @@ export default function Archivia() {
           }}
         >
           <button 
-            onClick={() => window.location.href = "/Designs"}
+            onClick={() => window.location.href = "/designs"}
             // Sincronizzato con lo stile dell'Header: font-light, senza uppercase, colori gray-500 -> black
             className="text-sm font-light text-gray-500 tracking-wide hover:text-black transition-colors duration-200 flex items-center gap-2"
             style={{
