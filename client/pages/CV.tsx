@@ -24,7 +24,7 @@ export default function Archivia() {
           <div style={{
             width: "100%",
             height: "100%",
-            borderRadius: "16px",
+            borderRadius: "0px",
             overflow: "hidden",
             position: "relative",
             backgroundColor: "transparent"
@@ -36,10 +36,10 @@ export default function Archivia() {
               width="100%" 
               style={{ 
                 position: "absolute",
-                top: "-4px",
-                left: "-4px",
-                width: "calc(100% + 8px)",
-                height: "calc(100% + 8px)",
+                top: "-8px",
+                left: "-8px",
+                width: "calc(100% + 16px)",
+                height: "calc(100% + 16px)",
                 border: "none", 
                 backgroundColor: "transparent" 
               }}
@@ -52,7 +52,7 @@ export default function Archivia() {
                 position: "absolute",
                 top: 0,
                 right: 0,
-                width: "16px", // Larghezza standard per coprire la barra di scorrimento
+                width: "17px", // Larghezza standard per coprire la barra di scorrimento
                 height: "100%",
                 backgroundColor: "#ffffff",
                 zIndex: 5
