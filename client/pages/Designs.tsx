@@ -21,7 +21,7 @@ export default function Designs() {
     { id: "nando", title: "Nando", subtitle: "Hyperplastic cutlery handle", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F58faeaf495544fe5a8367b24177ac088", path: "/nando", areaClass: "area-nando" },
     { id: "snake", title: "Snake", subtitle: "Hockey stickhandling trainer", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F9366df60acf94b0bacc85252a2e3865e", path: "/snake", areaClass: "area-snake" },
     { id: "wafflemaker", title: "Waffle Maker", subtitle: "Waffle Maker analysis", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2Fedbb2046d3db4d549f4da864fca20382", path: "/wafflemaker", areaClass: "area-waffle" },
-    { id: "inlays", title: "Prop", subtitle: "3D-Printed Emergency Crutch", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F5ea37818589140f49395200bfbdbbb41", path: "/prop", areaClass: "area-inlays" },
+    { id: "prop", title: "Prop", subtitle: "3D-Printed Emergency Crutch", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F5ea37818589140f49395200bfbdbbb41", path: "/prop", areaClass: "area-prop" },
     { id: "ttable", title: "T-Table", subtitle: "Interactive feeding-friendly table", imageUrl: "https://cdn.builder.io/api/v1/image/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F2c9ec8a6b5fd4d90bb36506ce7b89adc", path: "/ttable", areaClass: "area-ttable" },
     { id: "matteo-finco", title: "Matteo Finco", subtitle: "Get in touch", path: "/contact", areaClass: "area-profile", isProfile: true },
   ];
@@ -37,8 +37,8 @@ export default function Designs() {
           grid-template-areas:
             "archivia archivia pizza"
             "nando    snake    pizza"
-            "waffle   waffle   inlays"
-            "ttable   profile  inlays";
+            "waffle   waffle   prop"
+            "ttable   profile  prop";
           gap: 24px;
           max-width: 1200px;
           margin: 0 auto;
@@ -50,7 +50,7 @@ export default function Designs() {
         .area-nando { grid-area: nando; }
         .area-snake { grid-area: snake; }
         .area-waffle { grid-area: waffle; }
-        .area-inlays { grid-area: inlays; }
+        .area-prop { grid-area: prop; }
         .area-ttable { grid-area: ttable; }
         .area-profile { grid-area: profile; }
 
@@ -142,7 +142,7 @@ export default function Designs() {
             grid-auto-rows: 250px;
           }
           .area-archivia, .area-waffle { grid-column: span 2; grid-row: span 1; }
-          .area-pizza, .area-inlays { grid-column: span 1; grid-row: span 2; }
+          .area-pizza, .area-prop { grid-column: span 1; grid-row: span 2; }
           .area-nando, .area-snake, .area-ttable, .area-profile { grid-column: span 1; grid-row: span 1; }
         }
         
@@ -159,8 +159,8 @@ export default function Designs() {
               "nando       pizza"
               "snake       pizza"
               "waffle      waffle"
-              "ttable      inlays"
-              "profile     inlays";
+              "ttable      prop"
+              "profile     prop";
           }
 
           .area-archivia { grid-area: archivia; }
@@ -168,7 +168,7 @@ export default function Designs() {
           .area-nando { grid-area: nando; }
           .area-snake { grid-area: snake; }
           .area-waffle { grid-area: waffle; }
-          .area-inlays { grid-area: inlays; }
+          .area-prop { grid-area: prop; }
           .area-ttable { grid-area: ttable; }
           .area-profile { grid-area: profile; }
 
