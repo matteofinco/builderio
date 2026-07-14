@@ -8,7 +8,7 @@ import Pizzamente from "./pages/Pizzamente";
 import Nando from "./pages/Nando";
 import TTable from "./pages/TTable";
 import WaffleMaker from "./pages/WaffleMaker";
-import Inlays from "./pages/Inlays";
+
 import Snake from "./pages/Snake";
 import About from "./pages/About";
 import CV from "./pages/CV";
@@ -28,7 +28,7 @@ const App = () => (
       <Route path="/nando" element={<Nando />} />
       <Route path="/ttable" element={<TTable />} />
       <Route path="/wafflemaker" element={<WaffleMaker />} />
-      <Route path="/inlays" element={<Inlays />} />
+  
       <Route path="/snake" element={<Snake />} />
       <Route path="/about" element={<About />} />
       <Route path="/cv" element={<CV />} />
