@@ -9,14 +9,56 @@ export default function Archivia() {
       {/* Contenitore principale */}
       <main style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", width: "100%", margin: 0, padding: 0, position: "relative" }}>
         
-        {/* Wrapper dell'iframe con spazio sul fondo per la barra absolute */}
-        <div style={{ flex: 1, width: "100%", height: "100%", paddingBottom: "60px", boxSizing: "border-box" }}>
-          <iframe 
-            src="https://cdn.builder.io/o/assets%2Fb117f80db1214c899c967fecfbdcaa25%2Fae57c8f749b942419e5ef5f1a41aabdd?alt=media&token=4600a34a-7bb4-4445-8ba4-8dbf89c53842&apiKey=b117f80db1214c899c967fecfbdcaa25#toolbar=0&navpanes=0&view=FitH" 
-            width="100%" 
-            style={{ height: "100%", border: "none", borderRadius: "0px", backgroundColor: "rgba(255, 255, 255, 0.95)" }}
-            title="Curriculum Vitae Matteo Finco"
-          ></iframe>
+        {/* Spazio del corpo principale (lascia 60px liberi sul fondo per la barra inferiore) */}
+        <div style={{ 
+          flex: 1, 
+          width: "100%", 
+          height: "100%", 
+          paddingBottom: "60px", 
+          boxSizing: "border-box",
+          position: "relative",
+          overflow: "hidden"
+        }}>
+          
+          {/* Contenitore con bordi arrotondati e ritaglio attivo */}
+          <div style={{
+            width: "100%",
+            height: "100%",
+            borderRadius: "16px",
+            overflow: "hidden",
+            position: "relative",
+            backgroundColor: "transparent"
+          }}>
+            
+            {/* Iframe leggermente più grande del contenitore per nascondere i bordi neri nativi del browser */}
+            <iframe 
+              src="https://cdn.builder.io/o/assets%2Fb117f80db1214c899c967fecfbdcaa25%2Fae57c8f749b942419e5ef5f1a41aabdd?alt=media&token=4600a34a-7bb4-4445-8ba4-8dbf89c53842&apiKey=b117f80db1214c899c967fecfbdcaa25#toolbar=0&navpanes=0&view=FitH" 
+              width="100%" 
+              style={{ 
+                position: "absolute",
+                top: "-4px",
+                left: "-4px",
+                width: "calc(100% + 8px)",
+                height: "calc(100% + 8px)",
+                border: "none", 
+                backgroundColor: "transparent" 
+              }}
+              title="Curriculum Vitae Matteo Finco"
+            ></iframe>
+
+            {/* Rettangolo bianco che copre e nasconde la scrollbar del PDF a destra */}
+            <div 
+              style={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+                width: "16px", // Larghezza standard per coprire la barra di scorrimento
+                height: "100%",
+                backgroundColor: "#ffffff",
+                zIndex: 5
+              }}
+            />
+          </div>
         </div>
         
         {/* Barra inferiore minimale coordinata */}
