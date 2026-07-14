@@ -39,7 +39,7 @@ export default function Archivia() {
                 top: "-8px",
                 left: "-8px",
                 width: "calc(100% + 16px)",
-                height: "calc(100% + 16px)",
+                height: "calc(100% + 20px)",
                 border: "none", 
                 backgroundColor: "transparent" 
               }}
