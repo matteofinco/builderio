@@ -1,21 +1,14 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Header from "../components/Header";
 
 export default function Archivia() {
   const [language, setLanguage] = useState("en");
-  const [isChanging, setIsChanging] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   const pdfUrls = {
     it: "https://cdn.builder.io/o/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F08ecfc6bb6a146d893a50c48392afa07?alt=media&token=c9ec7475-0f05-4279-aa29-438efd6c9518&apiKey=b117f80db1214c899c967fecfbdcaa25",
     en: "https://cdn.builder.io/o/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F3a612813bdd6434786b6d47a48781500?alt=media&token=2199cf05-8753-4383-b7be-a90505480b59&apiKey=b117f80db1214c899c967fecfbdcaa25"
   };
-
-  // Decoppiamo l'URL dell'iframe dallo stato della lingua per controllare il timing
-  const [iframeUrl, setIframeUrl] = useState(`${pdfUrls["en"]}#toolbar=0&navpanes=0&view=FitH`);
-
-  // Ref per tenere traccia del timer di sicurezza ed evitare memory leak
-  const safetyTimerRef = useRef(null);
 
   // Rileva se lo schermo è mobile
   useEffect(() => {
@@ -25,37 +18,8 @@ export default function Archivia() {
     
     handleResize();
     window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      if (safetyTimerRef.current) clearTimeout(safetyTimerRef.current);
-    };
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  // Gestione del cambio lingua con sequenza temporizzata
-  const handleLanguageChange = (lang) => {
-    if (lang !== language) {
-      setLanguage(lang); // Cambia subito il pulsante per dare feedback visivo
-      setIsChanging(true); // Avvia la dissolvenza in uscita (l'iframe diventa trasparente)
-
-      if (safetyTimerRef.current) clearTimeout(safetyTimerRef.current);
-
-      // Aspettiamo 500ms (il tempo della dissolvenza) prima di caricare il nuovo URL
-      setTimeout(() => {
-        setIframeUrl(`${pdfUrls[lang]}#toolbar=0&navpanes=0&view=FitH`);
-
-        // Timer di sicurezza: se l'onLoad non risponde entro 2.5s, mostra comunque il PDF
-        safetyTimerRef.current = setTimeout(() => {
-          setIsChanging(false);
-        }, 2500);
-      }, 500); // Coincide con la durata del fade-out CSS
-    }
-  };
-
-  // Triggerato quando il nuovo PDF è pronto dentro l'iframe
-  const handleIframeLoad = () => {
-    if (safetyTimerRef.current) clearTimeout(safetyTimerRef.current);
-    setIsChanging(false); // Avvia la dissolvenza in entrata (l'iframe torna visibile)
-  };
 
   const handleDownload = async () => {
     const fileName = `CV_Matteo_Finco_${language.toUpperCase()}.pdf`;
@@ -97,7 +61,7 @@ export default function Archivia() {
         boxShadow: "0 2px 10px rgba(0,0,0,0.05)"
       }}>
         <button
-          onClick={() => handleLanguageChange("it")}
+          onClick={() => setLanguage("it")}
           style={{
             padding: "4px 14px",
             borderRadius: "9999px",
@@ -115,7 +79,7 @@ export default function Archivia() {
           IT
         </button>
         <button
-          onClick={() => handleLanguageChange("en")}
+          onClick={() => setLanguage("en")}
           style={{
             padding: "4px 14px",
             borderRadius: "9999px",
@@ -207,7 +171,7 @@ export default function Archivia() {
               </div>
             </div>
           ) : (
-            /* Vista Desktop */
+            /* Vista Desktop con Doppia Iframe in Dissolvenza Incrociata */
             <div style={{
               width: "100%",
               height: "100%",
@@ -215,22 +179,44 @@ export default function Archivia() {
               position: "relative",
               backgroundColor: "#ffffff"
             }}>
+              {/* Iframe Italiano */}
               <iframe 
-                src={iframeUrl} 
-                onLoad={handleIframeLoad}
+                src={`${pdfUrls.it}#toolbar=0&navpanes=0&view=FitH`} 
                 width="100%" 
                 style={{ 
                   position: "absolute",
                   top: "-56px",
                   left: "0px",
                   width: "calc(100% + 24px)", 
-                  height: "calc(100% + 60px)", // Il tuo calc modificato
+                  height: "calc(100% + 60px)",
                   border: "none", 
                   backgroundColor: "transparent",
-                  opacity: isChanging ? 0 : 1,
-                  transition: "opacity 0.5s ease-in-out" // 0.5s di transizione super morbida
+                  opacity: language === "it" ? 1 : 0,
+                  pointerEvents: language === "it" ? "auto" : "none",
+                  transition: "opacity 0.6s ease-in-out",
+                  zIndex: language === "it" ? 2 : 1
                 }}
-                title="Curriculum Vitae Matteo Finco"
+                title="Curriculum Vitae Matteo Finco IT"
+              ></iframe>
+
+              {/* Iframe Inglese */}
+              <iframe 
+                src={`${pdfUrls.en}#toolbar=0&navpanes=0&view=FitH`} 
+                width="100%" 
+                style={{ 
+                  position: "absolute",
+                  top: "-56px",
+                  left: "0px",
+                  width: "calc(100% + 24px)", 
+                  height: "calc(100% + 60px)",
+                  border: "none", 
+                  backgroundColor: "transparent",
+                  opacity: language === "en" ? 1 : 0,
+                  pointerEvents: language === "en" ? "auto" : "none",
+                  transition: "opacity 0.6s ease-in-out",
+                  zIndex: language === "en" ? 2 : 1
+                }}
+                title="Curriculum Vitae Matteo Finco EN"
               ></iframe>
             </div>
           )}
