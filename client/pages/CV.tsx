@@ -7,6 +7,7 @@ export default function Archivia() {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
 
   // Stati per il caricamento on-demand (evita il lag iniziale)
+  const [shouldRenderIframes, setShouldRenderIframes] = useState(false);
   const [itRendered, setItRendered] = useState(false);
   const [isEnLoaded, setIsEnLoaded] = useState(false);
   const [isItLoaded, setIsItLoaded] = useState(false);
@@ -27,12 +28,22 @@ export default function Archivia() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Schermata bianca iniziale per nascondere il primo rendering del browser
+  // Gestione dei tempi di caricamento
   useEffect(() => {
-    const timer = setTimeout(() => {
+    // 1. Aspetta che finisca la transizione di navigazione della pagina prima di montare gli iframe (500ms)
+    const iframeTimer = setTimeout(() => {
+      setShouldRenderIframes(true);
+    }, 500);
+
+    // 2. Rimuove la schermata bianca di copertura (1200ms)
+    const loadingTimer = setTimeout(() => {
       setIsInitialLoading(false);
     }, 1200);
-    return () => clearTimeout(timer);
+
+    return () => {
+      clearTimeout(iframeTimer);
+      clearTimeout(loadingTimer);
+    };
   }, []);
 
   const handleLanguageChange = (lang) => {
@@ -67,11 +78,11 @@ export default function Archivia() {
   return (
     <div className="bg-white flex flex-col" style={{ height: "100vh", width: "100vw", overflow: "hidden", margin: 0, padding: 0, position: "relative" }}>
       
-      {/* Contenitore Header per garantire il perfetto allineamento verticale del selettore */}
+      {/* Contenitore Header */}
       <div style={{ position: "relative", width: "100%" }}>
         <Header showBackToDesigns={false} />
 
-        {/* Selettore Lingua perfettamente centrato in altezza rispetto all'Header */}
+        {/* Selettore Lingua */}
         <div style={{
           position: "absolute",
           top: "50%", 
@@ -205,64 +216,70 @@ export default function Archivia() {
               position: "relative",
               backgroundColor: "#ffffff"
             }}>
-              {/* Iframe Italiano (Caricato solo on-demand al click) */}
-              {itRendered && (
-                <iframe 
-                  src={`${pdfUrls.it}#toolbar=0&navpanes=0&view=FitH`} 
-                  onLoad={() => setIsItLoaded(true)}
-                  width="100%" 
-                  style={{ 
-                    position: "absolute",
-                    top: "-56px",
-                    left: "-12px", // Solo 12px a sinistra per preservare i testi
-                    width: "calc(100% + 36px)", // Centratura matematica perfetta
-                    height: "calc(100% + 60px)",
-                    border: "none", 
-                    backgroundColor: "transparent",
-                    opacity: (language === "it" && isItLoaded) ? 1 : 0,
-                    pointerEvents: (language === "it" && isItLoaded) ? "auto" : "none",
-                    transition: "opacity 0.6s ease-in-out",
-                    zIndex: language === "it" ? 2 : 1
-                  }}
-                  title="Curriculum Vitae Matteo Finco IT"
-                ></iframe>
+              
+              {/* Gli iframe vengono renderizzati solo a transizione completata */}
+              {shouldRenderIframes && (
+                <>
+                  {/* Iframe Italiano */}
+                  {itRendered && (
+                    <iframe 
+                      src={`${pdfUrls.it}#toolbar=0&navpanes=0&view=FitH`} 
+                      onLoad={() => setIsItLoaded(true)}
+                      width="100%" 
+                      style={{ 
+                        position: "absolute",
+                        top: "-56px",
+                        left: "-12px", 
+                        width: "calc(100% + 36px)", 
+                        height: "calc(100% + 60px)",
+                        border: "none", 
+                        backgroundColor: "transparent",
+                        opacity: (language === "it" && isItLoaded) ? 1 : 0,
+                        pointerEvents: (language === "it" && isItLoaded) ? "auto" : "none",
+                        transition: "opacity 0.6s ease-in-out",
+                        zIndex: language === "it" ? 2 : 1
+                      }}
+                      title="Curriculum Vitae Matteo Finco IT"
+                    ></iframe>
+                  )}
+
+                  {/* Iframe Inglese */}
+                  <iframe 
+                    src={`${pdfUrls.en}#toolbar=0&navpanes=0&view=FitH`} 
+                    onLoad={() => setIsEnLoaded(true)}
+                    width="100%" 
+                    style={{ 
+                      position: "absolute",
+                      top: "-56px",
+                      left: "-12px", 
+                      width: "calc(100% + 36px)", 
+                      height: "calc(100% + 75px)",
+                      border: "none", 
+                      backgroundColor: "transparent",
+                      opacity: (language === "en" && isEnLoaded) ? 1 : 0,
+                      pointerEvents: (language === "en" && isEnLoaded) ? "auto" : "none",
+                      transition: "opacity 0.6s ease-in-out",
+                      zIndex: language === "en" ? 2 : 1
+                    }}
+                    title="Curriculum Vitae Matteo Finco EN"
+                  ></iframe>
+                </>
               )}
 
-              {/* Iframe Inglese (Sempre montato all'avvio) */}
-              <iframe 
-                src={`${pdfUrls.en}#toolbar=0&navpanes=0&view=FitH`} 
-                onLoad={() => setIsEnLoaded(true)}
-                width="100%" 
-                style={{ 
-                  position: "absolute",
-                  top: "-56px",
-                  left: "-12px", // Solo 12px a sinistra per preservare i testi
-                  width: "calc(100% + 36px)", // Centratura matematica perfetta
-                  height: "calc(100% + 75px)",
-                  border: "none", 
-                  backgroundColor: "transparent",
-                  opacity: (language === "en" && isEnLoaded) ? 1 : 0,
-                  pointerEvents: (language === "en" && isEnLoaded) ? "auto" : "none",
-                  transition: "opacity 0.6s ease-in-out",
-                  zIndex: language === "en" ? 2 : 1
-                }}
-                title="Curriculum Vitae Matteo Finco EN"
-              ></iframe>
-
-              {/* RETTANGOLI DI COPERTURA LATERALI (Coprono i bordi neri/scuri dell'iframe) */}
-              {/* Sinistro: Sottile (12px) così non copre le scritte reali */}
+              {/* RETTANGOLI DI COPERTURA LATERALI */}
+              {/* Sinistro: Sottile (12px) e di colore NERO */}
               <div style={{
                 position: "absolute",
                 top: 0,
                 left: 0,
                 width: "12px",
                 height: "100%",
-                backgroundColor: "#ffffff",
+                backgroundColor: "#000000",
                 zIndex: 3,
                 pointerEvents: "none"
               }} />
 
-              {/* Destro: 24px per coprire interamente la scrollbar */}
+              {/* Destro: 24px e di colore Bianco (per nascondere la scrollbar) */}
               <div style={{
                 position: "absolute",
                 top: 0,
@@ -310,7 +327,6 @@ export default function Archivia() {
             boxShadow: "0 -15px 30px -10px rgba(0, 0, 0, 0.04), 0 -10px 15px -5px rgba(0, 0, 0, 0.02)"
           }}
         >
-          {/* Pulsante Contatto */}
           <button 
             onClick={() => window.location.href = "/Contact"}
             className="text-sm font-light text-gray-500 tracking-wide hover:text-black transition-colors duration-200"
@@ -324,7 +340,6 @@ export default function Archivia() {
             Get in touch
           </button>
 
-          {/* Pulsante Download PDF */}
           <button 
             onClick={handleDownload}
             className="text-sm font-light text-gray-500 tracking-wide hover:text-black transition-colors duration-200"
