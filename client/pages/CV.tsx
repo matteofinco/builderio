@@ -13,13 +13,13 @@ export default function Archivia() {
 
   const currentIframeUrl = `${pdfUrls[language]}#toolbar=0&navpanes=0&view=FitH`;
 
-  // Rileva se lo schermo è mobile (sotto i 768px)
+  // Rileva se lo schermo è mobile
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
     
-    handleResize(); // Esegui al caricamento
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -122,7 +122,7 @@ export default function Archivia() {
         }}>
           
           {isMobile ? (
-            /* Vista Mobile: Sostituisce l'iframe con un layout responsive e pulito */
+            /* Vista Mobile */
             <div style={{
               display: "flex",
               flexDirection: "column",
@@ -181,7 +181,7 @@ export default function Archivia() {
               </div>
             </div>
           ) : (
-            /* Vista Desktop: Mantiene l'iframe con i parametri perfetti */
+            /* Vista Desktop */
             <div style={{
               width: "100%",
               height: "100%",
@@ -198,11 +198,11 @@ export default function Archivia() {
                   top: "-56px",
                   left: "0px",
                   width: "calc(100% + 24px)", 
-                  height: "calc(100% + 60px)", // Il tuo calc modificato che funziona alla perfezione
+                  height: "calc(100% + 60px)",
                   border: "none", 
                   backgroundColor: "transparent",
                   opacity: isChanging ? 0 : 1,
-                  transition: "opacity 0.9s ease-in-out"
+                  transition: "opacity 1.8s ease-in-out" // Durata aumentata a 0.8s per massima fluidità
                 }}
                 title="Curriculum Vitae Matteo Finco"
               ></iframe>
@@ -229,7 +229,7 @@ export default function Archivia() {
             boxShadow: "0 -15px 30px -10px rgba(0, 0, 0, 0.04), 0 -10px 15px -5px rgba(0, 0, 0, 0.02)"
           }}
         >
-          {/* Pulsante Contatto (Centrato) */}
+          {/* Pulsante Contatto */}
           <button 
             onClick={() => window.location.href = "/Contact"}
             className="text-sm font-light text-gray-500 tracking-wide hover:text-black transition-colors duration-200"
@@ -243,7 +243,7 @@ export default function Archivia() {
             Get in touch
           </button>
 
-          {/* Pulsante Download PDF (In basso a destra) */}
+          {/* Pulsante Download PDF */}
           <button 
             onClick={handleDownload}
             className="text-sm font-light text-gray-500 tracking-wide hover:text-black transition-colors duration-200"
@@ -273,7 +273,6 @@ export default function Archivia() {
               <polyline points="7 10 12 15 17 10" />
               <line x1="12" y1="15" x2="12" y2="3" />
             </svg>
-            {/* Tailwind nasconde la scritta su schermi piccoli (sotto i 640px) lasciando solo l'icona */}
             <span className="hidden sm:inline">Download PDF</span>
           </button>
         </div>
