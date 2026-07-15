@@ -5,6 +5,7 @@ export default function Archivia() {
   const [language, setLanguage] = useState("en");
   const [isMobile, setIsMobile] = useState(false);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [loadSecondary, setLoadSecondary] = useState(false); // Lazy load per evitare il lag di caricamento doppio
 
   const pdfUrls = {
     it: "https://cdn.builder.io/o/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F08ecfc6bb6a146d893a50c48392afa07?alt=media&token=c9ec7475-0f05-4279-aa29-438efd6c9518&apiKey=b117f80db1214c899c967fecfbdcaa25",
@@ -22,13 +23,30 @@ export default function Archivia() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Rimuove la schermata bianca iniziale dopo 800ms
+  // Gestione caricamenti e rimozione schermata bianca iniziale
   useEffect(() => {
-    const timer = setTimeout(() => {
+    // Rimuove la schermata di caricamento dopo 1.8s per dare tempo al PDF primario di stabilizzarsi
+    const loadingTimer = setTimeout(() => {
       setIsInitialLoading(false);
-    }, 800); // Dà il tempo al browser di inizializzare e renderizzare il PDF in background
-    return () => clearTimeout(timer);
+    }, 1800);
+
+    // Carica il secondo PDF in background dopo 1.5s per evitare colli di bottiglia e lag iniziali
+    const secondaryTimer = setTimeout(() => {
+      setLoadSecondary(true);
+    }, 1500);
+
+    return () => {
+      clearTimeout(loadingTimer);
+      clearTimeout(secondaryTimer);
+    };
   }, []);
+
+  const handleLanguageChange = (lang) => {
+    if (lang !== language) {
+      setLoadSecondary(true); // Forza il caricamento immediato se l'utente clicca prima del timer
+      setLanguage(lang);
+    }
+  };
 
   const handleDownload = async () => {
     const fileName = `CV_Matteo_Finco_${language.toUpperCase()}.pdf`;
@@ -53,58 +71,61 @@ export default function Archivia() {
   return (
     <div className="bg-white flex flex-col" style={{ height: "100vh", width: "100vw", overflow: "hidden", margin: 0, padding: 0, position: "relative" }}>
       
-      <Header showBackToDesigns={false} />
+      {/* Contenitore Header per garantire il perfetto centramento verticale del selettore lingua */}
+      <div style={{ position: "relative", width: "100%" }}>
+        <Header showBackToDesigns={false} />
 
-      {/* Selettore Lingua */}
-      <div style={{
-        position: "absolute",
-        top: "14px", 
-        left: "50%",
-        transform: "translateX(-50%)",
-        zIndex: 99999,
-        display: "flex",
-        backgroundColor: "#f3f4f6",
-        padding: "3px",
-        borderRadius: "9999px",
-        border: "1px solid #e5e7eb",
-        boxShadow: "0 2px 10px rgba(0,0,0,0.05)"
-      }}>
-        <button
-          onClick={() => setLanguage("it")}
-          style={{
-            padding: "4px 14px",
-            borderRadius: "9999px",
-            fontSize: "11px",
-            letterSpacing: "0.05em",
-            fontWeight: language === "it" ? "500" : "300",
-            color: language === "it" ? "#000000" : "#9ca3af",
-            backgroundColor: language === "it" ? "#ffffff" : "transparent",
-            boxShadow: language === "it" ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
-            border: "none",
-            cursor: "pointer",
-            transition: "all 0.2s ease"
-          }}
-        >
-          IT
-        </button>
-        <button
-          onClick={() => setLanguage("en")}
-          style={{
-            padding: "4px 14px",
-            borderRadius: "9999px",
-            fontSize: "11px",
-            letterSpacing: "0.05em",
-            fontWeight: language === "en" ? "500" : "300",
-            color: language === "en" ? "#000000" : "#9ca3af",
-            backgroundColor: language === "en" ? "#ffffff" : "transparent",
-            boxShadow: language === "en" ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
-            border: "none",
-            cursor: "pointer",
-            transition: "all 0.2s ease"
-          }}
-        >
-          EN
-        </button>
+        {/* Selettore Lingua perfettamente centrato in altezza rispetto all'Header */}
+        <div style={{
+          position: "absolute",
+          top: "50%", 
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          zIndex: 99999,
+          display: "flex",
+          backgroundColor: "#f3f4f6",
+          padding: "3px",
+          borderRadius: "9999px",
+          border: "1px solid #e5e7eb",
+          boxShadow: "0 2px 10px rgba(0,0,0,0.05)"
+        }}>
+          <button
+            onClick={() => handleLanguageChange("it")}
+            style={{
+              padding: "4px 14px",
+              borderRadius: "9999px",
+              fontSize: "11px",
+              letterSpacing: "0.05em",
+              fontWeight: language === "it" ? "500" : "300",
+              color: language === "it" ? "#000000" : "#9ca3af",
+              backgroundColor: language === "it" ? "#ffffff" : "transparent",
+              boxShadow: language === "it" ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
+              border: "none",
+              cursor: "pointer",
+              transition: "all 0.2s ease"
+            }}
+          >
+            IT
+          </button>
+          <button
+            onClick={() => handleLanguageChange("en")}
+            style={{
+              padding: "4px 14px",
+              borderRadius: "9999px",
+              fontSize: "11px",
+              letterSpacing: "0.05em",
+              fontWeight: language === "en" ? "500" : "300",
+              color: language === "en" ? "#000000" : "#9ca3af",
+              backgroundColor: language === "en" ? "#ffffff" : "transparent",
+              boxShadow: language === "en" ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
+              border: "none",
+              cursor: "pointer",
+              transition: "all 0.2s ease"
+            }}
+          >
+            EN
+          </button>
+        </div>
       </div>
 
       {/* Contenitore principale */}
@@ -180,7 +201,7 @@ export default function Archivia() {
               </div>
             </div>
           ) : (
-            /* Vista Desktop con Doppia Iframe in Dissolvenza Incrociata */
+            /* Vista Desktop con Doppia Iframe e Maschere Antilag */
             <div style={{
               width: "100%",
               height: "100%",
@@ -188,35 +209,37 @@ export default function Archivia() {
               position: "relative",
               backgroundColor: "#ffffff"
             }}>
-              {/* Iframe Italiano */}
-              <iframe 
-                src={`${pdfUrls.it}#toolbar=0&navpanes=0&view=FitH`} 
-                width="100%" 
-                style={{ 
-                  position: "absolute",
-                  top: "-56px",
-                  left: "0px",
-                  width: "calc(100% + 24px)", 
-                  height: "calc(100% + 60px)",
-                  border: "none", 
-                  backgroundColor: "transparent",
-                  opacity: language === "it" ? 1 : 0,
-                  pointerEvents: language === "it" ? "auto" : "none",
-                  transition: "opacity 0.6s ease-in-out",
-                  zIndex: language === "it" ? 2 : 1
-                }}
-                title="Curriculum Vitae Matteo Finco IT"
-              ></iframe>
+              {/* Iframe Italiano (Attivo se selezionato) */}
+              {(loadSecondary || language === "it") && (
+                <iframe 
+                  src={`${pdfUrls.it}#toolbar=0&navpanes=0&view=FitH`} 
+                  width="100%" 
+                  style={{ 
+                    position: "absolute",
+                    top: "-56px",
+                    left: "-40px", // Spostato a sinistra per nascondere il bordo nero
+                    width: "calc(100% + 80px)", // Allargato simmetricamente per spingere la scrollbar fuori schermo
+                    height: "calc(100% + 60px)",
+                    border: "none", 
+                    backgroundColor: "transparent",
+                    opacity: language === "it" ? 1 : 0,
+                    pointerEvents: language === "it" ? "auto" : "none",
+                    transition: "opacity 0.6s ease-in-out",
+                    zIndex: language === "it" ? 2 : 1
+                  }}
+                  title="Curriculum Vitae Matteo Finco IT"
+                ></iframe>
+              )}
 
-              {/* Iframe Inglese */}
+              {/* Iframe Inglese (Attivo se selezionato) */}
               <iframe 
                 src={`${pdfUrls.en}#toolbar=0&navpanes=0&view=FitH`} 
                 width="100%" 
                 style={{ 
                   position: "absolute",
                   top: "-56px",
-                  left: "0px",
-                  width: "calc(100% + 24px)", 
+                  left: "-40px", // Spostato a sinistra per nascondere il bordo nero
+                  width: "calc(100% + 80px)", // Allargato simmetricamente per spingere la scrollbar fuori schermo
                   height: "calc(100% + 60px)",
                   border: "none", 
                   backgroundColor: "transparent",
@@ -228,7 +251,30 @@ export default function Archivia() {
                 title="Curriculum Vitae Matteo Finco EN"
               ></iframe>
 
-              {/* Copertura Bianca Iniziale Antilag / Antiflash */}
+              {/* RETTANGOLI DI MASCHERAMENTO LATERALI (Coprono bordi neri e scrollbar) */}
+              <div style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "40px",
+                height: "100%",
+                backgroundColor: "#ffffff",
+                zIndex: 3,
+                pointerEvents: "none"
+              }} />
+
+              <div style={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+                width: "40px",
+                height: "100%",
+                backgroundColor: "#ffffff",
+                zIndex: 3,
+                pointerEvents: "none"
+              }} />
+
+              {/* Schermata Bianca Antilag / Antiflash Iniziale */}
               <div style={{
                 position: "absolute",
                 top: 0,
@@ -239,7 +285,7 @@ export default function Archivia() {
                 zIndex: 10,
                 opacity: isInitialLoading ? 1 : 0,
                 pointerEvents: "none",
-                transition: "opacity 0.5s ease-in-out" // Dissolvenza incrociata morbidissima di 0.5s
+                transition: "opacity 0.5s ease-in-out"
               }} />
             </div>
           )}
