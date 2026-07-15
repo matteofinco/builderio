@@ -5,7 +5,11 @@ export default function Archivia() {
   const [language, setLanguage] = useState("en");
   const [isMobile, setIsMobile] = useState(false);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
-  const [loadSecondary, setLoadSecondary] = useState(false); // Lazy load per evitare il lag di caricamento doppio
+
+  // Stati per il caricamento on-demand (evita il lag iniziale)
+  const [itRendered, setItRendered] = useState(false);
+  const [isEnLoaded, setIsEnLoaded] = useState(false);
+  const [isItLoaded, setIsItLoaded] = useState(false);
 
   const pdfUrls = {
     it: "https://cdn.builder.io/o/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F08ecfc6bb6a146d893a50c48392afa07?alt=media&token=c9ec7475-0f05-4279-aa29-438efd6c9518&apiKey=b117f80db1214c899c967fecfbdcaa25",
@@ -23,27 +27,19 @@ export default function Archivia() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Gestione caricamenti e rimozione schermata bianca iniziale
+  // Schermata bianca iniziale per nascondere il primo rendering del browser
   useEffect(() => {
-    // Rimuove la schermata di caricamento dopo 1.8s per dare tempo al PDF primario di stabilizzarsi
-    const loadingTimer = setTimeout(() => {
+    const timer = setTimeout(() => {
       setIsInitialLoading(false);
-    }, 1800);
-
-    // Carica il secondo PDF in background dopo 1.5s per evitare colli di bottiglia e lag iniziali
-    const secondaryTimer = setTimeout(() => {
-      setLoadSecondary(true);
-    }, 1500);
-
-    return () => {
-      clearTimeout(loadingTimer);
-      clearTimeout(secondaryTimer);
-    };
+    }, 1200);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleLanguageChange = (lang) => {
     if (lang !== language) {
-      setLoadSecondary(true); // Forza il caricamento immediato se l'utente clicca prima del timer
+      if (lang === "it" && !itRendered) {
+        setItRendered(true); // Carica l'iframe italiano solo al primo click
+      }
       setLanguage(lang);
     }
   };
@@ -71,7 +67,7 @@ export default function Archivia() {
   return (
     <div className="bg-white flex flex-col" style={{ height: "100vh", width: "100vw", overflow: "hidden", margin: 0, padding: 0, position: "relative" }}>
       
-      {/* Contenitore Header per garantire il perfetto centramento verticale del selettore lingua */}
+      {/* Contenitore Header per garantire il perfetto allineamento verticale del selettore */}
       <div style={{ position: "relative", width: "100%" }}>
         <Header showBackToDesigns={false} />
 
@@ -201,7 +197,7 @@ export default function Archivia() {
               </div>
             </div>
           ) : (
-            /* Vista Desktop con Doppia Iframe e Maschere Antilag */
+            /* Vista Desktop */
             <div style={{
               width: "100%",
               height: "100%",
@@ -209,21 +205,22 @@ export default function Archivia() {
               position: "relative",
               backgroundColor: "#ffffff"
             }}>
-              {/* Iframe Italiano (Attivo se selezionato) */}
-              {(loadSecondary || language === "it") && (
+              {/* Iframe Italiano (Caricato solo on-demand al click) */}
+              {itRendered && (
                 <iframe 
                   src={`${pdfUrls.it}#toolbar=0&navpanes=0&view=FitH`} 
+                  onLoad={() => setIsItLoaded(true)}
                   width="100%" 
                   style={{ 
                     position: "absolute",
                     top: "-56px",
-                    left: "-40px", // Spostato a sinistra per nascondere il bordo nero
-                    width: "calc(100% + 80px)", // Allargato simmetricamente per spingere la scrollbar fuori schermo
+                    left: "-12px", // Solo 12px a sinistra per preservare i testi
+                    width: "calc(100% + 36px)", // Centratura matematica perfetta
                     height: "calc(100% + 60px)",
                     border: "none", 
                     backgroundColor: "transparent",
-                    opacity: language === "it" ? 1 : 0,
-                    pointerEvents: language === "it" ? "auto" : "none",
+                    opacity: (language === "it" && isItLoaded) ? 1 : 0,
+                    pointerEvents: (language === "it" && isItLoaded) ? "auto" : "none",
                     transition: "opacity 0.6s ease-in-out",
                     zIndex: language === "it" ? 2 : 1
                   }}
@@ -231,50 +228,53 @@ export default function Archivia() {
                 ></iframe>
               )}
 
-              {/* Iframe Inglese (Attivo se selezionato) */}
+              {/* Iframe Inglese (Sempre montato all'avvio) */}
               <iframe 
                 src={`${pdfUrls.en}#toolbar=0&navpanes=0&view=FitH`} 
+                onLoad={() => setIsEnLoaded(true)}
                 width="100%" 
                 style={{ 
                   position: "absolute",
                   top: "-56px",
-                  left: "-40px", // Spostato a sinistra per nascondere il bordo nero
-                  width: "calc(100% + 80px)", // Allargato simmetricamente per spingere la scrollbar fuori schermo
+                  left: "-12px", // Solo 12px a sinistra per preservare i testi
+                  width: "calc(100% + 36px)", // Centratura matematica perfetta
                   height: "calc(100% + 60px)",
                   border: "none", 
                   backgroundColor: "transparent",
-                  opacity: language === "en" ? 1 : 0,
-                  pointerEvents: language === "en" ? "auto" : "none",
+                  opacity: (language === "en" && isEnLoaded) ? 1 : 0,
+                  pointerEvents: (language === "en" && isEnLoaded) ? "auto" : "none",
                   transition: "opacity 0.6s ease-in-out",
                   zIndex: language === "en" ? 2 : 1
                 }}
                 title="Curriculum Vitae Matteo Finco EN"
               ></iframe>
 
-              {/* RETTANGOLI DI MASCHERAMENTO LATERALI (Coprono bordi neri e scrollbar) */}
+              {/* RETTANGOLI DI COPERTURA LATERALI (Coprono i bordi neri/scuri dell'iframe) */}
+              {/* Sinistro: Sottile (12px) così non copre le scritte reali */}
               <div style={{
                 position: "absolute",
                 top: 0,
                 left: 0,
-                width: "40px",
+                width: "12px",
                 height: "100%",
                 backgroundColor: "#ffffff",
                 zIndex: 3,
                 pointerEvents: "none"
               }} />
 
+              {/* Destro: 24px per coprire interamente la scrollbar */}
               <div style={{
                 position: "absolute",
                 top: 0,
                 right: 0,
-                width: "40px",
+                width: "24px",
                 height: "100%",
                 backgroundColor: "#ffffff",
                 zIndex: 3,
                 pointerEvents: "none"
               }} />
 
-              {/* Schermata Bianca Antilag / Antiflash Iniziale */}
+              {/* Schermata Bianca di Caricamento Iniziale */}
               <div style={{
                 position: "absolute",
                 top: 0,
