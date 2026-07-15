@@ -202,7 +202,7 @@ export default function Archivia() {
                   border: "none", 
                   backgroundColor: "transparent",
                   opacity: isChanging ? 0 : 1,
-                  transition: "opacity 0.3s ease-in-out"
+                  transition: "opacity 0.9s ease-in-out"
                 }}
                 title="Curriculum Vitae Matteo Finco"
               ></iframe>
