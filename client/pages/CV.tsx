@@ -136,7 +136,7 @@ export default function Archivia() {
                 top: "-40px",
                 left: "0px",
                 width: "calc(100% + 40px)", 
-                height: "calc(100% + 80px)",
+                height: "calc(100% + 60px)",
                 border: "none", 
                 backgroundColor: "transparent",
                 opacity: isChanging ? 0 : 1,
