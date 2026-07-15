@@ -4,6 +4,7 @@ import Header from "../components/Header";
 export default function Archivia() {
   const [language, setLanguage] = useState("en");
   const [isMobile, setIsMobile] = useState(false);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
 
   const pdfUrls = {
     it: "https://cdn.builder.io/o/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F08ecfc6bb6a146d893a50c48392afa07?alt=media&token=c9ec7475-0f05-4279-aa29-438efd6c9518&apiKey=b117f80db1214c899c967fecfbdcaa25",
@@ -19,6 +20,14 @@ export default function Archivia() {
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Rimuove la schermata bianca iniziale dopo 800ms
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsInitialLoading(false);
+    }, 800); // Dà il tempo al browser di inizializzare e renderizzare il PDF in background
+    return () => clearTimeout(timer);
   }, []);
 
   const handleDownload = async () => {
@@ -218,6 +227,20 @@ export default function Archivia() {
                 }}
                 title="Curriculum Vitae Matteo Finco EN"
               ></iframe>
+
+              {/* Copertura Bianca Iniziale Antilag / Antiflash */}
+              <div style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                backgroundColor: "#ffffff",
+                zIndex: 10,
+                opacity: isInitialLoading ? 1 : 0,
+                pointerEvents: "none",
+                transition: "opacity 0.5s ease-in-out" // Dissolvenza incrociata morbidissima di 0.5s
+              }} />
             </div>
           )}
         </div>
