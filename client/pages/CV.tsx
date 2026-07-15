@@ -236,7 +236,7 @@ export default function Archivia() {
                         backgroundColor: "transparent",
                         opacity: (language === "it" && isItLoaded) ? 1 : 0,
                         pointerEvents: (language === "it" && isItLoaded) ? "auto" : "none",
-                        transition: "opacity 0.6s ease-in-out",
+                        transition: "opacity 0.8s ease-in-out",
                         zIndex: language === "it" ? 2 : 1
                       }}
                       title="Curriculum Vitae Matteo Finco IT"
@@ -258,7 +258,7 @@ export default function Archivia() {
                       backgroundColor: "transparent",
                       opacity: (language === "en" && isEnLoaded) ? 1 : 0,
                       pointerEvents: (language === "en" && isEnLoaded) ? "auto" : "none",
-                      transition: "opacity 0.6s ease-in-out",
+                      transition: "opacity 0.8s ease-in-out",
                       zIndex: language === "en" ? 2 : 1
                     }}
                     title="Curriculum Vitae Matteo Finco EN"
@@ -302,7 +302,7 @@ export default function Archivia() {
                 zIndex: 10,
                 opacity: isInitialLoading ? 1 : 0,
                 pointerEvents: "none",
-                transition: "opacity 0.5s ease-in-out"
+                transition: "opacity 0.7s ease-in-out"
               }} />
             </div>
           )}
