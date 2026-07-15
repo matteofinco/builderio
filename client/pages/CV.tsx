@@ -238,7 +238,7 @@ export default function Archivia() {
                   top: "-56px",
                   left: "-12px", // Solo 12px a sinistra per preservare i testi
                   width: "calc(100% + 36px)", // Centratura matematica perfetta
-                  height: "calc(100% + 65px)",
+                  height: "calc(100% + 75px)",
                   border: "none", 
                   backgroundColor: "transparent",
                   opacity: (language === "en" && isEnLoaded) ? 1 : 0,
