@@ -2,8 +2,8 @@ import { useState } from "react";
 import Header from "../components/Header";
 
 export default function Archivia() {
-  // Stato per gestire la lingua attiva: "it" o "en"
-  const [language, setLanguage] = useState("it");
+  // Lingua inglese impostata di default
+  const [language, setLanguage] = useState("en");
 
   // Database dei link dei PDF
   const pdfUrls = {
@@ -11,8 +11,31 @@ export default function Archivia() {
     en: "https://cdn.builder.io/o/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F3e28745827294807a934f037226de5ad?alt=media&token=a28b01f6-333b-4e52-8e49-694d3d5894c9&apiKey=b117f80db1214c899c967fecfbdcaa25"
   };
 
-  // Costruisce l'URL per l'iframe applicando i parametri di visualizzazione pulita
+  // Costruisce l'URL per l'iframe
   const currentIframeUrl = `${pdfUrls[language]}#toolbar=0&navpanes=0&view=FitH`;
+
+  // Funzione per forzare il download con il nome personalizzato bypassando il blocco CORS
+  const handleDownload = async () => {
+    const fileName = `CV_Matteo_Finco_${language.toUpperCase()}.pdf`;
+    try {
+      const response = await fetch(pdfUrls[language]);
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      
+      // Pulizia della memoria
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      // Fallback classico se il browser blocca la richiesta fetch
+      window.open(pdfUrls[language], "_blank");
+    }
+  };
 
   return (
     <div className="bg-white flex flex-col" style={{ height: "100vh", width: "100vw", overflow: "hidden", margin: 0, padding: 0, position: "relative" }}>
@@ -20,7 +43,7 @@ export default function Archivia() {
       {/* Header senza pulsante indietro */}
       <Header showBackToDesigns={false} />
 
-      {/* Selettore Lingua minimale (Posizionato sopra l'header con zIndex elevatissimo) */}
+      {/* Selettore Lingua minimale in alto al centro */}
       <div style={{
         position: "absolute",
         top: "14px", 
@@ -75,7 +98,7 @@ export default function Archivia() {
       {/* Contenitore principale */}
       <main style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", width: "100%", margin: 0, padding: 0, position: "relative" }}>
         
-        {/* Spazio dell'iframe (lascia 60px liberi sul fondo per la barra inferiore) */}
+        {/* Spazio dell'iframe con 60px liberi sul fondo */}
         <div style={{ 
           flex: 1, 
           width: "100%", 
@@ -86,7 +109,7 @@ export default function Archivia() {
           overflow: "hidden"
         }}>
           
-          {/* Contenitore di ritaglio squadrato (senza bordi arrotondati) */}
+          {/* Contenitore di ritaglio squadrato */}
           <div style={{
             width: "100%",
             height: "100%",
@@ -95,15 +118,15 @@ export default function Archivia() {
             backgroundColor: "transparent"
           }}>
             
-            {/* Iframe scalato maggiormente per tagliare fuori i bordi neri e la scrollbar del browser */}
+            {/* Iframe allineato a sinistra (left: 0) per non tagliare il testo del banner */}
             <iframe 
               src={currentIframeUrl} 
               width="100%" 
               style={{ 
                 position: "absolute",
                 top: "-40px",
-                left: "-40px",
-                width: "calc(100% + 80px)",
+                left: "0px",
+                width: "calc(100% + 40px)", // Spinge solo il lato destro (e la scrollbar) fuori dallo schermo
                 height: "calc(100% + 80px)",
                 border: "none", 
                 backgroundColor: "transparent" 
@@ -146,20 +169,20 @@ export default function Archivia() {
             Get in touch
           </button>
 
-          {/* Pulsante Download PDF dinamico (In basso a destra) */}
-          <a 
-            href={pdfUrls[language]} 
-            download={`CV_Matteo_Finco_${language.toUpperCase()}.pdf`}
-            target="_blank" 
-            rel="noopener noreferrer"
+          {/* Pulsante Download PDF rinominato dinamicamente (In basso a destra) */}
+          <button 
+            onClick={handleDownload}
             className="text-sm font-light text-gray-500 tracking-wide hover:text-black transition-colors duration-200"
             style={{
               position: "absolute",
               right: "32px",
-              textDecoration: "none",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
               display: "flex",
               alignItems: "center",
-              gap: "6px"
+              gap: "6px",
+              padding: 0
             }}
           >
             <svg 
@@ -177,7 +200,7 @@ export default function Archivia() {
               <line x1="12" y1="15" x2="12" y2="3" />
             </svg>
             Download PDF
-          </a>
+          </button>
         </div>
       </main>
     </div>
