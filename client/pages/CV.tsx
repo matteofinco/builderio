@@ -5,31 +5,34 @@ export default function Archivia() {
   // Stato per gestire la lingua attiva: "it" o "en"
   const [language, setLanguage] = useState("it");
 
-  // Database dei link dei PDF forniti
+  // Database dei link dei PDF
   const pdfUrls = {
     it: "https://cdn.builder.io/o/assets%2Fb117f80db1214c899c967fecfbdcaa25%2Fa6c2d056f1db4f8c9f9f2dd4f261bbed?alt=media&token=7284c0de-1d2b-47b9-b4f0-0c6e563a83be&apiKey=b117f80db1214c899c967fecfbdcaa25",
     en: "https://cdn.builder.io/o/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F3e28745827294807a934f037226de5ad?alt=media&token=a28b01f6-333b-4e52-8e49-694d3d5894c9&apiKey=b117f80db1214c899c967fecfbdcaa25"
   };
 
-  // Costruisce l'URL per l'iframe aggiungendo i filtri grafici corretti
+  // Costruisce l'URL per l'iframe applicando i parametri di visualizzazione pulita
   const currentIframeUrl = `${pdfUrls[language]}#toolbar=0&navpanes=0&view=FitH`;
 
   return (
     <div className="bg-white flex flex-col" style={{ height: "100vh", width: "100vw", overflow: "hidden", margin: 0, padding: 0, position: "relative" }}>
       
-      {/* Selettore Lingua minimale in alto al centro (sovrapposto all'Header) */}
+      {/* Header senza pulsante indietro */}
+      <Header showBackToDesigns={false} />
+
+      {/* Selettore Lingua minimale (Posizionato sopra l'header con zIndex elevatissimo) */}
       <div style={{
         position: "absolute",
         top: "14px", 
         left: "50%",
         transform: "translateX(-50%)",
-        zIndex: 50,
+        zIndex: 99999,
         display: "flex",
         backgroundColor: "#f3f4f6",
         padding: "3px",
         borderRadius: "9999px",
         border: "1px solid #e5e7eb",
-        boxShadow: "0 2px 10px rgba(0,0,0,0.02)"
+        boxShadow: "0 2px 10px rgba(0,0,0,0.05)"
       }}>
         <button
           onClick={() => setLanguage("it")}
@@ -69,13 +72,10 @@ export default function Archivia() {
         </button>
       </div>
 
-      {/* Header senza pulsante indietro */}
-      <Header showBackToDesigns={false} />
-
       {/* Contenitore principale */}
       <main style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", width: "100%", margin: 0, padding: 0, position: "relative" }}>
         
-        {/* Spazio dell'iframe con 60px liberi in fondo per la barra di navigazione inferiore */}
+        {/* Spazio dell'iframe (lascia 60px liberi sul fondo per la barra inferiore) */}
         <div style={{ 
           flex: 1, 
           width: "100%", 
@@ -86,48 +86,34 @@ export default function Archivia() {
           overflow: "hidden"
         }}>
           
-          {/* Contenitore interno con maschera attiva */}
+          {/* Contenitore di ritaglio squadrato (senza bordi arrotondati) */}
           <div style={{
             width: "100%",
             height: "100%",
-            borderRadius: "16px",
             overflow: "hidden",
             position: "relative",
             backgroundColor: "transparent"
           }}>
             
-            {/* Iframe dinamico basato sullo stato della lingua */}
+            {/* Iframe scalato maggiormente per tagliare fuori i bordi neri e la scrollbar del browser */}
             <iframe 
               src={currentIframeUrl} 
               width="100%" 
               style={{ 
                 position: "absolute",
-                top: "-4px",
-                left: "-4px",
-                width: "calc(100% + 8px)",
-                height: "calc(100% + 8px)",
+                top: "-40px",
+                left: "-40px",
+                width: "calc(100% + 80px)",
+                height: "calc(100% + 80px)",
                 border: "none", 
                 backgroundColor: "transparent" 
               }}
               title="Curriculum Vitae Matteo Finco"
             ></iframe>
-
-            {/* Rettangolo bianco per nascondere la barra di scorrimento del PDF */}
-            <div 
-              style={{
-                position: "absolute",
-                top: 0,
-                right: 0,
-                width: "16px", 
-                height: "100%",
-                backgroundColor: "#ffffff",
-                zIndex: 5
-              }}
-            />
           </div>
         </div>
         
-        {/* Barra inferiore minimale */}
+        {/* Barra inferiore minimale coordinata */}
         <div 
           style={{
             position: "absolute",
@@ -176,7 +162,6 @@ export default function Archivia() {
               gap: "6px"
             }}
           >
-            {/* Icona SVG minimale per il download */}
             <svg 
               width="14" 
               height="14" 
