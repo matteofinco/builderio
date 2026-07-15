@@ -231,7 +231,7 @@ export default function Archivia() {
                         top: "-56px",
                         left: "-12px", 
                         width: "calc(100% + 36px)", 
-                        height: "calc(100% + 60px)",
+                        height: "calc(100% + 75px)",
                         border: "none", 
                         backgroundColor: "transparent",
                         opacity: (language === "it" && isItLoaded) ? 1 : 0,
