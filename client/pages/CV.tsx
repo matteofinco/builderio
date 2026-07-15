@@ -257,7 +257,7 @@ export default function Archivia() {
                 left: 0,
                 width: "12px",
                 height: "100%",
-                backgroundColor: "#ffffff",
+                backgroundColor: "#000000ff",
                 zIndex: 3,
                 pointerEvents: "none"
               }} />
