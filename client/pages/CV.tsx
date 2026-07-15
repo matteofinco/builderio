@@ -2,19 +2,29 @@ import { useState } from "react";
 import Header from "../components/Header";
 
 export default function Archivia() {
-  // Lingua inglese impostata di default
+  // Lingua inglese di default
   const [language, setLanguage] = useState("en");
+  // Stato per gestire la transizione di caricamento dell'iframe
+  const [isChanging, setIsChanging] = useState(false);
 
-  // Database dei link dei PDF
+  // Nuovi link dei PDF
   const pdfUrls = {
-    it: "https://cdn.builder.io/o/assets%2Fb117f80db1214c899c967fecfbdcaa25%2Fa6c2d056f1db4f8c9f9f2dd4f261bbed?alt=media&token=7284c0de-1d2b-47b9-b4f0-0c6e563a83be&apiKey=b117f80db1214c899c967fecfbdcaa25",
-    en: "https://cdn.builder.io/o/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F3e28745827294807a934f037226de5ad?alt=media&token=a28b01f6-333b-4e52-8e49-694d3d5894c9&apiKey=b117f80db1214c899c967fecfbdcaa25"
+    it: "https://cdn.builder.io/o/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F08ecfc6bb6a146d893a50c48392afa07?alt=media&token=c9ec7475-0f05-4279-aa29-438efd6c9518&apiKey=b117f80db1214c899c967fecfbdcaa25",
+    en: "https://cdn.builder.io/o/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F3a612813bdd6434786b6d47a48781500?alt=media&token=2199cf05-8753-4383-b7be-a90505480b59&apiKey=b117f80db1214c899c967fecfbdcaa25"
   };
 
   // Costruisce l'URL per l'iframe
   const currentIframeUrl = `${pdfUrls[language]}#toolbar=0&navpanes=0&view=FitH`;
 
-  // Funzione per forzare il download con il nome personalizzato bypassando il blocco CORS
+  // Gestione del cambio lingua con attivazione dell'effetto fade-out
+  const handleLanguageChange = (lang) => {
+    if (lang !== language) {
+      setIsChanging(true);
+      setLanguage(lang);
+    }
+  };
+
+  // Download forzato con nome file pulito
   const handleDownload = async () => {
     const fileName = `CV_Matteo_Finco_${language.toUpperCase()}.pdf`;
     try {
@@ -28,11 +38,9 @@ export default function Archivia() {
       document.body.appendChild(link);
       link.click();
       
-      // Pulizia della memoria
       document.body.removeChild(link);
       window.URL.revokeObjectURL(blobUrl);
     } catch (error) {
-      // Fallback classico se il browser blocca la richiesta fetch
       window.open(pdfUrls[language], "_blank");
     }
   };
@@ -58,7 +66,7 @@ export default function Archivia() {
         boxShadow: "0 2px 10px rgba(0,0,0,0.05)"
       }}>
         <button
-          onClick={() => setLanguage("it")}
+          onClick={() => handleLanguageChange("it")}
           style={{
             padding: "4px 14px",
             borderRadius: "9999px",
@@ -76,7 +84,7 @@ export default function Archivia() {
           IT
         </button>
         <button
-          onClick={() => setLanguage("en")}
+          onClick={() => handleLanguageChange("en")}
           style={{
             padding: "4px 14px",
             borderRadius: "9999px",
@@ -98,7 +106,7 @@ export default function Archivia() {
       {/* Contenitore principale */}
       <main style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", width: "100%", margin: 0, padding: 0, position: "relative" }}>
         
-        {/* Spazio dell'iframe con 60px liberi sul fondo */}
+        {/* Spazio dell'iframe con 60px liberi sul fondo per la barra inferiore */}
         <div style={{ 
           flex: 1, 
           width: "100%", 
@@ -109,34 +117,37 @@ export default function Archivia() {
           overflow: "hidden"
         }}>
           
-          {/* Contenitore di ritaglio squadrato */}
+          {/* Contenitore di ritaglio squadrato con sfondo bianco solido */}
           <div style={{
             width: "100%",
             height: "100%",
             overflow: "hidden",
             position: "relative",
-            backgroundColor: "transparent"
+            backgroundColor: "#ffffff"
           }}>
             
-            {/* Iframe allineato a sinistra (left: 0) per non tagliare il testo del banner */}
+            {/* Iframe con effetto dissolvenza controllato dallo stato */}
             <iframe 
               src={currentIframeUrl} 
+              onLoad={() => setIsChanging(false)}
               width="100%" 
               style={{ 
                 position: "absolute",
                 top: "-40px",
                 left: "0px",
-                width: "calc(100% + 40px)", // Spinge solo il lato destro (e la scrollbar) fuori dallo schermo
+                width: "calc(100% + 40px)", 
                 height: "calc(100% + 80px)",
                 border: "none", 
-                backgroundColor: "transparent" 
+                backgroundColor: "transparent",
+                opacity: isChanging ? 0 : 1,
+                transition: "opacity 0.3s ease-in-out"
               }}
               title="Curriculum Vitae Matteo Finco"
             ></iframe>
           </div>
         </div>
         
-        {/* Barra inferiore minimale coordinata */}
+        {/* Barra inferiore minimale */}
         <div 
           style={{
             position: "absolute",
@@ -169,7 +180,7 @@ export default function Archivia() {
             Get in touch
           </button>
 
-          {/* Pulsante Download PDF rinominato dinamicamente (In basso a destra) */}
+          {/* Pulsante Download PDF */}
           <button 
             onClick={handleDownload}
             className="text-sm font-light text-gray-500 tracking-wide hover:text-black transition-colors duration-200"
