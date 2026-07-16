@@ -12,15 +12,20 @@ export default function Archivia() {
   const [isEnLoaded, setIsEnLoaded] = useState(false);
   const [isItLoaded, setIsItLoaded] = useState(false);
 
+  // Link aggiornati (incluso il nuovo link inglese)
   const pdfUrls = {
     it: "https://cdn.builder.io/o/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F08ecfc6bb6a146d893a50c48392afa07?alt=media&token=c9ec7475-0f05-4279-aa29-438efd6c9518&apiKey=b117f80db1214c899c967fecfbdcaa25",
-    en: "https://cdn.builder.io/o/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F3a612813bdd6434786b6d47a48781500?alt=media&token=2199cf05-8753-4383-b7be-a90505480b59&apiKey=b117f80db1214c899c967fecfbdcaa25"
+    en: "https://cdn.builder.io/o/assets%2Fb117f80db1214c899c967fecfbdcaa25%2Fc6fba1bdaa144626b762dbd980d6d889?alt=media&token=f32d4694-bbee-44cc-b960-9df7ab5f9304&apiKey=b117f80db1214c899c967fecfbdcaa25"
   };
 
-  // Rileva se lo schermo è mobile
+  // Rileva se lo schermo è mobile e forza l'inglese
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (mobile) {
+        setLanguage("en"); // Forza l'inglese su mobile
+      }
     };
     
     handleResize();
@@ -82,57 +87,59 @@ export default function Archivia() {
       <div style={{ position: "relative", width: "100%" }}>
         <Header showBackToDesigns={false} />
 
-        {/* Selettore Lingua */}
-        <div style={{
-          position: "absolute",
-          top: "50%", 
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          zIndex: 99999,
-          display: "flex",
-          backgroundColor: "#f3f4f6",
-          padding: "3px",
-          borderRadius: "9999px",
-          border: "1px solid #e5e7eb",
-          boxShadow: "0 2px 10px rgba(0,0,0,0.05)"
-        }}>
-          <button
-            onClick={() => handleLanguageChange("it")}
-            style={{
-              padding: "4px 14px",
-              borderRadius: "9999px",
-              fontSize: "11px",
-              letterSpacing: "0.05em",
-              fontWeight: language === "it" ? "500" : "300",
-              color: language === "it" ? "#000000" : "#9ca3af",
-              backgroundColor: language === "it" ? "#ffffff" : "transparent",
-              boxShadow: language === "it" ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
-              border: "none",
-              cursor: "pointer",
-              transition: "all 0.2s ease"
-            }}
-          >
-            IT
-          </button>
-          <button
-            onClick={() => handleLanguageChange("en")}
-            style={{
-              padding: "4px 14px",
-              borderRadius: "9999px",
-              fontSize: "11px",
-              letterSpacing: "0.05em",
-              fontWeight: language === "en" ? "500" : "300",
-              color: language === "en" ? "#000000" : "#9ca3af",
-              backgroundColor: language === "en" ? "#ffffff" : "transparent",
-              boxShadow: language === "en" ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
-              border: "none",
-              cursor: "pointer",
-              transition: "all 0.2s ease"
-            }}
-          >
-            EN
-          </button>
-        </div>
+        {/* Selettore Lingua - Renderizzato SOLO su Desktop */}
+        {!isMobile && (
+          <div style={{
+            position: "absolute",
+            top: "50%", 
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: 99999,
+            display: "flex",
+            backgroundColor: "#f3f4f6",
+            padding: "3px",
+            borderRadius: "9999px",
+            border: "1px solid #e5e7eb",
+            boxShadow: "0 2px 10px rgba(0,0,0,0.05)"
+          }}>
+            <button
+              onClick={() => handleLanguageChange("it")}
+              style={{
+                padding: "4px 14px",
+                borderRadius: "9999px",
+                fontSize: "11px",
+                letterSpacing: "0.05em",
+                fontWeight: language === "it" ? "500" : "300",
+                color: language === "it" ? "#000000" : "#9ca3af",
+                backgroundColor: language === "it" ? "#ffffff" : "transparent",
+                boxShadow: language === "it" ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
+                border: "none",
+                cursor: "pointer",
+                transition: "all 0.2s ease"
+              }}
+            >
+              IT
+            </button>
+            <button
+              onClick={() => handleLanguageChange("en")}
+              style={{
+                padding: "4px 14px",
+                borderRadius: "9999px",
+                fontSize: "11px",
+                letterSpacing: "0.05em",
+                fontWeight: language === "en" ? "500" : "300",
+                color: language === "en" ? "#000000" : "#9ca3af",
+                backgroundColor: language === "en" ? "#ffffff" : "transparent",
+                boxShadow: language === "en" ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
+                border: "none",
+                cursor: "pointer",
+                transition: "all 0.2s ease"
+              }}
+            >
+              EN
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Contenitore principale */}
@@ -149,7 +156,7 @@ export default function Archivia() {
         }}>
           
           {isMobile ? (
-            /* Vista Mobile */
+            /* Vista Mobile (Solo in Inglese per pulizia di design) */
             <div style={{
               display: "flex",
               flexDirection: "column",
@@ -164,14 +171,12 @@ export default function Archivia() {
               <span className="text-xs uppercase tracking-widest text-gray-400 mb-2">Curriculum Vitae</span>
               <h2 className="text-xl font-light text-black tracking-wide mb-6">Matteo Finco</h2>
               <p className="text-sm font-light text-gray-500 max-w-xs leading-relaxed mb-8">
-                {language === "it" 
-                  ? "Per una lettura ottimale su dispositivi mobili, apri il curriculum a tutto schermo o scarica il file direttamente."
-                  : "For the best reading experience on mobile, view the resume in full screen or download the file directly."}
+                For the best reading experience on mobile, view the resume in full screen or download the file directly.
               </p>
               
               <div style={{ display: "flex", flexDirection: "column", gap: "12px", width: "100%", maxWidth: "240px" }}>
                 <a 
-                  href={pdfUrls[language]} 
+                  href={pdfUrls.en} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   style={{
@@ -187,7 +192,7 @@ export default function Archivia() {
                     letterSpacing: "0.05em"
                   }}
                 >
-                  {language === "it" ? "Leggi a tutto schermo" : "View Full Screen"}
+                  View Full Screen
                 </a>
                 <button 
                   onClick={handleDownload}
@@ -203,7 +208,7 @@ export default function Archivia() {
                     cursor: "pointer"
                   }}
                 >
-                  {language === "it" ? "Scarica PDF" : "Download PDF"}
+                  Download PDF
                 </button>
               </div>
             </div>
