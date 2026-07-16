@@ -15,7 +15,7 @@ export default function Archivia() {
   // Link aggiornati (incluso il nuovo link inglese)
   const pdfUrls = {
     it: "https://cdn.builder.io/o/assets%2Fb117f80db1214c899c967fecfbdcaa25%2F08ecfc6bb6a146d893a50c48392afa07?alt=media&token=c9ec7475-0f05-4279-aa29-438efd6c9518&apiKey=b117f80db1214c899c967fecfbdcaa25",
-    en: "https://cdn.builder.io/o/assets%2Fb117f80db1214c899c967fecfbdcaa25%2Fc6fba1bdaa144626b762dbd980d6d889?alt=media&token=f32d4694-bbee-44cc-b960-9df7ab5f9304&apiKey=b117f80db1214c899c967fecfbdcaa25"
+    en: "https://cdn.builder.io/o/assets%2Fb117f80db1214c899c967fecfbdcaa25%2Fa7085b0562374c6aa76d08e3a695e181?alt=media&token=adcabe70-f388-4c62-830d-e7a8b28413f2&apiKey=b117f80db1214c899c967fecfbdcaa25"
   };
 
   // Rileva se lo schermo è mobile e forza l'inglese
